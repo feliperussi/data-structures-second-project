@@ -58,20 +58,72 @@ public class ArregloDinamico implements IArregloDinamico {
 		}
 
 		public String darElemento(int i) {
-			// TODO implementar
-			return null;
+			// Implementar
+			if (i< tamanoAct) {
+				return elementos[i];
+			}
+			else {
+				//System.out.println("No hay un elemento en la posicion: "+ i);
+				return null;
+			}
 		}
 
 		public String buscar(String dato) {
-			// TODO implementar
+			// Implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			return null;
+			boolean termino=false;
+			int i=0;
+			String resp= null;
+			while (termino==false) {
+				//Revisa que aun estoy en el arreglo y no he encontrado el dato
+				if(i<tamanoAct) {
+				int prueba = dato.compareTo(elementos[i]);
+				if(prueba==0) {
+					resp=elementos[i]; 
+					termino=true;
+				}
+					i++;
+				}
+				else{
+					termino=true;
+					//System.out.println("El dato no se encuentra en el arreglo");
+				}
+			}
+			return resp;
 		}
 
 		public String eliminar(String dato) {
-			// TODO implementar
+			// Implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			return null;
+			boolean termino=false;
+			int i=0;
+			String resp= null;
+			while (termino==false) {
+				//Busco el dato y su posicion
+				if(i<tamanoAct) {
+				int prueba = dato.compareTo(elementos[i]);
+				if(prueba==0) {
+					resp=elementos[i];
+					//Modifica el arreglo para que sea compacto
+					String [ ] copia = elementos;
+					elementos = new String[tamanoAct--];
+					for (int j=0; j<i; j++) { //Elementos antes quedan igual
+						elementos[j]=copia[j];
+					}
+					for (int j=i+1; j<tamanoAct; j++) { //Elementos despues tienen desfase de 1
+						elementos[j--]=copia[j];
+					}
+					tamanoAct--;
+					termino=true;
+				}
+					i++;
+				}
+				else{
+					termino=true;
+					//System.out.println("El dato no se encuentra en el arreglo");
+				}
+			}
+			return resp;
 		}
 
 }
