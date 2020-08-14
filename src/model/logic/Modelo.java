@@ -68,5 +68,16 @@ public class Modelo {
 		return datos.eliminar(dato);
 	}
 
+	/**
+	 * Metodo adicional de dar la lista de datos
+	 * @return lista de datos
+	 */
+	public String darDatos() {
+		String resp="->";
+		for (int i=0; i<darTamano(); i++) {
+			resp=resp + datos.darElemento(i) + "-";
+		}
+		return resp;
+	}
 
 }

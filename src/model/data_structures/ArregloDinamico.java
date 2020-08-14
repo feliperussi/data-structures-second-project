@@ -20,7 +20,7 @@ public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinami
         /**
          * Arreglo de elementos de tamaNo maximo
          */
-        private T elementos[ ];
+        private T[] elementos;
 
         /**
          * Construir un arreglo con la capacidad maxima inicial.
@@ -28,7 +28,7 @@ public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinami
          */
 		public ArregloDinamico( int max )
         {
-               elementos = (T[]) new Object[max];
+               elementos = (T[]) new Comparable[max];
                tamanoMax = max;
                tamanoAct = 0;
         }
@@ -39,7 +39,7 @@ public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinami
                {  // caso de arreglo lleno (aumentar tamaNo)
                     tamanoMax = 2 * tamanoMax;
                     T [ ] copia = elementos;
-                    elementos = (T[]) new Object[tamanoMax];
+                    elementos = (T[]) new Comparable[tamanoMax];
                     for ( int i = 0; i < tamanoAct; i++)
                     {
                      	 elementos[i] = copia[i];
@@ -107,12 +107,20 @@ public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinami
 					resp=elementos[i];
 					//Modifica el arreglo para que sea compacto
 					T [ ] copia = elementos;
-					elementos = (T[]) new Object[tamanoAct--];
-					for (int j=0; j<i; j++) { //Elementos antes quedan igual
-						elementos[j]=copia[j];
+					for (int k=0; k<tamanoAct;k++) {
+						System.out.println(copia[k]);
 					}
-					for (int j=i+1; j<tamanoAct; j++) { //Elementos despues tienen desfase de 1
-						elementos[j--]=copia[j];
+					elementos = (T[]) new Comparable[tamanoMax];
+					for (int j=0; j < tamanoAct; j++) { //Elementos antes quedan igual
+						if(j<i) {
+							elementos[j]=copia[j];
+						}
+						if(j>i) {
+							elementos[j-1]=copia[j];
+						}			
+					}
+					for (int k=0; k<tamanoAct;k++) {
+						System.out.println(elementos[k]);
 					}
 					tamanoAct--;
 					termino=true;
