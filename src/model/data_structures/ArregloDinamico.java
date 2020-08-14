@@ -7,7 +7,8 @@ package model.data_structures;
  * @author Fernando De la Rosa
  *
  */
-public class ArregloDinamico implements IArregloDinamico {
+/** Encabezado de definición generico para la clase ArregloDinamico */
+public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinamico<T>{
 		/**
 		 * Capacidad maxima del arreglo
 		 */
@@ -19,7 +20,7 @@ public class ArregloDinamico implements IArregloDinamico {
         /**
          * Arreglo de elementos de tamaNo maximo
          */
-        private String elementos[ ];
+        private T elementos[ ];
 
         /**
          * Construir un arreglo con la capacidad maxima inicial.
@@ -27,18 +28,18 @@ public class ArregloDinamico implements IArregloDinamico {
          */
 		public ArregloDinamico( int max )
         {
-               elementos = new String[max];
+               elementos = (T[]) new Object[max];
                tamanoMax = max;
                tamanoAct = 0;
         }
         
-		public void agregar( String dato )
+		public void agregar( T dato )
         {
                if ( tamanoAct == tamanoMax )
                {  // caso de arreglo lleno (aumentar tamaNo)
                     tamanoMax = 2 * tamanoMax;
-                    String [ ] copia = elementos;
-                    elementos = new String[tamanoMax];
+                    T [ ] copia = elementos;
+                    elementos = (T[]) new Object[tamanoMax];
                     for ( int i = 0; i < tamanoAct; i++)
                     {
                      	 elementos[i] = copia[i];
@@ -57,7 +58,7 @@ public class ArregloDinamico implements IArregloDinamico {
 			return tamanoAct;
 		}
 
-		public String darElemento(int i) {
+		public T darElemento(int i) {
 			// Implementar
 			if (i< tamanoAct) {
 				return elementos[i];
@@ -68,12 +69,12 @@ public class ArregloDinamico implements IArregloDinamico {
 			}
 		}
 
-		public String buscar(String dato) {
+		public T buscar(T dato) {
 			// Implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
 			boolean termino=false;
 			int i=0;
-			String resp= null;
+			T resp= null;
 			while (termino==false) {
 				//Revisa que aun estoy en el arreglo y no he encontrado el dato
 				if(i<tamanoAct) {
@@ -92,12 +93,12 @@ public class ArregloDinamico implements IArregloDinamico {
 			return resp;
 		}
 
-		public String eliminar(String dato) {
+		public T eliminar(T dato) {
 			// Implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
 			boolean termino=false;
 			int i=0;
-			String resp= null;
+			T resp= null;
 			while (termino==false) {
 				//Busco el dato y su posicion
 				if(i<tamanoAct) {
@@ -105,8 +106,8 @@ public class ArregloDinamico implements IArregloDinamico {
 				if(prueba==0) {
 					resp=elementos[i];
 					//Modifica el arreglo para que sea compacto
-					String [ ] copia = elementos;
-					elementos = new String[tamanoAct--];
+					T [ ] copia = elementos;
+					elementos = (T[]) new Object[tamanoAct--];
 					for (int j=0; j<i; j++) { //Elementos antes quedan igual
 						elementos[j]=copia[j];
 					}
