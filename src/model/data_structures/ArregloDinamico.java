@@ -67,7 +67,7 @@ public class ArregloDinamico implements IArregloDinamico {
 				return null;
 			}
 		}
-
+	
 		public String buscar(String dato) {
 			// Implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
@@ -106,12 +106,14 @@ public class ArregloDinamico implements IArregloDinamico {
 					resp=elementos[i];
 					//Modifica el arreglo para que sea compacto
 					String [ ] copia = elementos;
-					elementos = new String[tamanoAct--];
-					for (int j=0; j<i; j++) { //Elementos antes quedan igual
-						elementos[j]=copia[j];
-					}
-					for (int j=i+1; j<tamanoAct; j++) { //Elementos despues tienen desfase de 1
-						elementos[j--]=copia[j];
+					elementos = new String[tamanoMax];
+					for (int j=0; j < tamanoAct; j++) { //Elementos antes quedan igual
+						if(j<i) {
+							elementos[j]=copia[j];
+						}
+						if(j>i) {
+							elementos[j-1]=copia[j];
+						}			
 					}
 					tamanoAct--;
 					termino=true;
@@ -120,7 +122,6 @@ public class ArregloDinamico implements IArregloDinamico {
 				}
 				else{
 					termino=true;
-					//System.out.println("El dato no se encuentra en el arreglo");
 				}
 			}
 			return resp;
