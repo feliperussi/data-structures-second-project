@@ -30,25 +30,43 @@ public class TestModelo {
 
 	@Test
 	public void testDarTamano() {
-		// TODO
+		// Completar la prueba
+		assertTrue(modelo!=null);
+		assertEquals(0, modelo.darTamano());  // El modelo deberia tener 100 elementos
+		setUp2();
+		assertEquals(CAPACIDAD, modelo.darTamano());  // El modelo deberia tener 100 elementos
 	}
 
 	@Test
 	public void testAgregar() {
-		// TODO Completar la prueba
+		Integer prueba= 1;
+		assertTrue(modelo!=null);
+		modelo.agregar(prueba);
+		assertEquals(1, modelo.darTamano());  			// El modelo deberia tener 1 elemento
+		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
 	}
 
 	@Test
 	public void testBuscar() {
 		setUp2();
-		// TODO Completar la prueba
+		// Completar la prueba
+		Integer prueba= 1;
+		Integer noPrueba= CAPACIDAD++;
+		assertTrue(modelo!=null);
+		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
+		assertNull(modelo.buscar(noPrueba));            // El modelo no deberia encontrar el dato
 	}
 
 	@Test
 	public void testEliminar() {
 		setUp2();
-		// TODO Completar la prueba
-		
+		// Completar la prueba
+		Integer prueba= 1;
+		assertTrue(modelo!=null);
+		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
+		modelo.eliminar(prueba);
+		assertNull(modelo.buscar(prueba));        	    // El modelo no deberia encontrar el dato
+		assertEquals(CAPACIDAD--, modelo.darTamano());  // El modelo deberia tener 99 elementos
 	}
 
 }
