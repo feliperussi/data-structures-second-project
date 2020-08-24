@@ -37,6 +37,9 @@ public class Peliculas implements Comparable<Peliculas> {
 		return id;
 	}
 	
+	/**
+	 * Requerimiento de Comparable de implementar metodo compareTo 
+	 */
 	public int compareTo(Peliculas pelicula) {
 	    return pelicula.darId().compareTo(this.id);
 	}

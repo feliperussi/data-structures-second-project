@@ -2,8 +2,13 @@ package model.logic;
 
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
+
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -134,7 +139,7 @@ public class Modelo {
     	}
 	}
 	
-	/**-------------------------------------------------------------------------
+	/**---------------------------------------------------------------------
 	 * OPCION 2
 	 * Agregar datos optimizado
 	 */
@@ -142,9 +147,12 @@ public class Modelo {
 		try {
 			//Prueba la lectura de los archivos
 			Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
-			Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
-	        CSVReader csvReaderD = new CSVReader(readerDetalles);
-			CSVReader csvReaderC = new CSVReader(readerCasting);
+			Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_CASTING));
+			//Crea el separador con ";"
+			CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+			//Crea los respectivos lectores
+	        CSVReader csvReaderD = new CSVReaderBuilder(readerDetalles).withCSVParser(parser).build();
+			CSVReader csvReaderC = new CSVReaderBuilder(readerCasting).withCSVParser(parser).build();
 	        // Lee todos los datos y los agrega a una List<String[]>
 	        List<String[]> detalles = csvReaderD.readAll();
 	        List<String[]> castings = csvReaderC.readAll();
@@ -158,7 +166,6 @@ public class Modelo {
 	        		castLimpio.agregar(verificarCastings(casting));
 	        	}
 	        }
-	        
 	        //Combina las peliculas con informacion completa y correcta
 	        for (String[] detalle : detalles) {
 	        	//Comprueba que la linea tenga informacion correcta
