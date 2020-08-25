@@ -158,7 +158,7 @@ public class Modelo
 				Integer id = Integer.parseInt(detalle[0]);				//identificaci�n
 				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuaci�n
 			
-				//Se confirma la fecha de estreno est� en el formato requerido
+				//Se confirma la fecha de estreno este en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
 				Date date = formato.parse(fecha);
