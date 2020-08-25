@@ -85,19 +85,6 @@ public class Modelo {
 	{
 		return datos.eliminar(dato);
 	}
-
-	/**
-	 * Metodo adicional de dar la lista de datos
-	 * @return lista de datos
-	 */
-	//TODO pensar como retornar esto
-	public String darDatos() {
-		String resp="->";
-		for (int i=0; i<darTamano(); i++) {
-			resp=resp + datos.darElemento(i) + "-";
-		}
-		return resp;
-	}
 	
 	/**
 	 * Agregar datos de archivo csv
@@ -269,5 +256,9 @@ public class Modelo {
 			System.out.println("Algun campo no tiene el formato esperado");
 			return null;
 		}
+	}
+
+	public String darInfoExtremos() {
+		return "Primera pelicula:\n"datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
 	}
 }
