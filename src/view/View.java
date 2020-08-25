@@ -1,7 +1,5 @@
 package view;
 
-import model.logic.Modelo;
-
 public class View 
 {
 	    /**
@@ -25,10 +23,4 @@ public class View
 			System.out.println(mensaje);
 		}		
 		
-		public void printModelo(Modelo modelo)
-		{
-			// Implementar
-			String str = modelo.darDatos();
-			System.out.println(str);
-		}
 }

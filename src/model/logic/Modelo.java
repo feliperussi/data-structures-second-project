@@ -31,7 +31,6 @@ public class Modelo
 	private static final String PELICULAS_CASTING = "/T1_202020/data/MoviesCastingRaw-small.csv";
 	private IArregloDinamico<Peliculas> datos;
 	private int tamanoAprox = 100;
-	private int umbral = 6;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
@@ -47,7 +46,7 @@ public class Modelo
 	 */
 	public Modelo(int capacidad)
 	{
-		datos = new ArregloDinamico(capacidad);
+		datos = new ArregloDinamico<Peliculas>(capacidad);
 	}
 
 	/**
@@ -169,8 +168,6 @@ public class Modelo
 					String[] generos =detalle[2].split("|");
 					//Se crea una pelicula con la informacion disponible
 					resp= new Peliculas(id, "", nombre, puntuacion, null, date, generos);
-					//Se establece la comparaci�n por ID
-					resp.buscarPorID();
 				}
 			}
 			return resp;
@@ -210,8 +207,6 @@ public class Modelo
 				Integer id = Integer.parseInt(casting[0]);				//identificaci�n
 				//Se crea una pelicula con la informacion disponible
 				resp= new Peliculas(id, director, "", null,actores, null, null);
-				//Se establece la comparaci�n por ID
-				resp.buscarPorID();
 			}
 			return resp;
 		}
@@ -222,8 +217,8 @@ public class Modelo
 	}
 
 	public String darInfoExtremos() {
-		return "Primera pelicula:\n"datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
-	
+		return "Primera pelicula:\n"+datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
+	}
 	/**
 	 * Metodo para dar la lista de las peliculas buenas de un director
 	 * @param entra como String el nombre del director

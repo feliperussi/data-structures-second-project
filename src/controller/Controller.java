@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import model.logic.Modelo;
@@ -34,20 +35,25 @@ public class Controller {
 			switch (option) {
 				case 1:
 					view.printMessage("--------- \nCargando Datos...");
-					modelo.agregarDatosCsvOpt();
+					try {
+						modelo.agregarDatosCsvOpt();
 					view.printMessage("Datos cargados");
 					view.printMessage("Numero de peliculas cargadas: " + modelo.darTamano());
 					view.printMessage(modelo.darInfoExtremos());
+					} catch (IOException e) {
+						modelo=new Modelo();
+						view.printMessage("Error cargando las peliculas");
+					}
+					
 					break;
 
 				case 2:
 					view.printMessage("--------- \nNombre del director: ");
 					String director = lector.next();
-					String[] peliculas = modelo.buscarPeliculas(director);
+					String[] peliculas = modelo.buenasPeliculas(director);
 					if (peliculas != null) {
-						String[] buenas = modelo.darBuenasPeliculas();
-						view.printMessage("El director tiene "+buenas.length+" buenas peliculas\n---------\nEstas son:\n");
-						for(String pelicula:buenas){
+						view.printMessage("El director tiene "+peliculas.length+" buenas peliculas\n---------\nEstas son:\n");
+						for(String pelicula:peliculas){
 							view.printMessage(pelicula);
 						}
 					} else {
