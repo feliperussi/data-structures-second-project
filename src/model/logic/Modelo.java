@@ -158,7 +158,7 @@ public class Modelo
 				Integer id = Integer.parseInt(detalle[0]);				//identificaci�n
 				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuaci�n
 			
-				//Se confirma la fecha de estreno est� en el formato requerido
+				//Se confirma la fecha de estreno este en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
 				Date date = formato.parse(fecha);
@@ -219,6 +219,7 @@ public class Modelo
 	public String darInfoExtremos() {
 		return "Primera pelicula:\n"+datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
 	}
+	
 	/**
 	 * Metodo para dar la lista de las peliculas buenas de un director
 	 * @param entra como String el nombre del director
@@ -226,6 +227,24 @@ public class Modelo
 	 */
 	public String[] buenasPeliculas(String director) {
 		String[] resp = null;
+		IArregloDinamico<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox/10);
+		for (int i=0; i<datos.darTamano(); i++) {
+			Peliculas temp = datos.darElemento(i);
+			//Compara si es el director correcto
+			if (temp.darDirector().compareTo(director)==0) {
+				//Compara si la pelicula es buena
+				if(temp.darPuntuacion() >= 6) {
+					peliculasDirector.agregar(temp);
+				}
+			}
+		}
+		//Da el formato de String[] con la informacion de la pelicula
+		if(peliculasDirector.darTamano()!=0) {
+			resp = new String[peliculasDirector.darTamano()];
+			for (int i=0; i<peliculasDirector.darTamano(); i++) {
+				resp[i]=peliculasDirector.darElemento(i).darInfo();
+			}
+		}
 		return resp;
 	}
 }
