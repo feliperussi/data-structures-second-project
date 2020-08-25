@@ -31,7 +31,7 @@ public class Controller {
 		while (!fin) {
 			view.printMenu();
 
-			int option = lector.nextInt();
+			int option = Integer.parseInt(lector.nextLine());
 			switch (option) {
 				case 1:
 					view.printMessage("--------- \nCargando Datos...");
@@ -49,7 +49,7 @@ public class Controller {
 
 				case 2:
 					view.printMessage("--------- \nNombre del director: ");
-					String director = lector.next();
+					String director = lector.nextLine();
 					String[] peliculas = modelo.buenasPeliculas(director);
 					if (peliculas != null) {
 						view.printMessage(
@@ -58,7 +58,7 @@ public class Controller {
 							view.printMessage(pelicula);
 						}
 					} else {
-						view.printMessage("El director " + director + " no fue encontrado." + "\n---------");
+						view.printMessage("El director " + director + " no tiene buenas peliculas." + "\n---------");
 					}
 					break;
 
