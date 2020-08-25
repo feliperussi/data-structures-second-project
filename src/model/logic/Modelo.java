@@ -1,5 +1,6 @@
 package model.logic;
 
+
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
 
@@ -15,14 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Definicion del modelo del mundo
  *
  */
-public class Modelo {
+public class Modelo 
+{
 	/**
 	 * Atributos del modelo del mundo
 	 */
@@ -30,6 +31,7 @@ public class Modelo {
 	private static final String PELICULAS_CASTING = "/T1_202020/data/MoviesCastingRaw-small.csv";
 	private IArregloDinamico<Peliculas> datos;
 	private int tamanoAprox = 100;
+	private int umbral = 6;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
@@ -38,16 +40,16 @@ public class Modelo {
 	{
 		datos = new ArregloDinamico<Peliculas>(tamanoAprox);
 	}
-	
+
 	/**
 	 * Constructor del modelo del mundo con capacidad dada
 	 * @param tamano
 	 */
 	public Modelo(int capacidad)
 	{
-		datos = new ArregloDinamico<Peliculas>(capacidad);
+		datos = new ArregloDinamico(capacidad);
 	}
-	
+
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
 	 * @return numero de elementos presentes en el modelo
@@ -65,7 +67,7 @@ public class Modelo {
 	{	
 		datos.agregar(dato);
 	}
-	
+
 	/**
 	 * Requerimiento buscar dato
 	 * @param dato Dato a buscar
@@ -75,7 +77,7 @@ public class Modelo {
 	{
 		return datos.buscar(dato);
 	}
-	
+
 	/**
 	 * Requerimiento eliminar dato
 	 * @param dato Dato a eliminar
@@ -86,52 +88,9 @@ public class Modelo {
 		return datos.eliminar(dato);
 	}
 	
-	/**
-	 * Agregar datos de archivo csv
-	 */
-	public void agregarDatosCsv() throws IOException{
-	try {
-		//Prueba la lectura de los archivos
-		Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
-		Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_CASTING));
-        CSVReader csvReaderD = new CSVReader(readerDetalles);
-		CSVReader csvReaderC = new CSVReader(readerCasting);
-        // Lee todos los datos y los agrega a una List<String[]>
-        List<String[]> detalles = csvReaderD.readAll();
-        List<String[]> castings = csvReaderC.readAll();
-        //Combina las peliculas con informacion completa y correcta
-        	for (String[] detalle : detalles) {
-        		boolean encontro = false;
-        		Peliculas infoD = verificarDetalles(detalle);
-        		Iterator<String[]> iterator = castings.iterator();
-        		while(iterator.hasNext() && encontro==false && infoD!= null) {
-        			String[] temp = iterator.next();
-        			Peliculas infoC = verificarCastings(temp);
-        			if (infoC!=null) {
-        				if(infoD.compareTo(infoC)==0) {
-        					//Asigna la informacion verificada
-        					String nombre = infoD.darNombre();
-        					String director = infoC.darDirector();
-        					Double puntuacion = infoD.darPuntuacion();
-        					Integer id = infoD.darId();
-            				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, null, null, null);
-            				datos.agregar(pelicula);
-            				encontro=true;
-            			}
-        			}
-        		}
-			}
-			csvReaderC.close();
-			csvReaderD.close();
-        }
-        catch (CsvException e) {
-        	System.out.println("Fallo en leer algun CSV");
-    		System.out.println(e.getStackTrace());
-		}
-	}
 	
 	/**---------------------------------------------------------------------
-	 * OPCION 2
+	 * OPCION 2 (Corregido)
 	 * Agregar datos optimizado
 	 */
 	public void agregarDatosCsvOpt() throws IOException{
@@ -210,6 +169,8 @@ public class Modelo {
 					String[] generos =detalle[2].split("|");
 					//Se crea una pelicula con la informacion disponible
 					resp= new Peliculas(id, "", nombre, puntuacion, null, date, generos);
+					//Se establece la comparaci�n por ID
+					resp.buscarPorID();
 				}
 			}
 			return resp;
@@ -249,6 +210,8 @@ public class Modelo {
 				Integer id = Integer.parseInt(casting[0]);				//identificaci�n
 				//Se crea una pelicula con la informacion disponible
 				resp= new Peliculas(id, director, "", null,actores, null, null);
+				//Se establece la comparaci�n por ID
+				resp.buscarPorID();
 			}
 			return resp;
 		}
@@ -260,5 +223,14 @@ public class Modelo {
 
 	public String darInfoExtremos() {
 		return "Primera pelicula:\n"datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
+	
+	/**
+	 * Metodo para dar la lista de las peliculas buenas de un director
+	 * @param entra como String el nombre del director
+	 * @return String[] lista de peliculas con puntuacion >= umbral; null si no se encuentra el director
+	 */
+	public String[] buenasPeliculas(String director) {
+		String[] resp = null;
+		return resp;
 	}
 }
