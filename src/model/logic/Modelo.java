@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -104,7 +106,7 @@ public class Modelo {
 	try {
 		//Prueba la lectura de los archivos
 		Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
-		Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
+		Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_CASTING));
         CSVReader csvReaderD = new CSVReader(readerDetalles);
 		CSVReader csvReaderC = new CSVReader(readerCasting);
         // Lee todos los datos y los agrega a una List<String[]>
@@ -125,7 +127,7 @@ public class Modelo {
         					String director = infoC.darDirector();
         					Double puntuacion = infoD.darPuntuacion();
         					Integer id = infoD.darId();
-            				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion);
+            				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, null, null, null);
             				datos.agregar(pelicula);
             				encontro=true;
             			}
@@ -177,9 +179,12 @@ public class Modelo {
 	        			//Asigna la informacion verificada
     					Integer id = infoC.darId();
     					String director = infoC.darDirector();
+    					String[] actores = infoC.darActores();
     					String nombre = infoD.darNombre();
     					Double puntuacion = infoD.darPuntuacion();
-        				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion);
+    					Date fecha = infoD.darFecha();
+    					String[] genero = infoD.darGenero();	
+        				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero);
         				datos.agregar(pelicula);
 	        		}
 	        	}
@@ -201,12 +206,22 @@ public class Modelo {
 		try{
 			Peliculas resp = null;
 			if(detalle[16].compareTo("")!=0 && detalle[16]!=null) {
-			//Cosas a verificar:
-			String nombre = detalle[16];							//Nombre de la pelicula
-			Integer id = Integer.parseInt(detalle[0]);				//identificación
-			Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuación
-			//Se crea una pelicula con la informacion disponible
-			resp= new Peliculas(id, "", nombre, puntuacion);
+				//Cosas a verificar:
+				String nombre = detalle[16];							//Nombre de la pelicula
+				Integer id = Integer.parseInt(detalle[0]);				//identificación
+				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuación
+			
+				//Se confirma la fecha de estreno esté en el formato requerido
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				String fecha = detalle[10];
+				Date date = formato.parse(fecha);
+			
+				//Se confirman el genero(s) de la película
+				if(detalle[2].compareTo("")!=0 && detalle[2]!=null) {
+					String[] generos =detalle[2].split("|");
+					//Se crea una pelicula con la informacion disponible
+					resp= new Peliculas(id, "", nombre, puntuacion, null, date, generos);
+				}
 			}
 			return resp;
 		}
@@ -224,17 +239,32 @@ public class Modelo {
 	public Peliculas verificarCastings(String[] casting) {
 		try{
 			Peliculas resp = null;
-			if(casting[12].compareTo("")!=0 && casting[12]!=null) {
-			//Cosas a verificar:
-			String director = casting[12];							//Nombre del director
-			Integer id = Integer.parseInt(casting[0]);				//identificación
-			//Se crea una pelicula con la informacion disponible
-			resp= new Peliculas(id, director, "", null);
+			//Verifica que los campos de nombres de actores y director sean validos
+			boolean bien = true;
+			int[] categorias = new int[] {1, 3, 5, 7, 9, 12};
+			String[] actores = new String[4];
+			for (int i : categorias) {
+				if (casting[i].compareTo("")!=0 && casting[i]!=null) {
+					int cont=0;
+					if(i!=12) {
+						//Crea el arreglo de actores
+						actores[cont]=casting[i];
+						cont++;
+					}
+				}
+				else {bien=false;}
+			}
+			//Dado que la info es correcta, se crean las categorias
+			if(bien==true) {
+				String director = casting[12];							//Nombre del director
+				Integer id = Integer.parseInt(casting[0]);				//identificación
+				//Se crea una pelicula con la informacion disponible
+				resp= new Peliculas(id, director, "", null,actores, null, null);
 			}
 			return resp;
 		}
 		catch(Exception e){
-			System.out.println("Algun dato no tiene el formato esperado");
+			System.out.println("Algun campo no tiene el formato esperado");
 			return null;
 		}
 	}
