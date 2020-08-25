@@ -110,15 +110,15 @@ public class Modelo
 	        
 	        // Crea una lista Castings con los datos en formato correcto
 	        IArregloDinamico<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
-	        for (String[] casting : castings) {
-	        	if (verificarCastings(casting)!=null) {
-	        		castLimpio.agregar(verificarCastings(casting));
+	        for (int i=1;i<castings.size();i++) { //Comienza en 1 ya que el primer dato es el nombre de la columna
+	        	if (verificarCastings(castings.get(i))!=null) {
+	        		castLimpio.agregar(verificarCastings(castings.get(i)));
 	        	}
 	        }
 	        //Combina las peliculas con informacion completa y correcta
-	        for (String[] detalle : detalles) {
+	        for (int i=1;i<detalles.size();i++) {
 	        	//Comprueba que la linea tenga informacion correcta
-	        	Peliculas infoD = verificarDetalles(detalle);
+	        	Peliculas infoD = verificarDetalles(detalles.get(i));
 	        	if(infoD!=null) {
 	        		// Busca la pelicula con misma identificacion en el arreglo dinamico
 	        		Peliculas infoC = castLimpio.buscar(infoD);
@@ -165,7 +165,7 @@ public class Modelo
 			
 				//Se confirman el genero(s) de la pel�cula
 				if(detalle[2].compareTo("")!=0 && detalle[2]!=null) {
-					String[] generos =detalle[2].split("|");
+					String[] generos =detalle[2].split("\\|");
 					//Se crea una pelicula con la informacion disponible
 					resp= new Peliculas(id, "", nombre, puntuacion, null, date, generos);
 				}
@@ -217,7 +217,7 @@ public class Modelo
 	}
 
 	public String darInfoExtremos() {
-		return "Primera pelicula:\n"+datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
+		return "---------------------\nPrimera pelicula:\n"+datos.darElemento(0).darInfo()+"\nUltima pelicula:\n"+datos.darElemento(datos.darTamano()-1).darInfo();
 	}
 	/**
 	 * Metodo para dar la lista de las peliculas buenas de un director

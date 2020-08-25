@@ -76,16 +76,18 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @return String con los datos de la pelicula
 	 */
 	public String darInfo() {
-		String str = "Pel�cula: " + nombre + "- ID: " + id + ", \n Genero(s): ";
+		String str = "Pel�cula: " + nombre + "- ID: " + id + "\nGenero(s): ";
 		// Agrega los generos
 		for (String i : genero) {
 			str = str + i + ",";
-		}
+		}str=str.substring(0,str.length()-1);
 		// Agrega los actores
-		str = str + "\n Actores: ";
+		str = str + "\nActores: ";
 		for (String i : actores) {
-			str = str + i + ",";
-		}
+			if (i != null) {
+				str = str + i + ",";
+			}
+		}str=str.substring(0,str.length()-1);
 		str = str + "\n ---------------------";
 		return str;
 	}
