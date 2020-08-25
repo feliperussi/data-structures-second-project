@@ -227,7 +227,7 @@ public class Modelo
 	 */
 	public String[] buenasPeliculas(String director) {
 		String[] resp = null;
-		IArregloDinamico<Peliculas> peliculasDirector = new ArregloDinamico(tamanoAprox/10);
+		IArregloDinamico<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox/10);
 		for (int i=0; i<datos.darTamano(); i++) {
 			Peliculas temp = datos.darElemento(i);
 			//Compara si es el director correcto
