@@ -1,26 +1,29 @@
 package model.data_structures;
 
-/** Encabezado de definición generico para la interface IArregloDinamico*/
-public interface IArregloDinamico <T extends Comparable<T>>{
+/** Encabezado de definiciï¿½n generico para la interface IArregloDinamico */
+public interface IArregloDinamico<T extends Comparable<T>> {
 
 	/**
 	 * Retornar el numero de elementos maximo en el arreglo
+	 * 
 	 * @return
 	 */
-	int darCapacidad( );
+	int darCapacidad();
 
 	/**
 	 * Retornar el numero de elementos presentes en el arreglo
+	 * 
 	 * @return
 	 */
-	int darTamano( );
-	
+	int darTamano();
+
 	/**
 	 * Retornar el elemento en la posicion i
+	 * 
 	 * @param i posicion de consulta
 	 * @return elemento de consulta. null si no hay elemento en posicion.
 	 */
-	T darElemento( int i );
+	T darElemento(int i);
 
 	/**
 	 * Agrega un elemento al principio del arreglo.
@@ -42,13 +45,14 @@ public interface IArregloDinamico <T extends Comparable<T>>{
 	public T removeFirst();
 	
 	/**
-	 * Elimina el último elemento. Se retorna el elemento eliminado.
+	 * Elimina el ï¿½ltimo elemento. Se retorna el elemento eliminado.
 	 */
 	public T removeLast();
 	
 	/**
-	 * Eliminar un dato del arreglo.
-	 * Los datos restantes deben quedar "compactos" desde la posicion 0.
+	 * Eliminar un dato del arreglo. Los datos restantes deben quedar "compactos"
+	 * desde la posicion 0.
+	 * 
 	 * @param dato Objeto de eliminacion en el arreglo
 	 * @return dato eliminado
 	 */
@@ -60,7 +64,7 @@ public interface IArregloDinamico <T extends Comparable<T>>{
 	public T firstElement( );
 	
 	/**
-	 * Retorna el último elemento.
+	 * Retorna el ï¿½ltimo elemento.
 	 */
 	public T lastElement( );
 	
@@ -78,22 +82,22 @@ public interface IArregloDinamico <T extends Comparable<T>>{
 	public boolean isEmpty();
 	
 	/**
-	 * Retorna la posición válida de un elemento. La búsqueda debe usar el método compareTo( … ) definido en el tipo T.
+	 * Retorna la posiciï¿½n vï¿½lida de un elemento. La bï¿½squeda debe usar el mï¿½todo compareTo( ï¿½ ) definido en el tipo T.
 	 * Si no se encuentra el elemento, el valor retornado es -1.
 	 * @param element a buscar
-	 * @return El índice del elemento || -1 si no se halló
+	 * @return El ï¿½ndice del elemento || -1 si no se hallï¿½
 	 */
 	public int isPresent(T element);
 	
 	/**
-	 * Intercambia la información de los elementos en dos posiciones válidas
+	 * Intercambia la informaciï¿½n de los elementos en dos posiciones vï¿½lidas
 	 * @param pos1 
 	 * @param pos2
 	 */
 	public void exchange (int pos1, int pos2);
 
 	/**
-	 * Actualiza el elemento en una posición válida
+	 * Actualiza el elemento en una posiciï¿½n vï¿½lida
 	 */
 	public void changeInfo (int pos, T elem);
 	

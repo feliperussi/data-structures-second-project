@@ -30,8 +30,8 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	 */
 	public ArregloDinamico(int max) {
 		@SuppressWarnings("unchecked")
-		T[] temp  = (T[]) new Comparable[max];
-		elementos=temp;
+		T[] temp = (T[]) new Comparable[max];
+		elementos = temp;
 		tamanoMax = max;
 		tamanoAct = 0;
 	}
@@ -122,8 +122,8 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 						System.out.println(copia[k]);
 					}
 					@SuppressWarnings("unchecked")
-					T[] temp  = (T[]) new Comparable[tamanoMax];
-					elementos=temp;
+					T[] temp = (T[]) new Comparable[tamanoMax];
+					elementos = temp;
 					for (int j = 0; j < tamanoAct; j++) { // Elementos antes quedan igual
 						if (j < i) {
 							elementos[j] = copia[j];
@@ -167,8 +167,9 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	@Override
 	public T removeLast() 
 	{
-		// TODO Auto-generated method stub
+
 		return null;
+		
 	}
 
 	@Override

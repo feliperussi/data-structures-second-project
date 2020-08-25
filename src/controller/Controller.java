@@ -31,33 +31,34 @@ public class Controller {
 		while (!fin) {
 			view.printMenu();
 
-			int option = lector.nextInt();
+			int option = Integer.parseInt(lector.nextLine());
 			switch (option) {
 				case 1:
 					view.printMessage("--------- \nCargando Datos...");
 					try {
 						modelo.agregarDatosCsvOpt();
-					view.printMessage("Datos cargados");
-					view.printMessage("Numero de peliculas cargadas: " + modelo.darTamano());
-					view.printMessage(modelo.darInfoExtremos());
+						view.printMessage("Datos cargados");
+						view.printMessage("Numero de peliculas cargadas: " + modelo.darTamano());
+						view.printMessage(modelo.darInfoExtremos());
 					} catch (IOException e) {
-						modelo=new Modelo();
-						view.printMessage("Error cargando las peliculas");
+						modelo = new Modelo();
+						view.printMessage("Error cargando las peliculas\n--------- ");
 					}
-					
+
 					break;
 
 				case 2:
 					view.printMessage("--------- \nNombre del director: ");
-					String director = lector.next();
+					String director = lector.nextLine();
 					String[] peliculas = modelo.buenasPeliculas(director);
 					if (peliculas != null) {
-						view.printMessage("El director tiene "+peliculas.length+" buenas peliculas\n---------\nEstas son:\n");
-						for(String pelicula:peliculas){
+						view.printMessage(
+								"El director tiene " + peliculas.length + " buenas peliculas\n---------\nEstas son:\n");
+						for (String pelicula : peliculas) {
 							view.printMessage(pelicula);
 						}
 					} else {
-						view.printMessage("El director " + director + " no fue encontrado." + "\n---------");
+						view.printMessage("El director " + director + " no tiene buenas peliculas." + "\n---------");
 					}
 					break;
 
