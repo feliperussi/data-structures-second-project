@@ -45,7 +45,7 @@ public class Modelo {
 	 */
 	public Modelo(int capacidad)
 	{
-		datos = new ArregloDinamico(capacidad);
+		datos = new ArregloDinamico<Peliculas>(capacidad);
 	}
 	
 	/**
@@ -133,12 +133,14 @@ public class Modelo {
             			}
         			}
         		}
-        	}
+			}
+			csvReaderC.close();
+			csvReaderD.close();
         }
         catch (CsvException e) {
         	System.out.println("Fallo en leer algun CSV");
     		System.out.println(e.getStackTrace());
-    	}
+		}
 	}
 	
 	/**---------------------------------------------------------------------
@@ -198,8 +200,8 @@ public class Modelo {
 	
 	
 	/**
-	 * Verificar que la información tiene el formato correcto
-	 * @return retorna la información en el formato correcto
+	 * Verificar que la informaciï¿½n tiene el formato correcto
+	 * @return retorna la informaciï¿½n en el formato correcto
 	 * null si hay errores
 	 */
 	public Peliculas verificarDetalles(String[] detalle) {
@@ -208,15 +210,15 @@ public class Modelo {
 			if(detalle[16].compareTo("")!=0 && detalle[16]!=null) {
 				//Cosas a verificar:
 				String nombre = detalle[16];							//Nombre de la pelicula
-				Integer id = Integer.parseInt(detalle[0]);				//identificación
-				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuación
+				Integer id = Integer.parseInt(detalle[0]);				//identificaciï¿½n
+				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuaciï¿½n
 			
-				//Se confirma la fecha de estreno esté en el formato requerido
+				//Se confirma la fecha de estreno estï¿½ en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
 				Date date = formato.parse(fecha);
 			
-				//Se confirman el genero(s) de la película
+				//Se confirman el genero(s) de la pelï¿½cula
 				if(detalle[2].compareTo("")!=0 && detalle[2]!=null) {
 					String[] generos =detalle[2].split("|");
 					//Se crea una pelicula con la informacion disponible
@@ -232,8 +234,8 @@ public class Modelo {
 	}
 	
 	/**
-	 * Verificar que la información tiene el formato correcto
-	 * @return retorna la información disponible en el formato correcto
+	 * Verificar que la informaciï¿½n tiene el formato correcto
+	 * @return retorna la informaciï¿½n disponible en el formato correcto
 	 * null si hay errores
 	 */
 	public Peliculas verificarCastings(String[] casting) {
@@ -257,7 +259,7 @@ public class Modelo {
 			//Dado que la info es correcta, se crean las categorias
 			if(bien==true) {
 				String director = casting[12];							//Nombre del director
-				Integer id = Integer.parseInt(casting[0]);				//identificación
+				Integer id = Integer.parseInt(casting[0]);				//identificaciï¿½n
 				//Se crea una pelicula con la informacion disponible
 				resp= new Peliculas(id, director, "", null,actores, null, null);
 			}
