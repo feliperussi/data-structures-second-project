@@ -11,6 +11,11 @@ public class Peliculas implements Comparable<Peliculas> {
 	private Double puntuacion;
 	private Integer id;
 	private String[] genero;
+	/**
+	 * Atributo que establece como comparar una pelicula
+	 * LISTA: 1 = por director, else (o 0) = por ID
+	 */
+	private int tipoComp = 0; 
 	
 	/**
 	 * Constructor de la clase Peliculas
@@ -59,10 +64,49 @@ public class Peliculas implements Comparable<Peliculas> {
 	public String[] darGenero() {
 		return genero;
 	}
+	
+	/**
+	 * Cambia el método de comparación a ID
+	 */
+	public void buscarPorID() {
+		tipoComp = 0;
+	}
+	
+	/**
+	 * Cambia el método de comparación a director
+	 */
+	public void buscarPorDirector() {
+		tipoComp = 1;
+	}
+	
 	/**
 	 * Requerimiento de Comparable de implementar metodo compareTo 
 	 */
 	public int compareTo(Peliculas pelicula) {
-	    return pelicula.darId().compareTo(this.id);
+		if (tipoComp == 1) {
+			return pelicula.darDirector().compareTo(this.director);
+		}
+		else {
+			return pelicula.darId().compareTo(this.id);
+		}
+	}
+	
+	/**
+	 * Retorna la informacion de la pelicula en formato String
+	 * @return String con los datos de la pelicula
+	 */
+	public String darInfo() {
+		String str = "Película: " + nombre + "- ID: " + id + ", \n Genero(s): ";
+		//Agrega los generos
+		for (String i : genero) {
+			str = str + i + ",";
+		}
+		//Agrega los actores
+		str = str + "\n Actores: ";
+		for (String i : actores) {
+			str = str + i + ",";
+		}
+		str = str + "\n ---------------------";
+		return str;
 	}
 }

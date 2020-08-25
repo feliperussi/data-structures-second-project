@@ -1,5 +1,6 @@
 package model.logic;
 
+
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
 
@@ -15,14 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Definicion del modelo del mundo
  *
  */
-public class Modelo {
+public class Modelo 
+{
 	/**
 	 * Atributos del modelo del mundo
 	 */
@@ -30,6 +31,7 @@ public class Modelo {
 	private static final String PELICULAS_CASTING = "/T1_202020/data/MoviesCastingRaw-small.csv";
 	private IArregloDinamico<Peliculas> datos;
 	private int tamanoAprox = 100;
+	private int umbral = 6;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
@@ -38,16 +40,16 @@ public class Modelo {
 	{
 		datos = new ArregloDinamico<Peliculas>(tamanoAprox);
 	}
-	
+
 	/**
 	 * Constructor del modelo del mundo con capacidad dada
 	 * @param tamano
 	 */
 	public Modelo(int capacidad)
 	{
-		datos = new ArregloDinamico<Peliculas>(capacidad);
+		datos = new ArregloDinamico(capacidad);
 	}
-	
+
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
 	 * @return numero de elementos presentes en el modelo
@@ -65,7 +67,7 @@ public class Modelo {
 	{	
 		datos.agregar(dato);
 	}
-	
+
 	/**
 	 * Requerimiento buscar dato
 	 * @param dato Dato a buscar
@@ -75,7 +77,7 @@ public class Modelo {
 	{
 		return datos.buscar(dato);
 	}
-	
+
 	/**
 	 * Requerimiento eliminar dato
 	 * @param dato Dato a eliminar
@@ -85,66 +87,10 @@ public class Modelo {
 	{
 		return datos.eliminar(dato);
 	}
-
-	/**
-	 * Metodo adicional de dar la lista de datos
-	 * @return lista de datos
-	 */
-	//TODO pensar como retornar esto
-	public String darDatos() {
-		String resp="->";
-		for (int i=0; i<darTamano(); i++) {
-			resp=resp + datos.darElemento(i) + "-";
-		}
-		return resp;
-	}
 	
-	/**
-	 * Agregar datos de archivo csv
-	 */
-	public void agregarDatosCsv() throws IOException{
-	try {
-		//Prueba la lectura de los archivos
-		Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
-		Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_CASTING));
-        CSVReader csvReaderD = new CSVReader(readerDetalles);
-		CSVReader csvReaderC = new CSVReader(readerCasting);
-        // Lee todos los datos y los agrega a una List<String[]>
-        List<String[]> detalles = csvReaderD.readAll();
-        List<String[]> castings = csvReaderC.readAll();
-        //Combina las peliculas con informacion completa y correcta
-        	for (String[] detalle : detalles) {
-        		boolean encontro = false;
-        		Peliculas infoD = verificarDetalles(detalle);
-        		Iterator<String[]> iterator = castings.iterator();
-        		while(iterator.hasNext() && encontro==false && infoD!= null) {
-        			String[] temp = iterator.next();
-        			Peliculas infoC = verificarCastings(temp);
-        			if (infoC!=null) {
-        				if(infoD.compareTo(infoC)==0) {
-        					//Asigna la informacion verificada
-        					String nombre = infoD.darNombre();
-        					String director = infoC.darDirector();
-        					Double puntuacion = infoD.darPuntuacion();
-        					Integer id = infoD.darId();
-            				Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, null, null, null);
-            				datos.agregar(pelicula);
-            				encontro=true;
-            			}
-        			}
-        		}
-			}
-			csvReaderC.close();
-			csvReaderD.close();
-        }
-        catch (CsvException e) {
-        	System.out.println("Fallo en leer algun CSV");
-    		System.out.println(e.getStackTrace());
-		}
-	}
 	
 	/**---------------------------------------------------------------------
-	 * OPCION 2
+	 * OPCION 2 (Corregido)
 	 * Agregar datos optimizado
 	 */
 	public void agregarDatosCsvOpt() throws IOException{
@@ -200,8 +146,8 @@ public class Modelo {
 	
 	
 	/**
-	 * Verificar que la informaciï¿½n tiene el formato correcto
-	 * @return retorna la informaciï¿½n en el formato correcto
+	 * Verificar que la información tiene el formato correcto
+	 * @return retorna la información en el formato correcto
 	 * null si hay errores
 	 */
 	public Peliculas verificarDetalles(String[] detalle) {
@@ -210,19 +156,21 @@ public class Modelo {
 			if(detalle[16].compareTo("")!=0 && detalle[16]!=null) {
 				//Cosas a verificar:
 				String nombre = detalle[16];							//Nombre de la pelicula
-				Integer id = Integer.parseInt(detalle[0]);				//identificaciï¿½n
-				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuaciï¿½n
+				Integer id = Integer.parseInt(detalle[0]);				//identificación
+				Double puntuacion=Double.parseDouble(detalle[17]);		//Puntuación
 			
-				//Se confirma la fecha de estreno estï¿½ en el formato requerido
+				//Se confirma la fecha de estreno esté en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
 				Date date = formato.parse(fecha);
 			
-				//Se confirman el genero(s) de la pelï¿½cula
+				//Se confirman el genero(s) de la película
 				if(detalle[2].compareTo("")!=0 && detalle[2]!=null) {
 					String[] generos =detalle[2].split("|");
 					//Se crea una pelicula con la informacion disponible
 					resp= new Peliculas(id, "", nombre, puntuacion, null, date, generos);
+					//Se establece la comparación por ID
+					resp.buscarPorID();
 				}
 			}
 			return resp;
@@ -234,8 +182,8 @@ public class Modelo {
 	}
 	
 	/**
-	 * Verificar que la informaciï¿½n tiene el formato correcto
-	 * @return retorna la informaciï¿½n disponible en el formato correcto
+	 * Verificar que la información tiene el formato correcto
+	 * @return retorna la información disponible en el formato correcto
 	 * null si hay errores
 	 */
 	public Peliculas verificarCastings(String[] casting) {
@@ -259,9 +207,11 @@ public class Modelo {
 			//Dado que la info es correcta, se crean las categorias
 			if(bien==true) {
 				String director = casting[12];							//Nombre del director
-				Integer id = Integer.parseInt(casting[0]);				//identificaciï¿½n
+				Integer id = Integer.parseInt(casting[0]);				//identificación
 				//Se crea una pelicula con la informacion disponible
 				resp= new Peliculas(id, director, "", null,actores, null, null);
+				//Se establece la comparación por ID
+				resp.buscarPorID();
 			}
 			return resp;
 		}
@@ -269,5 +219,15 @@ public class Modelo {
 			System.out.println("Algun campo no tiene el formato esperado");
 			return null;
 		}
+	}
+	
+	/**
+	 * Metodo para dar la lista de las peliculas buenas de un director
+	 * @param entra como String el nombre del director
+	 * @return String[] lista de peliculas con puntuacion >= umbral; null si no se encuentra el director
+	 */
+	public String[] buenasPeliculas(String director) {
+		String[] resp = null;
+		return resp;
 	}
 }
