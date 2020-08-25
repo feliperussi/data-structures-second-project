@@ -41,8 +41,8 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 			tamanoMax = 2 * tamanoMax;
 			T[] copia = elementos;
 			@SuppressWarnings("unchecked")
-		    T[] temp  = (T[]) new Comparable[tamanoMax];
-	    	elementos=temp;
+			T[] temp  = (T[]) new Comparable[tamanoMax];
+			elementos=temp;
 			for (int i = 0; i < tamanoAct; i++) {
 				elementos[i] = copia[i];
 			}
@@ -60,24 +60,32 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return tamanoAct;
 	}
 
-	public T darElemento(int i) {
+	public T darElemento(int i) 
+	{
 		// Implementar
-		if (i < tamanoAct) {
+		if (i < tamanoAct) 
+		{
 			return elementos[i];
-		} else {
+		} 
+		else 
+		{
 			// System.out.println("No hay un elemento en la posicion: "+ i);
 			return null;
 		}
 	}
 
-	public T buscar(T dato) {
+	public T buscar(T dato) 
+	{
 		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
 		// definido en Strings.
+		
 		boolean termino = false;
 		int i = 0;
 		T resp = null;
-		while (termino == false) {
+		
+		while (termino == false) 
+		{
 			// Revisa que aun estoy en el arreglo y no he encontrado el dato
 			if (i < tamanoAct) {
 				int prueba = dato.compareTo(elementos[i]);
@@ -94,7 +102,8 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return resp;
 	}
 
-	public T eliminar(T dato) {
+	public T eliminar(T dato) 
+	{
 		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
 		// definido en Strings.
@@ -137,5 +146,82 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		}
 		return resp;
 	}
+
+
+	@Override
+	public void addFirst(T element) 
+	{
+		for (T t : elementos) 
+		{
+
+		}
+	}
+
+	@Override
+	public T removeFirst() 
+	{
+		T eliminado = eliminar(elementos[0]);
+		return eliminado;
+	}
+
+	@Override
+	public T removeLast() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public T firstElement() 
+	{	
+		return elementos[0];
+	}
+
+	@Override
+	public T lastElement() 
+	{	
+		return elementos[tamanoAct-1];
+	}
+
+	@Override
+	public boolean isEmpty() 
+	{
+		if(elementos[0] == null)
+			return true;
+
+		return false;
+	}
+
+	@Override
+	public int isPresent(T element) 
+	{
+		int i = 0;
+		int resp = -1;
+
+		while(i < elementos.length)
+		{
+			if(elementos[i].compareTo(element) == 0)
+			{
+				resp = i;
+				break;
+			}
+		}
+		return resp;
+	}
+
+	@Override
+	public void exchange(int pos1, int pos2) 
+	{
+		T temp1 = elementos[pos1-1];	
+		elementos[pos1-1] = elementos[pos2-1];
+		elementos[pos2-1] = temp1;
+	}
+
+	@Override
+	public void changeInfo(int pos, T elem) 
+	{
+		elementos[pos-1] = elem;
+	}
+
 
 }

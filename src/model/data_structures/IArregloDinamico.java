@@ -23,18 +23,28 @@ public interface IArregloDinamico <T extends Comparable<T>>{
 	T darElemento( int i );
 
 	/**
+	 * Agrega un elemento al principio del arreglo.
+	 * Corre todos los elementos a la derecha.
+	 * @param dato nuevo.
+	 */
+	public void addFirst(T element);
+		
+	/**
 	 * Agregar un dato de forma compacta (en la primera casilla disponible) 
 	 * Caso Especial: Si el arreglo esta lleno debe aumentarse su capacidad, agregar el nuevo dato y deben quedar multiples casillas disponibles para futuros nuevos datos.
 	 * @param dato nuevo elemento
 	 */
 	public void agregar( T dato );
-		
+	
 	/**
-	 * Buscar un dato en el arreglo.
-	 * @param dato Objeto de busqueda en el arreglo
-	 * @return elemento encontrado en el arreglo (si existe). null si no se encontro el dato.
+	 * Elimina el primer elemento. Se retorna el elemento eliminado.
 	 */
-	T buscar(T dato);
+	public T removeFirst();
+	
+	/**
+	 * Elimina el último elemento. Se retorna el elemento eliminado.
+	 */
+	public T removeLast();
 	
 	/**
 	 * Eliminar un dato del arreglo.
@@ -42,6 +52,50 @@ public interface IArregloDinamico <T extends Comparable<T>>{
 	 * @param dato Objeto de eliminacion en el arreglo
 	 * @return dato eliminado
 	 */
-	T eliminar( T dato );
+	public T eliminar( T dato );
+	
+	/**
+	 * Retorna el primer elemento.
+	 */
+	public T firstElement( );
+	
+	/**
+	 * Retorna el último elemento.
+	 */
+	public T lastElement( );
+	
+	/**
+	 * Buscar un dato en el arreglo.
+	 * @param dato Objeto de busqueda en el arreglo
+	 * @return elemento encontrado en el arreglo (si existe). null si no se encontro el dato.
+	 */
+	public T buscar(T dato);
+	
+	/**
+	 * Retorna true si el arreglo No tiene datos. false en caso contrario.
+	 * @return true || false;
+	 */
+	public boolean isEmpty();
+	
+	/**
+	 * Retorna la posición válida de un elemento. La búsqueda debe usar el método compareTo( … ) definido en el tipo T.
+	 * Si no se encuentra el elemento, el valor retornado es -1.
+	 * @param element a buscar
+	 * @return El índice del elemento || -1 si no se halló
+	 */
+	public int isPresent(T element);
+	
+	/**
+	 * Intercambia la información de los elementos en dos posiciones válidas
+	 * @param pos1 
+	 * @param pos2
+	 */
+	public void exchange (int pos1, int pos2);
+
+	/**
+	 * Actualiza el elemento en una posición válida
+	 */
+	public void changeInfo (int pos, T elem);
+	
 
 }
