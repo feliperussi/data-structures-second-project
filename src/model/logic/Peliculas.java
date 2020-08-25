@@ -1,5 +1,7 @@
 package model.logic;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Peliculas implements Comparable<Peliculas> {
@@ -76,7 +78,10 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @return String con los datos de la pelicula
 	 */
 	public String darInfo() {
-		String str = "Pel�cula: " + nombre + "- ID: " + id + ", \n Genero(s): ";
+		//Convierte la fecha al formato correcto
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");  
+		String strFecha = formato.format(fecha);  
+		String str = "Pelicula: " + nombre + "- ID: " + id + "- Fecha: " + strFecha + ", \n Genero(s): ";
 		// Agrega los generos
 		for (String i : genero) {
 			str = str + i + ",";
