@@ -18,7 +18,7 @@ public class TestModelo {
 
 	public void setUp2() {
 		for(int i =0; i< CAPACIDAD;i++){
-			modelo.agregar(""+i);
+			modelo.agregar(i);
 		}
 	}
 
@@ -32,18 +32,17 @@ public class TestModelo {
 	public void testDarTamano() {
 		// Completar la prueba
 		assertTrue(modelo!=null);
-		assertEquals(0, modelo.darTamano());  // El modelo deberia tener 0 elementos
-		setUp2();		
+		assertEquals(0, modelo.darTamano());  // El modelo deberia tener 100 elementos
+		setUp2();
 		assertEquals(CAPACIDAD, modelo.darTamano());  // El modelo deberia tener 100 elementos
 	}
 
 	@Test
 	public void testAgregar() {
-		// Completar la prueba
-		String prueba= "prueba";
+		Integer prueba= 1;
 		assertTrue(modelo!=null);
 		modelo.agregar(prueba);
-		assertEquals(1, modelo.darTamano());		    // El modelo deberia tener 1 elemento
+		assertEquals(1, modelo.darTamano());  			// El modelo deberia tener 1 elemento
 		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
 	}
 
@@ -51,8 +50,8 @@ public class TestModelo {
 	public void testBuscar() {
 		setUp2();
 		// Completar la prueba
-		String prueba= " "+1;
-		String noPrueba= "No prueba";
+		Integer prueba= 1;
+		Integer noPrueba= CAPACIDAD++;
 		assertTrue(modelo!=null);
 		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
 		assertNull(modelo.buscar(noPrueba));            // El modelo no deberia encontrar el dato
@@ -62,7 +61,7 @@ public class TestModelo {
 	public void testEliminar() {
 		setUp2();
 		// Completar la prueba
-		String prueba= " "+1;
+		Integer prueba= 1;
 		assertTrue(modelo!=null);
 		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
 		modelo.eliminar(prueba);

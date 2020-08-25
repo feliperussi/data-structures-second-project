@@ -16,6 +16,13 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+#CSVs
+data/*
+
+#VSCode
+*.vscode
+lib/*
+
 !data/.gitignore
 lib/
 .vscode/
