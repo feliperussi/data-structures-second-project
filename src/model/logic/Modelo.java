@@ -27,8 +27,8 @@ public class Modelo
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private static final String PELICULAS_DETALLES = "/T1_202020/data/SmallMoviesDetailsCleaned.csv";
-	private static final String PELICULAS_CASTING = "/T1_202020/data/MoviesCastingRaw-small.csv";
+	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
+	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
 	private IArregloDinamico<Peliculas> datos;
 	private int tamanoAprox = 100;
 	
