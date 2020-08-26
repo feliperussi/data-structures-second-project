@@ -249,7 +249,7 @@ public class Modelo {
 		{
 			resp = new String[peliculasDirector.darTamano()];
 
-			for (int i = 0; i < peliculasDirector.darTamano(); i++) 
+			for (int i = 1; i < peliculasDirector.darTamano(); i++) 
 			{
 				resp[i] = peliculasDirector.darElemento(i).darInfo();
 			}
