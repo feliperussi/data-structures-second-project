@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import model.logic.Peliculas;
-
 /** Encabezado de definiciï¿½n generico para la interface IArregloDinamico */
 public interface IArregloDinamico<T extends Comparable<T>> {
 
@@ -104,7 +102,7 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	public void changeInfo (int pos, T elem);
 	
 	/**
-	 * Expande el arreglo dinámico.
+	 * Expande el arreglo dinï¿½mico.
 	 */
 	public void expandArray();
 
