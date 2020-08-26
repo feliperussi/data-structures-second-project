@@ -24,7 +24,8 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @param act       lista con los actores de la pel�cula
 	 * @param rdate     fecha de estreno de la pelicula
 	 */
-	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen) {
+	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen) 
+	{
 		director = dir;
 		id = pID;
 		nombre = nom;
@@ -77,20 +78,25 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * 
 	 * @return String con los datos de la pelicula
 	 */
-	public String darInfo() {
+	public String darInfo() 
+	{
 		// Convierte la fecha al formato correcto
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String strFecha = formato.format(fecha);
 		String str = "Pelicula: " + nombre + "\nFecha: " + strFecha + "\nID: " + id + "\nGenero(s): ";
 		// Agrega los generos
-		for (String i : genero) {
+		for (String i : genero) 
+		{
 			str = str + i + ",";
 		}
+		
 		str = str.substring(0, str.length() - 1);
 		// Agrega los actores
 		str = str + "\nActores: ";
-		for (String i : actores) {
-			if (i != null) {
+		for (String i : actores) 
+		{
+			if (i != null) 
+			{
 				str = str + i + ",";
 			}
 		}

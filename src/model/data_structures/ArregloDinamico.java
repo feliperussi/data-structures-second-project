@@ -36,16 +36,11 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		tamanoAct = 0;
 	}
 
-	public void agregar(T dato) {
-		if (tamanoAct == tamanoMax) { // caso de arreglo lleno (aumentar tamaNo)
-			tamanoMax = 2 * tamanoMax;
-			T[] copia = elementos;
-			@SuppressWarnings("unchecked")
-			T[] temp  = (T[]) new Comparable[tamanoMax];
-			elementos=temp;
-			for (int i = 0; i < tamanoAct; i++) {
-				elementos[i] = copia[i];
-			}
+	public void agregar(T dato) 
+	{
+		if (tamanoAct == tamanoMax) 
+		{ // caso de arreglo lleno (aumentar tamaNo)
+			expandArray();
 			System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
 		}
 		elementos[tamanoAct] = dato;
@@ -56,13 +51,16 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return tamanoMax;
 	}
 
-	public int darTamano() {
+	public int darTamano() 
+	{
 		return tamanoAct;
 	}
 
 	public T darElemento(int i) 
 	{
 		// Implementar
+		i = i-1;
+		
 		if (i < tamanoAct) 
 		{
 			return elementos[i];
@@ -79,22 +77,25 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
 		// definido en Strings.
-		
+
 		boolean termino = false;
 		int i = 0;
 		T resp = null;
-		
+
 		while (termino == false) 
 		{
 			// Revisa que aun estoy en el arreglo y no he encontrado el dato
-			if (i < tamanoAct) {
+			if (i < tamanoAct) 
+			{
 				int prueba = dato.compareTo(elementos[i]);
 				if (prueba == 0) {
 					resp = elementos[i];
 					termino = true;
 				}
 				i++;
-			} else {
+			} 
+			else 
+			{
 				termino = true;
 				// System.out.println("El dato no se encuentra en el arreglo");
 			}
@@ -102,7 +103,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return resp;
 	}
 
-	public T eliminar(T dato) 
+	public T eliminarPorTipo(T dato) 
 	{
 		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
@@ -110,31 +111,44 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		boolean termino = false;
 		int i = 0;
 		T resp = null;
-		while (termino == false) {
+
+		while (termino == false) 
+		{
 			// Busco el dato y su posicion
-			if (i < tamanoAct) {
+			if (i < tamanoAct) 
+			{
 				int prueba = dato.compareTo(elementos[i]);
 				if (prueba == 0) {
 					resp = elementos[i];
 					// Modifica el arreglo para que sea compacto
 					T[] copia = elementos;
-					for (int k = 0; k < tamanoAct; k++) {
+
+					for (int k = 0; k < tamanoAct; k++) 
+					{
 						System.out.println(copia[k]);
 					}
+
 					@SuppressWarnings("unchecked")
 					T[] temp = (T[]) new Comparable[tamanoMax];
 					elementos = temp;
-					for (int j = 0; j < tamanoAct; j++) { // Elementos antes quedan igual
-						if (j < i) {
+
+					for (int j = 0; j < tamanoAct; j++) 
+					{ // Elementos antes quedan igual
+						if (j < i) 
+						{
 							elementos[j] = copia[j];
 						}
-						if (j > i) {
+						if (j > i) 
+						{
 							elementos[j - 1] = copia[j];
 						}
 					}
-					for (int k = 0; k < tamanoAct; k++) {
+
+					for (int k = 0; k < tamanoAct; k++) 
+					{
 						System.out.println(elementos[k]);
 					}
+
 					tamanoAct--;
 					termino = true;
 				}
@@ -151,25 +165,34 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	@Override
 	public void addFirst(T element) 
 	{
-		for (T t : elementos) 
+		if (tamanoAct == elementos.length)
 		{
-
+			expandArray();
 		}
+		
+		for (int i = tamanoAct; i > 0; i--)
+		{
+			elementos[i] = elementos[i-1];
+		}
+		
+		elementos[0] = element;
+		tamanoAct++;
 	}
 
 	@Override
 	public T removeFirst() 
 	{
-		T eliminado = eliminar(elementos[0]);
+		T eliminado = eliminarPorIndice(1);
 		return eliminado;
 	}
 
 	@Override
 	public T removeLast() 
 	{
-
-		return null;
+		T item = elementos[tamanoAct-1];
+		eliminarPorIndice(tamanoAct-1);
 		
+		return item;
 	}
 
 	@Override
@@ -206,15 +229,17 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 				resp = i;
 				break;
 			}
+			i++;
 		}
-		return resp;
+		return resp+1;
 	}
 
 	@Override
 	public void exchange(int pos1, int pos2) 
 	{
-		T temp1 = elementos[pos1-1];	
-		elementos[pos1-1] = elementos[pos2-1];
+		T temp1 = elementos[pos1-1];
+		T temp2 = elementos[pos2-1];
+		elementos[pos1-1] = temp2;
 		elementos[pos2-1] = temp1;
 	}
 
@@ -222,6 +247,50 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	public void changeInfo(int pos, T elem) 
 	{
 		elementos[pos-1] = elem;
+	}
+
+	@Override
+	public T eliminarPorIndice(int index)
+	{
+		index = index - 1;
+		T resp = null;
+
+		if (index == tamanoAct) 
+		{
+			resp = elementos[index];
+			elementos[index] = null;
+		}
+
+		else if(!(index < 0 || index > tamanoAct))
+		{
+			resp = elementos[index];
+
+			for (int i = index; i < tamanoAct-1; i++) 
+			{
+				
+				elementos[i] = elementos[i+1];
+			}
+			elementos[tamanoAct-1] = null;
+		}
+
+		tamanoAct--;
+		return resp;
+	}
+
+	@Override
+	public void expandArray() 
+	{
+		tamanoMax = 2 * tamanoMax;
+		T[] copia = elementos;
+		
+		@SuppressWarnings("unchecked")
+		T[] temp  = (T[]) new Comparable[tamanoMax];		
+		elementos = temp;
+
+		for (int i = 0; i < tamanoAct; i++) 
+		{
+			elementos[i] = copia[i];
+		}
 	}
 
 

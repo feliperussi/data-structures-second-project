@@ -1,72 +1,87 @@
 package test.logic;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import model.logic.Modelo;
+import model.logic.Peliculas;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class TestModelo {
-	
+
 	private Modelo modelo;
-	private static int CAPACIDAD=100;
-	
+	private static int CAPACIDAD = 100;
+
 	@Before
-	public void setUp1() {
+	public void setUp1() throws IOException 
+	{
 		modelo= new Modelo(CAPACIDAD);
+		modelo.agregarDatosCsvOpt();
+
+		System.out.println("Numero de peliculas cargadas: " + modelo.darTamano());
 	}
 
-	public void setUp2() {
-		for(int i =0; i< CAPACIDAD;i++){
-			modelo.agregar(i);
-		}
+
+	@Test
+	public void testModelo() throws IOException 
+	{
+		assertTrue(modelo != null);
+		assertEquals(1988, modelo.darTamano());  // Modelo con 0 elementos presentes.
 	}
 
 	@Test
-	public void testModelo() {
+	public void testDarTamano() throws IOException 
+	{
+		setUp1();
 		assertTrue(modelo!=null);
-		assertEquals(0, modelo.darTamano());  // Modelo con 0 elementos presentes.
+		assertEquals(1988, modelo.darTamano());	
 	}
 
 	@Test
-	public void testDarTamano() {
-		// Completar la prueba
-		assertTrue(modelo!=null);
-		assertEquals(0, modelo.darTamano());  // El modelo deberia tener 100 elementos
-		setUp2();
-		assertEquals(CAPACIDAD, modelo.darTamano());  // El modelo deberia tener 100 elementos
+	public void testAgregar() throws IOException 
+	{
+		setUp1();
+		Peliculas prueba = modelo.darDatos().firstElement();
+		Peliculas eliminada = modelo.darDatos().eliminarPorIndice(1);
+		assertEquals("Error", prueba.darNombre(), eliminada.darNombre());	
+		
+		modelo.darDatos().addFirst(eliminada);
+		assertEquals("Error agregando.", modelo.darDatos().firstElement().darNombre(), eliminada.darNombre());	
+		
+		Peliculas prueba2 = modelo.darDatos().darElemento(5);
+		Peliculas eliminada2 = modelo.darDatos().eliminarPorIndice(5);
+		modelo.darDatos().agregar(prueba2);
+		
+		assertEquals("Error agregando.", modelo.darDatos().lastElement().darNombre(), eliminada2.darNombre());	
 	}
 
 	@Test
-	public void testAgregar() {
-		Integer prueba= 1;
-		assertTrue(modelo!=null);
-		modelo.agregar(prueba);
-		assertEquals(1, modelo.darTamano());  			// El modelo deberia tener 1 elemento
-		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
+	public void testBuscar() throws IOException 
+	{
+		setUp1();
+		Peliculas prueba = modelo.darDatos().eliminarPorIndice(20);
+		assertTrue("Resultado inesperado. ", !prueba.darNombre().equals(modelo.darDatos().darElemento(20).darNombre()));	
+		
+		assertTrue("Debería ser null", modelo.buscar(prueba) == null);
 	}
 
 	@Test
-	public void testBuscar() {
-		setUp2();
-		// Completar la prueba
-		Integer prueba= 1;
-		Integer noPrueba= CAPACIDAD++;
-		assertTrue(modelo!=null);
-		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
-		assertNull(modelo.buscar(noPrueba));            // El modelo no deberia encontrar el dato
+	public void testEliminar() throws IOException 
+	{
+		setUp1();
+		Peliculas prueba = modelo.darDatos().firstElement();
+		Peliculas eliminada = modelo.darDatos().eliminarPorIndice(1);
+		assertEquals("Error", prueba.darNombre(), eliminada.darNombre());	
 	}
 
-	@Test
-	public void testEliminar() {
-		setUp2();
-		// Completar la prueba
-		Integer prueba= 1;
-		assertTrue(modelo!=null);
-		assertEquals(prueba, modelo.buscar(prueba));    // El modelo deberia encontrar el dato
-		modelo.eliminar(prueba);
-		assertNull(modelo.buscar(prueba));        	    // El modelo no deberia encontrar el dato
-		assertEquals(CAPACIDAD--, modelo.darTamano());  // El modelo deberia tener 99 elementos
+	public void testBuenasPeliculas() 
+	{
+		//Holi jejejeje
 	}
-
+		
+	
 }
+

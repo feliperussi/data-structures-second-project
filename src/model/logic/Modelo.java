@@ -60,7 +60,8 @@ public class Modelo {
 	 * 
 	 * @param dato
 	 */
-	public void agregar(Peliculas dato) {
+	public void agregar(Peliculas dato) 
+	{
 		datos.agregar(dato);
 	}
 
@@ -80,15 +81,17 @@ public class Modelo {
 	 * @param dato Dato a eliminar
 	 * @return dato eliminado
 	 */
-	public Peliculas eliminar(Peliculas dato) {
-		return datos.eliminar(dato);
+	public Peliculas eliminar(Peliculas dato) 
+	{
+		return datos.eliminarPorTipo(dato);
 	}
 
 	/**
 	 * --------------------------------------------------------------------- OPCION
 	 * 2 (Corregido) Agregar datos optimizado
 	 */
-	public void agregarDatosCsvOpt() throws IOException {
+	public void agregarDatosCsvOpt() throws IOException 
+	{
 		try {
 			// Prueba la lectura de los archivos
 			Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
@@ -107,7 +110,7 @@ public class Modelo {
 			// Crea una lista Castings con los datos en formato correcto
 			IArregloDinamico<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
 			for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
-														// columna
+				// columna
 				if (verificarCastings(castings.get(i)) != null) {
 					castLimpio.agregar(verificarCastings(castings.get(i)));
 				}
@@ -212,8 +215,8 @@ public class Modelo {
 	}
 
 	public String darInfoExtremos() {
-		return "---------------------\nPrimera pelicula:\n" + datos.darElemento(0).darInfo() + "\nUltima pelicula:\n"
-				+ datos.darElemento(datos.darTamano() - 1).darInfo();
+		return "---------------------\nPrimera pelicula:\n" + datos.firstElement().darInfo() + "\nUltima pelicula:\n"
+				+ datos.lastElement().darInfo();
 	}
 
 	/**
@@ -223,26 +226,39 @@ public class Modelo {
 	 * @return String[] lista de peliculas con puntuacion >= umbral; null si no se
 	 *         encuentra el director
 	 */
-	public String[] buenasPeliculas(String director) {
+	public String[] buenasPeliculas(String director) 
+	{
 		String[] resp = null;
 		IArregloDinamico<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
-		for (int i = 0; i < datos.darTamano(); i++) {
+		
+		for (int i = 1; i < datos.darTamano(); i++) 
+		{
 			Peliculas temp = datos.darElemento(i);
 			// Compara si es el director correcto
-			if (temp.darDirector().compareTo(director) == 0) {
+			if (temp.darDirector().compareTo(director) == 0) 
+			{
 				// Compara si la pelicula es buena
-				if (temp.darPuntuacion() >= 6) {
+				if (temp.darPuntuacion() >= 6) 
+				{
 					peliculasDirector.agregar(temp);
 				}
 			}
 		}
 		// Da el formato de String[] con la informacion de la pelicula
-		if (peliculasDirector.darTamano() != 0) {
+		if (peliculasDirector.darTamano() != 0) 
+		{
 			resp = new String[peliculasDirector.darTamano()];
-			for (int i = 0; i < peliculasDirector.darTamano(); i++) {
+
+			for (int i = 0; i < peliculasDirector.darTamano(); i++) 
+			{
 				resp[i] = peliculasDirector.darElemento(i).darInfo();
 			}
 		}
 		return resp;
+	}
+	
+	public ArregloDinamico<Peliculas> darDatos()
+	{
+		return (ArregloDinamico<Peliculas>) datos;
 	}
 }

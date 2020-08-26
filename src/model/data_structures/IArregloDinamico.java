@@ -1,5 +1,7 @@
 package model.data_structures;
 
+import model.logic.Peliculas;
+
 /** Encabezado de definiciï¿½n generico para la interface IArregloDinamico */
 public interface IArregloDinamico<T extends Comparable<T>> {
 
@@ -56,7 +58,7 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 * @param dato Objeto de eliminacion en el arreglo
 	 * @return dato eliminado
 	 */
-	public T eliminar( T dato );
+	public T eliminarPorIndice( int index );
 	
 	/**
 	 * Retorna el primer elemento.
@@ -82,7 +84,7 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	public boolean isEmpty();
 	
 	/**
-	 * Retorna la posiciï¿½n vï¿½lida de un elemento. La bï¿½squeda debe usar el mï¿½todo compareTo( ï¿½ ) definido en el tipo T.
+	 * Retorna la posicion valida de un elemento. La bussqueda debe usar el metodo compareTo( ï¿½ ) definido en el tipo T.
 	 * Si no se encuentra el elemento, el valor retornado es -1.
 	 * @param element a buscar
 	 * @return El ï¿½ndice del elemento || -1 si no se hallï¿½
@@ -101,5 +103,10 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 */
 	public void changeInfo (int pos, T elem);
 	
+	/**
+	 * Expande el arreglo dinámico.
+	 */
+	public void expandArray();
 
+	public T eliminarPorTipo(T dato);
 }
