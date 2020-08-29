@@ -1,8 +1,7 @@
 package model.data_structures;
 
-/** Encabezado de definiciï¿½n generico para la interface IArregloDinamico */
-public interface IArregloDinamico<T extends Comparable<T>> {
-
+public interface Lista <T extends Comparable<T>> 
+{
 	/**
 	 * Retornar el numero de elementos maximo en el arreglo
 	 * 
@@ -15,7 +14,7 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 * 
 	 * @return
 	 */
-	int darTamano();
+	int size();
 
 	/**
 	 * Retornar el elemento en la posicion i
@@ -23,13 +22,21 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 * @param i posicion de consulta
 	 * @return elemento de consulta. null si no hay elemento en posicion.
 	 */
-	T darElemento(int i);
+	T get(int i);
 
+	/**
+	 * Agrega un elemento en la posición pos si la posición es una posición válida. Los elementos que estén a partir de la
+	 * posición dada deben correrse una posición a la derecha. Las posiciones válidas son posiciones donde ya hay un 
+	 * elemento en la lista. La posición del primer elemento es 1, la del segundo es 2 y así sucesivamente.
+	 */
+	public void insertElement(T element, int pos);	
+	
 	/**
 	 * Agrega un elemento al principio del arreglo.
 	 * Corre todos los elementos a la derecha.
 	 * @param dato nuevo.
 	 */
+
 	public void addFirst(T element);
 		
 	/**
@@ -37,26 +44,7 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 * Caso Especial: Si el arreglo esta lleno debe aumentarse su capacidad, agregar el nuevo dato y deben quedar multiples casillas disponibles para futuros nuevos datos.
 	 * @param dato nuevo elemento
 	 */
-	public void agregar( T dato );
-	
-	/**
-	 * Elimina el primer elemento. Se retorna el elemento eliminado.
-	 */
-	public T removeFirst();
-	
-	/**
-	 * Elimina el ï¿½ltimo elemento. Se retorna el elemento eliminado.
-	 */
-	public T removeLast();
-	
-	/**
-	 * Eliminar un dato del arreglo. Los datos restantes deben quedar "compactos"
-	 * desde la posicion 0.
-	 * 
-	 * @param dato Objeto de eliminacion en el arreglo
-	 * @return dato eliminado
-	 */
-	public T eliminarPorIndice( int index );
+	public void append( T dato );
 	
 	/**
 	 * Retorna el primer elemento.
@@ -85,26 +73,46 @@ public interface IArregloDinamico<T extends Comparable<T>> {
 	 * Retorna la posicion valida de un elemento. La bussqueda debe usar el metodo compareTo( ï¿½ ) definido en el tipo T.
 	 * Si no se encuentra el elemento, el valor retornado es -1.
 	 * @param element a buscar
-	 * @return El ï¿½ndice del elemento || -1 si no se hallï¿½
+	 * @return El índice del elemento || -1 si no se hallï¿½
 	 */
 	public int isPresent(T element);
 	
 	/**
-	 * Intercambia la informaciï¿½n de los elementos en dos posiciones vï¿½lidas
+	 * Intercambia la información de los elementos en dos posiciones vï¿½lidas
 	 * @param pos1 
 	 * @param pos2
 	 */
 	public void exchange (int pos1, int pos2);
 
 	/**
-	 * Actualiza el elemento en una posiciï¿½n vï¿½lida
+	 * .Actualiza el elemento en una posiciï¿½n vï¿½lida
 	 */
 	public void changeInfo (int pos, T elem);
 	
 	/**
-	 * Expande el arreglo dinï¿½mico.
+	 * Elimina según el tipo de objeto
+	 * @param dato
+	 * @return
 	 */
-	public void expandArray();
-
-	public T eliminarPorTipo(T dato);
+	public T removeByType(T dato);
+		
+	/**
+	 * Elimina el primer elemento. Se retorna el elemento eliminado.
+	 */
+	public T removeFirst();
+	
+	/**
+	 * Elimina el último elemento. Se retorna el elemento eliminado.
+	 */
+	public T removeLast();
+	
+	/**
+	 * Eliminar un dato del arreglo. Los datos restantes deben quedar "compactos"
+	 * desde la posicion 0.
+	 * 
+	 * @param dato Objeto de eliminacion en el arreglo
+	 * @return dato eliminado
+	 */
+	public T removeByIndex( int index );
+	
 }

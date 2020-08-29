@@ -8,7 +8,7 @@ package model.data_structures;
  *
  */
 /** Encabezado de definici�n generico para la clase ArregloDinamico */
-public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamico<T> {
+public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 	/**
 	 * Capacidad maxima del arreglo
 	 */
@@ -36,7 +36,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		tamanoAct = 0;
 	}
 
-	public void agregar(T dato) 
+	public void append(T dato) 
 	{
 		if (tamanoAct == tamanoMax) 
 		{ // caso de arreglo lleno (aumentar tamaNo)
@@ -51,12 +51,12 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return tamanoMax;
 	}
 
-	public int darTamano() 
+	public int size() 
 	{
 		return tamanoAct;
 	}
 
-	public T darElemento(int i) 
+	public T get(int i) 
 	{
 		// Implementar
 		i = i-1;
@@ -103,7 +103,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return resp;
 	}
 
-	public T eliminarPorTipo(T dato) 
+	public T removeByType(T dato) 
 	{
 		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
@@ -182,7 +182,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	@Override
 	public T removeFirst() 
 	{
-		T eliminado = eliminarPorIndice(1);
+		T eliminado = removeByIndex(1);
 		return eliminado;
 	}
 
@@ -190,7 +190,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	public T removeLast() 
 	{
 		T item = elementos[tamanoAct-1];
-		eliminarPorIndice(tamanoAct-1);
+		removeByIndex(tamanoAct-1);
 		
 		return item;
 	}
@@ -250,7 +250,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	}
 
 	@Override
-	public T eliminarPorIndice(int index)
+	public T removeByIndex(int index)
 	{
 		index = index - 1;
 		T resp = null;
@@ -277,7 +277,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		return resp;
 	}
 
-	@Override
+
 	public void expandArray() 
 	{
 		tamanoMax = 2 * tamanoMax;
@@ -291,6 +291,12 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 		{
 			elementos[i] = copia[i];
 		}
+	}
+
+	@Override
+	public void insertElement(T element, int pos) 
+	{
+		// TODO Auto-generated method stub	
 	}
 
 
