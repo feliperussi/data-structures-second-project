@@ -1,7 +1,7 @@
 package model.logic;
 
 import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+import model.data_structures.Lista;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -27,7 +27,7 @@ public class Modelo {
 	 */
 	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
 	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
-	private IArregloDinamico<Peliculas> datos;
+	private Lista<Peliculas> datos;
 	private int tamanoAprox = 100;
 
 	/**
@@ -108,7 +108,7 @@ public class Modelo {
 			csvReaderC.close();
 
 			// Crea una lista Castings con los datos en formato correcto
-			IArregloDinamico<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+			Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
 			for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
 				// columna
 				if (verificarCastings(castings.get(i)) != null) {
@@ -229,7 +229,7 @@ public class Modelo {
 	public String[] buenasPeliculas(String director) 
 	{
 		String[] resp = null;
-		IArregloDinamico<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
+		Lista<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
 		
 		for (int i = 1; i < datos.darTamano(); i++) 
 		{

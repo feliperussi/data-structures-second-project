@@ -1,7 +1,7 @@
 package model.data_structures;
 
 /** Encabezado de definici�n generico para la interface IArregloDinamico */
-public interface IArregloDinamico<T extends Comparable<T>> {
+public interface Lista<T extends Comparable<T>> {
 
 	/**
 	 * Retornar el numero de elementos maximo en el arreglo

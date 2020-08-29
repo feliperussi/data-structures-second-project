@@ -8,7 +8,7 @@ package model.data_structures;
  *
  */
 /** Encabezado de definici�n generico para la clase ArregloDinamico */
-public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamico<T> {
+public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 	/**
 	 * Capacidad maxima del arreglo
 	 */
