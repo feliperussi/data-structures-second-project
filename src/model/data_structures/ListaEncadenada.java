@@ -1,108 +1,410 @@
 package model.data_structures;
 
+import java.util.NoSuchElementException;
+
+
 public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 {
+    private static final long serialVersionUID = 6769829250639411880L;
 
-	@Override
-	public int darCapacidad() {
-		// TODO Auto-generated method stub
-		return 0;
+	/**
+	 * Primer nodo de la lista.
+	 */
+	private Node<T> list;
+
+	/**
+	 * Último nodo de la lista.
+	 */
+	private Node<T> last;
+	
+	/**
+	 * Tamaño de la lista.
+	 */
+	private int listSize;
+
+	public ListaEncadenada() 
+	{
+		list = null;
+		last = null;
 	}
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+	public ListaEncadenada(T item)
+	{
+		list = new Node<T> (item) ;
+		last = list;
+		listSize = 1;
 	}
 
-	@Override
-	public T get(int i) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Retorna la cantidad de nodos
+	 */
+	public int size() 
+	{
+		return listSize;
 	}
 
-	@Override
-	public void insertElement(T element, int pos) {
-		// TODO Auto-generated method stub
+	public Node<T> head()
+	{
+		return list;
+	}
+	
+	public Node<T> tail()
+	{
+		return last;
+	}
+	/**
+	 * Retorna el item del nodo según el índice. El primer node es el número 1.
+	 */
+	public T get(int index) 
+	{
+		index = index - 1;
+		T resp = null;
+
+		if(index == 0)
+			return list.getItem();
+
+		Node<T> tempNode = list;
+		
+		boolean stop = false;
+
+		for(int i = 1; i <= index && !stop; i++ )
+		{		
+			tempNode = tempNode.getNext();
+
+			if(tempNode != null)
+			{
+				if(i == index)
+				{		
+					resp = tempNode.getItem();
+				}
+				stop = true;
+			}	
+		}
+		return resp;
+	}
+
+	/**
+	 * Inserta un item en la lista en la posición dada. 
+	 */
+	public void insertElement(T element, int pos) 
+	{
+		if( list == null )
+			throw new NoSuchElementException();
+		
+		if(pos > size())
+			throw new NoSuchElementException();
+			
+		else if(pos == 1)
+		{
+			addFirst(element);
+		}
+		
+		else if(pos == size())
+		{
+			append(element);
+		}
+		
+		else
+		{
+			Node<T> newNode = new Node<T>(element);	
+			Node<T> tempNode = giveMeThatNode(pos);
+			Node<T> previousNode = giveMeThatNode(pos-1);
+						
+			newNode.setNextNode(tempNode);
+			previousNode.setNextNode(newNode);
+			listSize++;
+		}
+	}
+
+	/**
+	 * Agrega un item antes del primer elemento actual
+	 */
+	public void addFirst(T item) 
+	{
+		Node <T> newHead = new Node<> (item);
+		newHead.setNextNode(list);
+		list = newHead;
+		listSize++;
+	}
+
+	/**
+	 * Agrega un item al último elemento de la lista
+	 */
+	public void append(T item) 
+	{
+		Node <T> newNode = new Node<> (item);
+
+		if(list == null) 
+		{
+			list = newNode;
+			last = list;
+		}
+
+		else 
+		{
+			last.setNextNode(newNode);
+			last = last.getNext();
+		}
+		
+		listSize++;
+
+	}
+
+	/**
+	 * Retorna el primer elemento de la lista
+	 */
+	public T firstElement() 
+	{	
+		return list.getItem();
+	}
+
+	/**
+	 * Retorna el último elemento de la lista
+	 */
+	public T lastElement() 
+	{
+		return last.getItem();
+	}
+
+	/**
+	 * Busca un elemento de la lista según el tipo de dato.
+	 */
+	public Node<T> buscarDato(T dato) 
+	{
+		int c = 0;
+		
+		Node <T> nodeToSearch = new Node<> (dato);
+		Node <T> tempNode = list;
+		
+		while(c < size())
+		{
+			if(nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0)
+			{
+				nodeToSearch = tempNode;
+				break;
+			}
+			else if(tempNode.getNext() != null)
+			{
+				tempNode = tempNode.getNext();
+				c++;
+			}
+			else 
+			{
+				nodeToSearch = null;
+				break;
+			}
+				
+		}
+		return nodeToSearch;
+	}
+
+	/**
+	 * Retorna True si la lista está vacía. False si no lo está.
+	 */
+	public boolean isEmpty() 
+	{
+		if(size() == 0)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Retorna la posición del elemento por parámetro con respecto al primer elemento de la lista.
+	 * Retorna 0 si no lo encuentra.
+	 */
+	
+	public int isPresent(T element)
+	{
+		int c = 0;
+		int resp = 0;
+		Node <T> nodeToSearch = new Node<> (element);
+		Node <T> tempNode =  list;
+		
+		while(c < size())
+		{
+			if(nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0)
+			{
+				nodeToSearch = tempNode;
+				resp = c+1;
+				break;
+			}
+			else if(tempNode.getNext() != null)
+			{
+				c++;
+				tempNode = tempNode.getNext();	
+			}	
+		}
+		return resp;
+	}
+
+	/**
+	 * Intercambia la posición de dos elementos de la lista.
+	 */
+	public void exchange(int pos1, int pos2)
+	{
+		Node <T> node1 = giveMeThatNode(pos1);
+		Node <T> node2 = giveMeThatNode(pos2);
+		
+		if(node1.getItem() != null && node2.getItem() != null)
+		{		
+			T item1 = node1.getItem();
+			node1.setItem(node2.getItem());
+			node2.setItem(item1);
+		}
+		else
+			throw new NoSuchElementException();
 		
 	}
 
-	@Override
-	public void addFirst(T element) {
-		// TODO Auto-generated method stub
+	/**
+	 * Cambia la información del elemento en la posición dada por parámetro
+	 */
+	public void changeInfo(int pos, T elem) 
+	{
+		Node <T> node1 = giveMeThatNode(pos);
+		node1.setItem(elem);
+	}
+
+	/**
+	 * Elimina el item dado por parámetro.
+	 */
+	public T removeByType(T dato) 
+	{
+		T resp = dato;
+		Node<T> newNode = new Node(dato);
 		
-	}
-
-	@Override
-	public void append(T dato) {
-		// TODO Auto-generated method stub
+		if(list.getItem().compareTo(dato) == 0)
+		{
+			list = newNode; 
+		}
 		
-	}
-
-	@Override
-	public T firstElement() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T lastElement() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T buscar(T dato) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int isPresent(T element) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void exchange(int pos1, int pos2) {
-		// TODO Auto-generated method stub
+		else if(last.getItem().compareTo(dato) == 0)
+		{
+			last = newNode;
+		}
 		
+		else
+		{
+			Node<T> find = buscarDato(dato);
+			resp = find.getItem();
+			
+			if(resp == null)
+			{
+				throw new NoSuchElementException();
+			}
+			else
+			{
+				int index = isPresent(dato)-1;	
+				giveMeThatNode(index).setNextNode(find.getNext());
+				
+			}		
+		}
+		listSize--;
+			return resp;		
 	}
 
-	@Override
-	public void changeInfo(int pos, T elem) {
-		// TODO Auto-generated method stub
+	/**
+	 * Elmina el primer elemento de la lista.
+	 */
+	public T removeFirst() 
+	{
+		T resp = firstElement();
 		
+		if(resp != null)
+		{
+			list = list.getNext();
+			listSize--;
+		}
+		
+		return resp;
 	}
 
-	@Override
-	public T removeByType(T dato) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Elimina el último elemento de la lista.
+	 */
+	public T removeLast() 
+	{
+		T resp = lastElement();
+		if(resp != null)
+		{
+			last = giveMeThatNode(size()-1);
+			listSize--;
+		}
+		return resp;
 	}
 
-	@Override
-	public T removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * Elimina el nodo en la posición dada por parámetro.
+	 */
+	public T removeByIndex(int index) 
+	{
+		T resp = null;
 
-	@Override
-	public T removeLast() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T removeByIndex(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if(index == 1)
+		{
+			resp = firstElement();
+			removeFirst();
+		}
+		
+		else if(index == size())
+		{
+			resp = lastElement();
+			removeLast();
+		}
+		
+		else
+		{
+			Node<T> find = giveMeThatNode(index);
+			resp = find.getItem();
+			
+			if(resp == null)
+			{
+				throw new NoSuchElementException();
+			}
+			else
+			{
+				int i = index-1;	
+				giveMeThatNode(i).setNextNode(find.getNext());
+				
+			}		
+		}
+		listSize--;
+			return resp;		
 	} 
 
+	/**
+	 * Retorna el nodo según el índice.
+	 * @param index
+	 * @return
+	 */
+	public Node<T> giveMeThatNode(int index)
+	{
+		index = index - 1;
+		Node<T> resp = null;
+
+		if(index+1 == size())
+		{
+			resp = last;
+		}
+		else if (index < size()) 
+        {
+            resp = list;
+            for (int i = 0; i < index; i++)
+            {
+                resp = resp.getNext();
+            }
+            return resp;
+        } 
+        
+
+        return resp;
+	}
+
+	@Override
+	public T buscar(T dato) 
+	{
+		T resp = buscarDato(dato).getItem();
+		return resp;
+	}
 }

@@ -2,12 +2,7 @@ package model.data_structures;
 
 public interface Lista <T extends Comparable<T>> 
 {
-	/**
-	 * Retornar el numero de elementos maximo en el arreglo
-	 * 
-	 * @return
-	 */
-	int darCapacidad();
+    static final long serialVersionUID = 6769829250639411880L;
 
 	/**
 	 * Retornar el numero de elementos presentes en el arreglo
@@ -28,8 +23,9 @@ public interface Lista <T extends Comparable<T>>
 	 * Agrega un elemento en la posición pos si la posición es una posición válida. Los elementos que estén a partir de la
 	 * posición dada deben correrse una posición a la derecha. Las posiciones válidas son posiciones donde ya hay un 
 	 * elemento en la lista. La posición del primer elemento es 1, la del segundo es 2 y así sucesivamente.
+	 * @throws Exception 
 	 */
-	public void insertElement(T element, int pos);	
+	public void insertElement(T element, int pos) throws Exception;	
 	
 	/**
 	 * Agrega un elemento al principio del arreglo.
@@ -74,15 +70,17 @@ public interface Lista <T extends Comparable<T>>
 	 * Si no se encuentra el elemento, el valor retornado es -1.
 	 * @param element a buscar
 	 * @return El índice del elemento || -1 si no se hallï¿½
+	 * @throws Exception 
 	 */
-	public int isPresent(T element);
+	public int isPresent(T element) throws Exception;
 	
 	/**
 	 * Intercambia la información de los elementos en dos posiciones vï¿½lidas
 	 * @param pos1 
 	 * @param pos2
+	 * @throws Exception 
 	 */
-	public void exchange (int pos1, int pos2);
+	public void exchange (int pos1, int pos2) throws Exception;
 
 	/**
 	 * .Actualiza el elemento en una posiciï¿½n vï¿½lida
