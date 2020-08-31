@@ -1,21 +1,15 @@
 package model.data_structures;
 
-/** Encabezado de definici�n generico para la interface IArregloDinamico */
-public interface Lista<T extends Comparable<T>> {
-
-	/**
-	 * Retornar el numero de elementos maximo en el arreglo
-	 * 
-	 * @return
-	 */
-	int darCapacidad();
+public interface Lista <T extends Comparable<T>> 
+{
+    static final long serialVersionUID = 6769829250639411880L;
 
 	/**
 	 * Retornar el numero de elementos presentes en el arreglo
 	 * 
 	 * @return
 	 */
-	int darTamano();
+	int size();
 
 	/**
 	 * Retornar el elemento en la posicion i
@@ -23,13 +17,22 @@ public interface Lista<T extends Comparable<T>> {
 	 * @param i posicion de consulta
 	 * @return elemento de consulta. null si no hay elemento en posicion.
 	 */
-	T darElemento(int i);
+	T get(int i);
 
+	/**
+	 * Agrega un elemento en la posici�n pos si la posici�n es una posici�n v�lida. Los elementos que est�n a partir de la
+	 * posici�n dada deben correrse una posici�n a la derecha. Las posiciones v�lidas son posiciones donde ya hay un 
+	 * elemento en la lista. La posici�n del primer elemento es 1, la del segundo es 2 y as� sucesivamente.
+	 * @throws Exception 
+	 */
+	public void insertElement(T element, int pos) throws Exception;	
+	
 	/**
 	 * Agrega un elemento al principio del arreglo.
 	 * Corre todos los elementos a la derecha.
 	 * @param dato nuevo.
 	 */
+
 	public void addFirst(T element);
 		
 	/**
@@ -37,26 +40,7 @@ public interface Lista<T extends Comparable<T>> {
 	 * Caso Especial: Si el arreglo esta lleno debe aumentarse su capacidad, agregar el nuevo dato y deben quedar multiples casillas disponibles para futuros nuevos datos.
 	 * @param dato nuevo elemento
 	 */
-	public void agregar( T dato );
-	
-	/**
-	 * Elimina el primer elemento. Se retorna el elemento eliminado.
-	 */
-	public T removeFirst();
-	
-	/**
-	 * Elimina el �ltimo elemento. Se retorna el elemento eliminado.
-	 */
-	public T removeLast();
-	
-	/**
-	 * Eliminar un dato del arreglo. Los datos restantes deben quedar "compactos"
-	 * desde la posicion 0.
-	 * 
-	 * @param dato Objeto de eliminacion en el arreglo
-	 * @return dato eliminado
-	 */
-	public T eliminarPorIndice( int index );
+	public void append( T dato );
 	
 	/**
 	 * Retorna el primer elemento.
@@ -86,25 +70,47 @@ public interface Lista<T extends Comparable<T>> {
 	 * Si no se encuentra el elemento, el valor retornado es -1.
 	 * @param element a buscar
 	 * @return El �ndice del elemento || -1 si no se hall�
+	 * @throws Exception 
 	 */
-	public int isPresent(T element);
+	public int isPresent(T element) throws Exception;
 	
 	/**
 	 * Intercambia la informaci�n de los elementos en dos posiciones v�lidas
 	 * @param pos1 
 	 * @param pos2
+	 * @throws Exception 
 	 */
-	public void exchange (int pos1, int pos2);
+	public void exchange (int pos1, int pos2) throws Exception;
 
 	/**
-	 * Actualiza el elemento en una posici�n v�lida
+	 * .Actualiza el elemento en una posici�n v�lida
 	 */
 	public void changeInfo (int pos, T elem);
 	
 	/**
-	 * Expande el arreglo din�mico.
+	 * Elimina seg�n el tipo de objeto
+	 * @param dato
+	 * @return
 	 */
-	public void expandArray();
-
-	public T eliminarPorTipo(T dato);
+	public T removeByType(T dato);
+		
+	/**
+	 * Elimina el primer elemento. Se retorna el elemento eliminado.
+	 */
+	public T removeFirst();
+	
+	/**
+	 * Elimina el �ltimo elemento. Se retorna el elemento eliminado.
+	 */
+	public T removeLast();
+	
+	/**
+	 * Eliminar un dato del arreglo. Los datos restantes deben quedar "compactos"
+	 * desde la posicion 0.
+	 * 
+	 * @param dato Objeto de eliminacion en el arreglo
+	 * @return dato eliminado
+	 */
+	public T removeByIndex( int index );
+	
 }

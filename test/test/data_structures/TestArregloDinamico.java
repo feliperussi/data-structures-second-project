@@ -25,7 +25,7 @@ public class TestArregloDinamico
 		
 		for (int i = 0; i < TAMANO; i++) 
 		{
-			arreglo.agregar(i);
+			arreglo.append(i);
 		}	
 	}
 
@@ -34,7 +34,7 @@ public class TestArregloDinamico
 		//Expandir arreglo
 		for (int i = TAMANO; i < TAMANO * 2; i++) 
 		{
-			arreglo.agregar(i);
+			arreglo.append(i);
 		}
 	}
 
@@ -44,11 +44,11 @@ public class TestArregloDinamico
 		// Completar la prueba
 		setUp1();
 		assertTrue(arreglo != null);
-		assertEquals(TAMANO, arreglo.darTamano()); // El arreglo tiene 0 elementos presentes.
+		assertEquals(TAMANO, arreglo.size()); // El arreglo tiene 0 elementos presentes.
 		assertEquals(TAMANO, arreglo.darCapacidad()); // La capacidad maxima del arreglo es 100
 		
 		setUp2();
-		assertEquals(TAMANO*2, arreglo.darTamano());
+		assertEquals(TAMANO*2, arreglo.size());
 		assertEquals(TAMANO*2, arreglo.darCapacidad());
 	}
 
@@ -58,17 +58,17 @@ public class TestArregloDinamico
 		setUp1();
 		// Completar la prueba
 		assertTrue("El arreglo es nulo", arreglo != null);
-		assertEquals("El tamaño es incorrecto.", arreglo.darTamano(), TAMANO); // El arreglo deberï¿½a tener 200 elementos presentes.
+		assertEquals("El tamaño es incorrecto.", arreglo.size(), TAMANO); // El arreglo deberï¿½a tener 200 elementos presentes.
 		assertEquals("La capacidad no es la adecuada", arreglo.darCapacidad(), TAMANO); // La capacidad maxima del arreglo se debiï¿½ dubplicar
 		// Encuentra un elemento agregado dentro del limite inicial de la capacidad
-		assertEquals("El elemento es inadecuado", arreglo.darElemento(1), 0);
-		assertEquals("El elemento es inadecuado", arreglo.darElemento(5), 4);
+		assertEquals("El elemento es inadecuado", arreglo.get(1), 0);
+		assertEquals("El elemento es inadecuado", arreglo.get(5), 4);
 		
 		setUp2();
 		assertTrue("El arreglo es nulo", arreglo != null);
-		assertEquals("El tamaño es incorrecto.", arreglo.darTamano(), TAMANO*2);
-		assertEquals("El elemento es inadecuado", arreglo.darElemento(120), 119);
-		assertEquals("El elemento es inadecuado", arreglo.darElemento(80), 79);
+		assertEquals("El tamaño es incorrecto.", arreglo.size(), TAMANO*2);
+		assertEquals("El elemento es inadecuado", arreglo.get(120), 119);
+		assertEquals("El elemento es inadecuado", arreglo.get(80), 79);
 		// Encuentra un elemento agregado despues de aumentar la capacidad
 	}
 	
@@ -80,13 +80,13 @@ public class TestArregloDinamico
 		assertTrue("El arreglo es nulo", arreglo != null);
 		arreglo.addFirst(element);
 		assertEquals("El primer elemento es inadecuado", arreglo.firstElement(), element);
-		assertEquals("El ultimo elemento es inadecuado", arreglo.darElemento(arreglo.darTamano()), TAMANO-1);
+		assertEquals("El ultimo elemento es inadecuado", arreglo.get(arreglo.size()), TAMANO-1);
 		
 		Integer element2 = 14856;
 		arreglo.addFirst(element2);
 		assertEquals("El primer elemento es inadecuado", arreglo.firstElement(), element2);
-		assertEquals("El segundo elemento es inadecuado", arreglo.darElemento(2), element);
-		assertEquals("El ultimo elemento es inadecuado", arreglo.darElemento(arreglo.darTamano()), TAMANO-1);
+		assertEquals("El segundo elemento es inadecuado", arreglo.get(2), element);
+		assertEquals("El ultimo elemento es inadecuado", arreglo.get(arreglo.size()), TAMANO-1);
 	}
 	
 	@Test
@@ -94,15 +94,15 @@ public class TestArregloDinamico
 	{
 		Integer element = 45;
 		setUp1();
-		arreglo.agregar(element);
+		arreglo.append(element);
 		assertEquals("El primer elemento es inadecuado", arreglo.firstElement(), 0);
-		assertEquals("El ultimo elemento es inadecuado", arreglo.darElemento(arreglo.darTamano()), element);
+		assertEquals("El ultimo elemento es inadecuado", arreglo.get(arreglo.size()), element);
 		
 		setUp2();
 		Integer element2 = 148;
-		arreglo.agregar(element2);
+		arreglo.append(element2);
 		assertEquals("El primer elemento es inadecuado", arreglo.firstElement(), 0);
-		assertEquals("El ultimo elemento es inadecuado", arreglo.darElemento(arreglo.darTamano()), element2);
+		assertEquals("El ultimo elemento es inadecuado", arreglo.get(arreglo.size()), element2);
 	
 	}
 	
@@ -111,11 +111,11 @@ public class TestArregloDinamico
 	{
 		Integer element = 148;
 		setUp1();
-		arreglo.agregar(element);
+		arreglo.append(element);
 		assertEquals("El elemento buscado es inadecuado", 148, arreglo.buscar(element));
 		
 		setUp2();
-		arreglo.agregar(element+254);
+		arreglo.append(element+254);
 		assertEquals("El elemento buscado es inadecuado", element+254, arreglo.buscar(element+254));
 	}
 	
@@ -125,25 +125,25 @@ public class TestArregloDinamico
 		
 		Integer element = 148;
 		setUp1();
-		arreglo.agregar(element);
-		Integer datoPrueba = (Integer) arreglo.darElemento(12);
-		arreglo.exchange(arreglo.darTamano(), 12);
+		arreglo.append(element);
+		Integer datoPrueba = (Integer) arreglo.get(12);
+		arreglo.exchange(arreglo.size(), 12);
 		
 		assertEquals("Datos mal intercambiados", datoPrueba, arreglo.lastElement());
-		assertEquals("Datos mal intercambiados", element, arreglo.darElemento(12)) ;
+		assertEquals("Datos mal intercambiados", element, arreglo.get(12)) ;
 		
 		setUp2();
 		Integer element2 = 145;
-		arreglo.agregar(element2);	
+		arreglo.append(element2);	
 		
 		int indexElement2 = arreglo.isPresent(element2);
 		int indexPrueba2 = 12;
 
-		Integer datoPrueba2 = (Integer) arreglo.darElemento(indexPrueba2);
+		Integer datoPrueba2 = (Integer) arreglo.get(indexPrueba2);
 		arreglo.exchange(indexPrueba2, indexElement2);
 		
-		assertEquals("Datos mal intercambiados", datoPrueba2, arreglo.darElemento(indexElement2));
-		assertEquals("Datos mal intercambiados", element2, arreglo.darElemento(indexPrueba2));
+		assertEquals("Datos mal intercambiados", datoPrueba2, arreglo.get(indexElement2));
+		assertEquals("Datos mal intercambiados", element2, arreglo.get(indexPrueba2));
 	}
 	
 	@Test
@@ -152,7 +152,7 @@ public class TestArregloDinamico
 		setUp1();
 		Integer dato = 25;
 		int indexDato = arreglo.isPresent(dato);
-		Integer respuesta = (Integer) arreglo.eliminarPorTipo(dato);
+		Integer respuesta = (Integer) arreglo.removeByType(dato);
 		assertTrue("Eliminó mal", dato == respuesta);	
 	}
 	
@@ -162,7 +162,7 @@ public class TestArregloDinamico
 		setUp1();
 		Integer dato = 25;		
 		int indexDato = arreglo.isPresent(dato);
-		Integer respuesta = (Integer) arreglo.eliminarPorIndice(indexDato);
+		Integer respuesta = (Integer) arreglo.removeByIndex(indexDato);
 		assertTrue("Eliminó mal", dato == respuesta);	
 
 	}

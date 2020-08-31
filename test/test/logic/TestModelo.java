@@ -45,15 +45,15 @@ public class TestModelo {
 	{
 		setUp1();
 		Peliculas prueba = modelo.darDatos().firstElement();
-		Peliculas eliminada = modelo.darDatos().eliminarPorIndice(1);
+		Peliculas eliminada = modelo.darDatos().removeByIndex(1);
 		assertEquals("Error", prueba.darNombre(), eliminada.darNombre());	
 		
 		modelo.darDatos().addFirst(eliminada);
 		assertEquals("Error agregando.", modelo.darDatos().firstElement().darNombre(), eliminada.darNombre());	
 		
-		Peliculas prueba2 = modelo.darDatos().darElemento(5);
-		Peliculas eliminada2 = modelo.darDatos().eliminarPorIndice(5);
-		modelo.darDatos().agregar(prueba2);
+		Peliculas prueba2 = modelo.darDatos().get(5);
+		Peliculas eliminada2 = modelo.darDatos().removeByIndex(5);
+		modelo.darDatos().append(prueba2);
 		
 		assertEquals("Error agregando.", modelo.darDatos().lastElement().darNombre(), eliminada2.darNombre());	
 	}
@@ -62,8 +62,8 @@ public class TestModelo {
 	public void testBuscar() throws IOException 
 	{
 		setUp1();
-		Peliculas prueba = modelo.darDatos().eliminarPorIndice(20);
-		assertTrue("Resultado inesperado. ", !prueba.darNombre().equals(modelo.darDatos().darElemento(20).darNombre()));	
+		Peliculas prueba = modelo.darDatos().removeByIndex(20);
+		assertTrue("Resultado inesperado. ", !prueba.darNombre().equals(modelo.darDatos().get(20).darNombre()));	
 		
 		assertTrue("Debería ser null", modelo.buscar(prueba) == null);
 	}
@@ -73,7 +73,7 @@ public class TestModelo {
 	{
 		setUp1();
 		Peliculas prueba = modelo.darDatos().firstElement();
-		Peliculas eliminada = modelo.darDatos().eliminarPorIndice(1);
+		Peliculas eliminada = modelo.darDatos().removeByIndex(1);
 		assertEquals("Error", prueba.darNombre(), eliminada.darNombre());	
 	}
 

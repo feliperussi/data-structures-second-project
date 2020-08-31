@@ -33,7 +33,8 @@ public class Modelo {
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
-	public Modelo() {
+	public Modelo() 
+	{
 		datos = new ArregloDinamico<Peliculas>(tamanoAprox);
 	}
 
@@ -42,7 +43,8 @@ public class Modelo {
 	 * 
 	 * @param tamano
 	 */
-	public Modelo(int capacidad) {
+	public Modelo(int capacidad) 
+	{
 		datos = new ArregloDinamico<Peliculas>(capacidad);
 	}
 
@@ -51,8 +53,9 @@ public class Modelo {
 	 * 
 	 * @return numero de elementos presentes en el modelo
 	 */
-	public int darTamano() {
-		return datos.darTamano();
+	public int darTamano() 
+	{
+		return datos.size();
 	}
 
 	/**
@@ -62,7 +65,7 @@ public class Modelo {
 	 */
 	public void agregar(Peliculas dato) 
 	{
-		datos.agregar(dato);
+		datos.append(dato);
 	}
 
 	/**
@@ -71,7 +74,8 @@ public class Modelo {
 	 * @param dato Dato a buscar
 	 * @return dato encontrado
 	 */
-	public Peliculas buscar(Peliculas dato) {
+	public Peliculas buscar(Peliculas dato) 
+	{
 		return datos.buscar(dato);
 	}
 
@@ -83,7 +87,7 @@ public class Modelo {
 	 */
 	public Peliculas eliminar(Peliculas dato) 
 	{
-		return datos.eliminarPorTipo(dato);
+		return datos.removeByType(dato);
 	}
 
 	/**
@@ -92,7 +96,8 @@ public class Modelo {
 	 */
 	public void agregarDatosCsvOpt() throws IOException 
 	{
-		try {
+		try 
+		{
 			// Prueba la lectura de los archivos
 			Reader readerDetalles = Files.newBufferedReader(Paths.get(PELICULAS_DETALLES));
 			Reader readerCasting = Files.newBufferedReader(Paths.get(PELICULAS_CASTING));
@@ -116,13 +121,16 @@ public class Modelo {
 				}
 			}
 			// Combina las peliculas con informacion completa y correcta
-			for (int i = 1; i < detalles.size(); i++) {
+			for (int i = 1; i < detalles.size(); i++) 
+			{
 				// Comprueba que la linea tenga informacion correcta
 				Peliculas infoD = verificarDetalles(detalles.get(i));
-				if (infoD != null) {
+				if (infoD != null) 
+				{
 					// Busca la pelicula con misma identificacion en el arreglo dinamico
 					Peliculas infoC = castLimpio.buscar(infoD);
-					if (infoC != null) {
+					if (infoC != null) 
+					{
 						// Asigna la informacion verificada
 						Integer id = infoC.darId();
 						String director = infoC.darDirector();
@@ -132,11 +140,13 @@ public class Modelo {
 						Date fecha = infoD.darFecha();
 						String[] genero = infoD.darGenero();
 						Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero);
-						datos.agregar(pelicula);
+						datos.append(pelicula);
 					}
 				}
 			}
-		} catch (CsvException e) {
+		} 
+		catch (CsvException e) 
+		{
 			System.out.println("Fallo en leer algun CSV");
 			System.out.println(e.getStackTrace());
 		}
@@ -176,9 +186,9 @@ public class Modelo {
 	}
 
 	/**
-	 * Verificar que la informaci�n tiene el formato correcto
+	 * Verificar que la informacion tiene el formato correcto
 	 * 
-	 * @return retorna la informaci�n disponible en el formato correcto null si hay
+	 * @return retorna la informacion disponible en el formato correcto null si hay
 	 *         errores
 	 */
 	public Peliculas verificarCastings(String[] casting) {
@@ -230,33 +240,33 @@ public class Modelo {
 	{
 		String[] resp = null;
 		Lista<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
-		
-		for (int i = 1; i < datos.darTamano(); i++) 
+
+		for (int i = 1; i < datos.size(); i++) 
 		{
-			Peliculas temp = datos.darElemento(i);
+			Peliculas temp = datos.get(i);
 			// Compara si es el director correcto
 			if (temp.darDirector().compareTo(director) == 0) 
 			{
 				// Compara si la pelicula es buena
 				if (temp.darPuntuacion() >= 6) 
 				{
-					peliculasDirector.agregar(temp);
+					peliculasDirector.append(temp);
 				}
 			}
 		}
 		// Da el formato de String[] con la informacion de la pelicula
-		if (peliculasDirector.darTamano() != 0) 
+		if (peliculasDirector.size() != 0) 
 		{
-			resp = new String[peliculasDirector.darTamano()];
+			resp = new String[peliculasDirector.size()];
 
-			for (int i = 1; i < peliculasDirector.darTamano(); i++) 
+			for (int i = 1; i < peliculasDirector.size(); i++) 
 			{
-				resp[i] = peliculasDirector.darElemento(i).darInfo();
+				resp[i] = peliculasDirector.get(i).darInfo();
 			}
 		}
 		return resp;
 	}
-	
+
 	public ArregloDinamico<Peliculas> darDatos()
 	{
 		return (ArregloDinamico<Peliculas>) datos;
