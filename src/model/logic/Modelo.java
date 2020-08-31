@@ -3,6 +3,7 @@ package model.logic;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Lista;
 import model.data_structures.ListaEncadenada;
+import model.data_structures.ShellSort;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -296,14 +297,23 @@ public class Modelo {
 			for(int i=1; i <= pelisPuntuacion.size(); i++){
 				pelisPuntuacion.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
 			}
+			//Organiza en orden ascendente
+			ShellSort.sort(pelisPuntuacion);
 			//Verifica que hayan suficientes datos como los solicitados
 			if(pelisPuntuacion.size()>=cant){
 				resp = new String[cant];
-
+				for(i=1; i<= cant; i++){
+					//Inicia en 1 por el conteo de las listas, pero en 0 para String[]
+					resp[i-1]= i + ") " + pelisPuntuacion.get(i).darInfo();
+				}
 			}
 			else{
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
-
+				resp = new String[pelisPuntuacion.size()];
+				for(i=1; i<= pelisPuntuacion.size(); i++){
+					//Inicia en 1 por el conteo de las listas, pero en 0 para String[]
+					resp[i-1]= i + ") " + pelisPuntuacion.get(i).darInfo();
+				}
 			}
 		}
 		return resp;

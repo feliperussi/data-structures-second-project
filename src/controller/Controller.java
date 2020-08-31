@@ -74,7 +74,7 @@ public class Controller {
 							view.printMessage(pelicula);
 						}
 					} else {
-						view.printMessage("Error cargando las peliculas\n--------- ");
+						view.printMessage("Error: No hay peliculas cargadas \n--------- ");
 					}
 					break;
 
