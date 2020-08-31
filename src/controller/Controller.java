@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import model.logic.Modelo;
 import view.View;
@@ -33,21 +34,51 @@ public class Controller {
 
 			int option = Integer.parseInt(lector.nextLine());
 			switch (option) {
-				case 1:
-					view.printMessage("--------- \nCargando Datos...");
+				case 1: //Carga datos a una lista encadenada
+					view.printMessage("--------- \nCargando Datos a Lista encadenada...");
 					try {
-						modelo.agregarDatosCsvOpt();
-						view.printMessage("Datos cargados");
+						long t_inicial = System.currentTimeMillis();
+						modelo.agregarDatosCsv(2);
+						long t_final = System.currentTimeMillis();
+						long tiempo = t_final - t_inicial;
+						view.printMessage("Datos cargados en " + tiempo + "ms");
 						view.printMessage("Numero de peliculas cargadas: " + modelo.darTamano());
 						view.printMessage(modelo.darInfoExtremos());
 					} catch (IOException e) {
 						modelo = new Modelo();
 						view.printMessage("Error cargando las peliculas\n--------- ");
 					}
-
 					break;
 
-				case 2:
+				case 2: //Carga datos a un arreglo dinámico
+					view.printMessage("--------- \nCargando Datos a Arreglo dinamico...");
+					try {
+						long t_inicial = System.currentTimeMillis();
+						modelo.agregarDatosCsv(1);
+						long t_final = System.currentTimeMillis();
+						long tiempo = t_final - t_inicial;
+						view.printMessage("Datos cargados en " + tiempo + "ms");
+						view.printMessage("Numero de peliculas cargadas: " + modelo.darTamano());
+						view.printMessage(modelo.darInfoExtremos());
+					} catch (IOException e) {
+						modelo = new Modelo();
+						view.printMessage("Error cargando las peliculas\n--------- ");
+					}
+					break;
+
+				case 3: //Retorna las 20 peliculas con peor puntuacion
+					String[] peliculas = modelo.peoresPeliculas(20);
+					if (peliculas != null) {
+						view.printMessage("Las 20 peores peliculas son:\n");
+						for (String pelicula : peliculas) {
+							view.printMessage(pelicula);
+						}
+					} else {
+						view.printMessage("Error cargando las peliculas\n--------- ");
+					}
+					break;
+
+				case 4: //Retorna las buenas peliculas de un director 
 					view.printMessage("--------- \nNombre del director: ");
 					String director = lector.nextLine();
 					String[] peliculas = modelo.buenasPeliculas(director);
@@ -62,7 +93,7 @@ public class Controller {
 					}
 					break;
 
-				case 3:
+				case 5:
 					view.printMessage("--------- \n Hasta pronto !! \n---------");
 					lector.close();
 					fin = true;

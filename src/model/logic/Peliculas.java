@@ -13,6 +13,7 @@ public class Peliculas implements Comparable<Peliculas> {
 	private Double puntuacion;
 	private Integer id;
 	private String[] genero;
+	private Integer comparador;
 
 	/**
 	 * Constructor de la clase Peliculas
@@ -21,7 +22,7 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @param dir       director, si no hay informacion en el csv dir=""
 	 * @param nom       nombre pelicula, si no hay informacion en el csv nom=""
 	 * @param punt      puntuacion, si no hay informacion en el csv punt=null
-	 * @param act       lista con los actores de la pel�cula
+	 * @param act       lista con los actores de la pelicula
 	 * @param rdate     fecha de estreno de la pelicula
 	 */
 	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen) 
@@ -35,7 +36,7 @@ public class Peliculas implements Comparable<Peliculas> {
 		genero = gen;
 	}
 
-	// M�todos de devolver informaci�n
+	// Metodos de devolver informacion
 	public String darNombre() {
 		return nombre;
 	}
@@ -65,12 +66,26 @@ public class Peliculas implements Comparable<Peliculas> {
 	}
 
 	/**
+	 * Cambia el tipo de comparacion
+	 * Posibles comparaciones: 1= puntuacion, default = id
+	 */
+	public void compararPor(Integer i){
+		comparador=i;
+	}
+
+	/**
 	 * Requerimiento de Comparable de implementar metodo compareTo
+	 * Posibles comparaciones: 1 = puntuacion, default = id
 	 */
 	public int compareTo(Peliculas pelicula) {
-
-		return pelicula.darId().compareTo(this.id);
-
+		switch (comparador) {
+			case 1:
+				return pelicula.darPuntuacion().compareTo(this.puntuacion);
+				break;
+			default:
+				return pelicula.darId().compareTo(this.id);
+				break;
+		}		
 	}
 
 	/**

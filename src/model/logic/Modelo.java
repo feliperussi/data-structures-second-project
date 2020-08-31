@@ -2,6 +2,7 @@ package model.logic;
 
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Lista;
+import model.data_structures.ListaEncadenada;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -81,21 +82,19 @@ public class Modelo {
 
 	/**
 	 * Requerimiento eliminar dato
-	 * 
 	 * @param dato Dato a eliminar
 	 * @return dato eliminado
 	 */
-	public Peliculas eliminar(Peliculas dato) 
-	{
+	public Peliculas eliminar(Peliculas dato) {
 		return datos.removeByType(dato);
 	}
 
 	/**
-	 * --------------------------------------------------------------------- OPCION
-	 * 2 (Corregido) Agregar datos optimizado
+	 * Agrega los datos del Csv en el tipo correcto de estructura de datos
+	 * @param tipo de estructura: 1 = Arreglo dinamico, 2 = Lista encadenada
+	 * default = se crea un arreglo dinamico
 	 */
-	public void agregarDatosCsvOpt() throws IOException 
-	{
+	public void agregarDatosCsv(int tipo) throws IOException {
 		try 
 		{
 			// Prueba la lectura de los archivos
@@ -112,12 +111,30 @@ public class Modelo {
 			csvReaderD.close();
 			csvReaderC.close();
 
-			// Crea una lista Castings con los datos en formato correcto
-			Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+			//Parte de un arreglo vacio 
+			//Crea las variables temporales con el tipo de estructura correcto
+			switch (tipo) {
+				case 1:
+					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
+					Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+					break;
+				case 2:
+					datos = new ListaEncadenada();
+					Lista<Peliculas> castLimpio = new ListaEncadenada();
+					break;
+				default:
+					System.out.println("No es una estructura de datos valida. \n
+					Se utilizará un Arreglo dinámico por default.")
+					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
+					Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+					break;
+			}
+
+			//Agrega información correcta a la lista de castings
 			for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
 				// columna
 				if (verificarCastings(castings.get(i)) != null) {
-					castLimpio.agregar(verificarCastings(castings.get(i)));
+					castLimpio.append(verificarCastings(castings.get(i)));
 				}
 			}
 			// Combina las peliculas con informacion completa y correcta
@@ -153,9 +170,8 @@ public class Modelo {
 	}
 
 	/**
-	 * Verificar que la informaci�n tiene el formato correcto
-	 * 
-	 * @return retorna la informaci�n en el formato correcto null si hay errores
+	 * Verificar que la informacion tiene el formato correcto
+	 * @return retorna la informacion en el formato correcto null si hay errores
 	 */
 	public Peliculas verificarDetalles(String[] detalle) {
 		try {
@@ -163,8 +179,8 @@ public class Modelo {
 			if (detalle[16].compareTo("") != 0 && detalle[16] != null) {
 				// Cosas a verificar:
 				String nombre = detalle[16]; // Nombre de la pelicula
-				Integer id = Integer.parseInt(detalle[0]); // identificaci�n
-				Double puntuacion = Double.parseDouble(detalle[17]); // Puntuaci�n
+				Integer id = Integer.parseInt(detalle[0]); // identificacion
+				Double puntuacion = Double.parseDouble(detalle[17]); // Puntuacion
 
 				// Se confirma la fecha de estreno este en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -187,9 +203,7 @@ public class Modelo {
 
 	/**
 	 * Verificar que la informacion tiene el formato correcto
-	 * 
-	 * @return retorna la informacion disponible en el formato correcto null si hay
-	 *         errores
+	 * @return retorna la informacion disponible en el formato correcto null si hay errores
 	 */
 	public Peliculas verificarCastings(String[] casting) {
 		try {
@@ -236,8 +250,7 @@ public class Modelo {
 	 * @return String[] lista de peliculas con puntuacion >= umbral; null si no se
 	 *         encuentra el director
 	 */
-	public String[] buenasPeliculas(String director) 
-	{
+	public String[] buenasPeliculas(String director) {
 		String[] resp = null;
 		Lista<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
 
@@ -259,9 +272,37 @@ public class Modelo {
 		{
 			resp = new String[peliculasDirector.size()];
 
-			for (int i = 1; i < peliculasDirector.size(); i++) 
+			for (int i = 1; i <= peliculasDirector.size(); i++) 
 			{
 				resp[i] = peliculasDirector.get(i).darInfo();
+			}
+		}
+		return resp;
+	}
+
+	/**
+	 * Metodo para devolver las películas peor punteadad
+	 * @param entra como entero la cantidad de peliculas deseadas
+	 * @return String[] lista de las peores peliculas en orden ascendente; 
+	 * null si hay problemas
+	 */
+	public String[] peoresPeliculas(Integer cant){
+		String[] resp = null;
+		//Lista auxiliar comparacion por puntuacion
+		Lista<Peliculas> pelisPuntuacion = datos;
+		//Verifica que los datos existan
+		if(pelisPuntuacion != null && pelisPuntuacion.size()>0){
+			for(int i=1; i <= pelisPuntuacion.size(); i++){
+				pelisPuntuacion.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
+			}
+			//Verifica que hayan suficientes datos como los solicitados
+			if(pelisPuntuacion.size()>=cant){
+				resp = new String[cant];
+
+			}
+			else{
+				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n")
+
 			}
 		}
 		return resp;
@@ -271,4 +312,5 @@ public class Modelo {
 	{
 		return (ArregloDinamico<Peliculas>) datos;
 	}
+
 }
