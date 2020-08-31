@@ -272,7 +272,7 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	public T removeByType(T dato) 
 	{
 		T resp = dato;
-		Node<T> newNode = new Node(dato);
+		Node<T> newNode = new Node<T>(dato);
 		
 		if(list.getItem().compareTo(dato) == 0)
 		{

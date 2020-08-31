@@ -113,54 +113,55 @@ public class Modelo {
 
 			//Parte de un arreglo vacio 
 			//Crea las variables temporales con el tipo de estructura correcto
+			Lista<Peliculas> castLimpio = null;
 			switch (tipo) {
 				case 1:
 					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
-					Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+					castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
 					break;
 				case 2:
-					datos = new ListaEncadenada();
-					Lista<Peliculas> castLimpio = new ListaEncadenada();
+					datos = new ListaEncadenada<Peliculas>();
+					castLimpio = new ListaEncadenada<Peliculas>();
 					break;
 				default:
-					System.out.println("No es una estructura de datos valida. \n
-					Se utilizará un Arreglo dinámico por default.")
+					System.out.println("No es una estructura de datos valida. \n Se utilizara un Arreglo dinamico por default.");
 					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
-					Lista<Peliculas> castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+					castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
 					break;
 			}
-
-			//Agrega información correcta a la lista de castings
-			for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
-				// columna
-				if (verificarCastings(castings.get(i)) != null) {
-					castLimpio.append(verificarCastings(castings.get(i)));
-				}
-			}
-			// Combina las peliculas con informacion completa y correcta
-			for (int i = 1; i < detalles.size(); i++) 
-			{
-				// Comprueba que la linea tenga informacion correcta
-				Peliculas infoD = verificarDetalles(detalles.get(i));
-				if (infoD != null) 
-				{
-					// Busca la pelicula con misma identificacion en el arreglo dinamico
-					Peliculas infoC = castLimpio.buscar(infoD);
-					if (infoC != null) 
-					{
-						// Asigna la informacion verificada
-						Integer id = infoC.darId();
-						String director = infoC.darDirector();
-						String[] actores = infoC.darActores();
-						String nombre = infoD.darNombre();
-						Double puntuacion = infoD.darPuntuacion();
-						Date fecha = infoD.darFecha();
-						String[] genero = infoD.darGenero();
-						Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero);
-						datos.append(pelicula);
+			if(castLimpio!=null) {
+				//Agrega informacion correcta a la lista de castings
+				for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
+					// columna
+					if (verificarCastings(castings.get(i)) != null) {
+						castLimpio.append(verificarCastings(castings.get(i)));
 					}
 				}
-			}
+				// Combina las peliculas con informacion completa y correcta
+				for (int i = 1; i < detalles.size(); i++) 
+				{
+					// Comprueba que la linea tenga informacion correcta
+					Peliculas infoD = verificarDetalles(detalles.get(i));
+					if (infoD != null) 
+					{
+						// Busca la pelicula con misma identificacion en el arreglo dinamico
+						Peliculas infoC = castLimpio.buscar(infoD);
+						if (infoC != null) 
+						{
+							// Asigna la informacion verificada
+							Integer id = infoC.darId();
+							String director = infoC.darDirector();
+							String[] actores = infoC.darActores();
+							String nombre = infoD.darNombre();
+							Double puntuacion = infoD.darPuntuacion();
+							Date fecha = infoD.darFecha();
+							String[] genero = infoD.darGenero();
+							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero);
+							datos.append(pelicula);
+						}
+					}
+				}
+			}		
 		} 
 		catch (CsvException e) 
 		{
@@ -301,7 +302,7 @@ public class Modelo {
 
 			}
 			else{
-				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n")
+				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
 
 			}
 		}

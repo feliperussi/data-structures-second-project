@@ -81,11 +81,11 @@ public class Controller {
 				case 4: //Retorna las buenas peliculas de un director 
 					view.printMessage("--------- \nNombre del director: ");
 					String director = lector.nextLine();
-					String[] peliculas = modelo.buenasPeliculas(director);
-					if (peliculas != null) {
+					String[] buenasPelis = modelo.buenasPeliculas(director);
+					if (buenasPelis != null) {
 						view.printMessage(
-								"El director tiene " + peliculas.length + " buenas peliculas\n---------\nEstas son:\n");
-						for (String pelicula : peliculas) {
+								"El director tiene " + buenasPelis.length + " buenas peliculas\n---------\nEstas son:\n");
+						for (String pelicula : buenasPelis) {
 							view.printMessage(pelicula);
 						}
 					} else {

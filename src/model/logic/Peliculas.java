@@ -81,10 +81,8 @@ public class Peliculas implements Comparable<Peliculas> {
 		switch (comparador) {
 			case 1:
 				return pelicula.darPuntuacion().compareTo(this.puntuacion);
-				break;
 			default:
 				return pelicula.darId().compareTo(this.id);
-				break;
 		}		
 	}
 
