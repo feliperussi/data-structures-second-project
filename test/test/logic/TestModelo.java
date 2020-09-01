@@ -19,8 +19,8 @@ public class TestModelo {
 	public void setUp1() throws IOException 
 	{
 		modelo= new Modelo(CAPACIDAD);
-		modelo.agregarDatosCsvOpt();
-
+		//modelo.agregarDatosCsvOpt();
+	    //TODO: Broken method
 		System.out.println("Numero de peliculas cargadas: " + modelo.darTamano());
 	}
 
@@ -65,7 +65,7 @@ public class TestModelo {
 		Peliculas prueba = modelo.darDatos().removeByIndex(20);
 		assertTrue("Resultado inesperado. ", !prueba.darNombre().equals(modelo.darDatos().get(20).darNombre()));	
 		
-		assertTrue("Debería ser null", modelo.buscar(prueba) == null);
+		assertTrue("Deberï¿½a ser null", modelo.buscar(prueba) == null);
 	}
 
 	@Test

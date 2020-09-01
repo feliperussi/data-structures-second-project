@@ -1,14 +1,7 @@
 package test.data_structures;
 
-import model.data_structures.ArregloDinamico;
 import model.data_structures.ListaEncadenada;
 
-import java.util.Arrays;
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
-import org.junit.Before;
 import org.junit.Test;
 
 
@@ -19,7 +12,7 @@ public class TestListaEncadenada
 	public void setUp1() 
 	{
 		//Arreglo por defecto
-		lista = new ListaEncadenada();
+		lista = new ListaEncadenada<Integer>();
 		
 		for (Integer i = 10; i < 20; i++)
 		{

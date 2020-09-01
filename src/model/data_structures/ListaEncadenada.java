@@ -5,8 +5,6 @@ import java.util.NoSuchElementException;
 
 public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 {
-    private static final long serialVersionUID = 6769829250639411880L;
-
 	/**
 	 * Primer nodo de la lista.
 	 */
