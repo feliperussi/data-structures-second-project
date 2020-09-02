@@ -283,7 +283,7 @@ public class Modelo {
 	}
 
 	/**
-	 * Metodo para devolver las películas peor punteadad
+	 * Metodo para devolver las películas peor punteadas
 	 * @param entra como entero la cantidad de peliculas deseadas
 	 * @return String[] lista de las peores peliculas en orden ascendente; 
 	 * null si hay problemas
@@ -292,9 +292,8 @@ public class Modelo {
 		String[] resp = null;
 		//Verifica que los datos existan
 		if(datos != null && datos.size()>0){
-			for(int i=1; i <= datos.size() && i!=3; i++){
-				int tipo=1;
-				datos.get(i).compararPor(tipo); //Cambia el criterio de comparacion a puntuación
+			for(int i=1; i <= datos.size(); i++){
+				datos.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
 			}
 			//Variable auxiliar tipo Comparable[]
 			Peliculas[] pelisPuntuacion = new Peliculas[datos.size()];
@@ -302,7 +301,7 @@ public class Modelo {
 				//Inicia en 1 por el conteo de las listas, pero en 0 para Comparable[]
 				pelisPuntuacion[i-1]=datos.get(i);
 			}
-			//Organiza en orden ascendente
+			//Organiza en orden descendente
 			ShellSort.sort(pelisPuntuacion);
 			//Verifica que hayan suficientes datos como los solicitados
 			if(datos.size()>=cant){
