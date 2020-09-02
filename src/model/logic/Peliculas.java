@@ -34,6 +34,7 @@ public class Peliculas implements Comparable<Peliculas> {
 		actores = act;
 		fecha = rdate;
 		genero = gen;
+		comparador=0;
 	}
 
 	// Metodos de devolver informacion
