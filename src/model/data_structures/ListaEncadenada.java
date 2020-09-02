@@ -62,10 +62,8 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 			return list.getItem();
 
 		Node<T> tempNode = list;
-		
-		boolean stop = false;
 
-		for(int i = 1; i <= index && !stop; i++ )
+		for(int i = 1; i <= index; i++ )
 		{		
 			tempNode = tempNode.getNext();
 
@@ -74,8 +72,8 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 				if(i == index)
 				{		
 					resp = tempNode.getItem();
+					return resp;
 				}
-				stop = true;
 			}	
 		}
 		return resp;

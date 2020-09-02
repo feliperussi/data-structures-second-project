@@ -297,7 +297,7 @@ public class Modelo {
 			}
 			//Variable auxiliar tipo Comparable[]
 			Peliculas[] pelisPuntuacion = new Peliculas[datos.size()];
-			for(int i=1;i<=cant;i++) {
+			for(int i=1;i<=datos.size();i++) {
 				//Inicia en 1 por el conteo de las listas, pero en 0 para Comparable[]
 				pelisPuntuacion[i-1]=datos.get(i);
 			}
