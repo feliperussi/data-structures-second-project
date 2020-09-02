@@ -308,7 +308,7 @@ public class Modelo {
 			if(datos.size()>=cant){
 				resp = new String[cant];
 				for(int i=0; i < cant; i++){
-					resp[i]= i+1 + ") " + pelisPuntuacion[datos.size()-i-1].darInfo();
+					resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
 				}
 			}
 			//Sino, da todos los datos disponiles
@@ -316,7 +316,7 @@ public class Modelo {
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
 				resp = new String[datos.size()];
 				for(int i=0; i < datos.size(); i++){
-					resp[i]= i+1 + ") " + pelisPuntuacion[datos.size()-i-1].darInfo();
+					resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
 				}
 			}
 		}

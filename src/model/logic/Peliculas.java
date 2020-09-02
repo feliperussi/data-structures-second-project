@@ -98,14 +98,13 @@ public class Peliculas implements Comparable<Peliculas> {
 		// Convierte la fecha al formato correcto
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String strFecha = formato.format(fecha);
-		String str = "Pelicula: " + nombre + "\nFecha: " + strFecha 
+		String str = "Pelicula: " + nombre + "\nDirector: " + director + "\nFecha: " + strFecha 
 					+ "\nID: " + id + "\nPuntuacion: " + puntuacion + "\nGenero(s): ";
 		// Agrega los generos
 		for (String i : genero) 
 		{
 			str = str + " " + i + ",";
 		}
-		
 		str = str.substring(0, str.length() - 1);
 		// Agrega los actores
 		str = str + "\nActores: ";
