@@ -17,6 +17,7 @@ public class Peliculas implements Comparable<Peliculas> {
 
 	/**
 	 * Constructor de la clase Peliculas
+	 * Inicia el comparador en 0 para que compare por id
 	 * 
 	 * @param idCasting numero de identificacion de la pelicula !=null
 	 * @param dir       director, si no hay informacion en el csv dir=""
@@ -76,7 +77,7 @@ public class Peliculas implements Comparable<Peliculas> {
 
 	/**
 	 * Requerimiento de Comparable de implementar metodo compareTo
-	 * Posibles comparaciones: 1 = puntuacion, default = id
+	 * Posibles comparaciones: 1 = puntuacion, default = id (o 0)
 	 */
 	public int compareTo(Peliculas pelicula) {
 		switch (comparador) {
