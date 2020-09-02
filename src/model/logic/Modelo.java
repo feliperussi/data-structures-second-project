@@ -213,10 +213,10 @@ public class Modelo {
 			// Verifica que los campos de nombres de actores y director sean validos
 			boolean bien = true;
 			int[] categorias = new int[] { 1, 3, 5, 7, 9, 12 };
-			String[] actores = new String[4];
+			String[] actores = new String[5];
+			int cont = 0;
 			for (int i : categorias) {
 				if (casting[i].compareTo("") != 0 && casting[i] != null) {
-					int cont = 0;
 					if (i != 12) {
 						// Crea el arreglo de actores
 						actores[cont] = casting[i];

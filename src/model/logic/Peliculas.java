@@ -112,7 +112,7 @@ public class Peliculas implements Comparable<Peliculas> {
 		{
 			if (i != null) 
 			{
-				str = str + i + ",";
+				str = str + " " + i + ",";
 			}
 		}
 		str = str.substring(0, str.length() - 1);
