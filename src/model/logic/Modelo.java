@@ -276,7 +276,7 @@ public class Modelo {
 
 			for (int i = 1; i <= peliculasDirector.size(); i++) 
 			{
-				resp[i] = peliculasDirector.get(i).darInfo();
+				resp[i-1] = peliculasDirector.get(i).darInfo();
 			}
 		}
 		return resp;
@@ -292,12 +292,13 @@ public class Modelo {
 		String[] resp = null;
 		//Verifica que los datos existan
 		if(datos != null && datos.size()>0){
-			for(int i=1; i <= datos.size(); i++){
-				datos.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
+			for(int i=1; i <= datos.size() && i!=3; i++){
+				int tipo=1;
+				datos.get(i).compararPor(tipo); //Cambia el criterio de comparacion a puntuación
 			}
 			//Variable auxiliar tipo Comparable[]
 			Peliculas[] pelisPuntuacion = new Peliculas[datos.size()];
-			for(int i=1;i<=cant;i++) {
+			for(int i=1;i<=datos.size();i++) {
 				//Inicia en 1 por el conteo de las listas, pero en 0 para Comparable[]
 				pelisPuntuacion[i-1]=datos.get(i);
 			}
@@ -307,14 +308,15 @@ public class Modelo {
 			if(datos.size()>=cant){
 				resp = new String[cant];
 				for(int i=0; i < cant; i++){
-					resp[i]= i + ") " + pelisPuntuacion[i].darInfo();
+					resp[i]= i+1 + ") " + pelisPuntuacion[datos.size()-i-1].darInfo();
 				}
 			}
+			//Sino, da todos los datos disponiles
 			else{
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
 				resp = new String[datos.size()];
 				for(int i=0; i < datos.size(); i++){
-					resp[i]= i + ") " + pelisPuntuacion[i].darInfo();
+					resp[i]= i+1 + ") " + pelisPuntuacion[datos.size()-i-1].darInfo();
 				}
 			}
 		}
