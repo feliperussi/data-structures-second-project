@@ -27,6 +27,8 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
+	//private static final String PELICULAS_DETALLES = "data/AllMoviesDetailsCleaned.csv";
+	//private static final String PELICULAS_CASTING = "data/AllMoviesCastingRaw.csv";
 	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
 	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
 	private Lista<Peliculas> datos;

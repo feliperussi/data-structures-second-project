@@ -4,7 +4,11 @@ public class ShellSort {
 
     @SuppressWarnings("all")
     public static void sort(Comparable[] array) {
-        for (int gap = array.length / 2; gap > 0; gap /= 2) {
+        int fast=1;
+        while(fast/3<array.length){
+            fast=fast*3+1;
+        }
+        for (int gap = fast; gap > 0; gap /= 3) {
             for (int i = gap; i < array.length; i++) {
                 Comparable val = array[i];
                 int j;
