@@ -11,6 +11,7 @@ public class Peliculas implements Comparable<Peliculas> {
 	private Date fecha;
 	private String[] actores;
 	private Double puntuacion;
+	private Integer votos;
 	private Integer id;
 	private String[] genero;
 	private Integer comparador;
@@ -25,8 +26,9 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @param punt      puntuacion, si no hay informacion en el csv punt=null
 	 * @param act       lista con los actores de la pelicula
 	 * @param rdate     fecha de estreno de la pelicula
+	 * @param pvotos	cantidad de votos de la pelicula
 	 */
-	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen) 
+	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen, Integer pvotos) 
 	{
 		director = dir;
 		id = pID;
@@ -35,6 +37,7 @@ public class Peliculas implements Comparable<Peliculas> {
 		actores = act;
 		fecha = rdate;
 		genero = gen;
+		votos=pvotos;
 		comparador=0;
 	}
 
@@ -67,6 +70,9 @@ public class Peliculas implements Comparable<Peliculas> {
 		return genero;
 	}
 
+	public Integer darVotos(){
+		return votos;
+	}
 	/**
 	 * Cambia el tipo de comparacion
 	 * Posibles comparaciones: 1= puntuacion, default = id
@@ -99,7 +105,7 @@ public class Peliculas implements Comparable<Peliculas> {
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String strFecha = formato.format(fecha);
 		String str = "Pelicula: " + nombre + "\nDirector: " + director + "\nFecha: " + strFecha 
-					+ "\nID: " + id + "\nPuntuacion: " + puntuacion + "\nGenero(s): ";
+					+ "\nID: " + id + "\nPuntuacion: " + puntuacion + "\nVotos: " + votos + "\nGenero(s): ";
 		// Agrega los generos
 		for (String i : genero) 
 		{

@@ -157,7 +157,8 @@ public class Modelo {
 							Double puntuacion = infoD.darPuntuacion();
 							Date fecha = infoD.darFecha();
 							String[] genero = infoD.darGenero();
-							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero);
+							Integer votos = infoD.darVotos();
+							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero, votos);
 							datos.append(pelicula);
 						}
 					}
@@ -180,20 +181,24 @@ public class Modelo {
 			Peliculas resp = null;
 			if (detalle[16].compareTo("") != 0 && detalle[16] != null) {
 				// Cosas a verificar:
-				String nombre = detalle[16]; // Nombre de la pelicula
+				String nombre = detalle[16].trim(); // Nombre de la pelicula
 				Integer id = Integer.parseInt(detalle[0]); // identificacion
 				Double puntuacion = Double.parseDouble(detalle[17]); // Puntuacion
+				Integer votos = Integer.parseInt(detalle[18]);//Cantidad de votos
 
 				// Se confirma la fecha de estreno este en el formato requerido
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
 				Date date = formato.parse(fecha);
 
-				// Se confirman el genero(s) de la pel�cula
+				// Se confirman el genero(s) de la pelicula
 				if (detalle[2].compareTo("") != 0 && detalle[2] != null) {
 					String[] generos = detalle[2].split("\\|");
+					for (String genero : generos){ //Quita los espacios 
+						genero=genero.trim();
+					}
 					// Se crea una pelicula con la informacion disponible
-					resp = new Peliculas(id, "", nombre, puntuacion, null, date, generos);
+					resp = new Peliculas(id, "", nombre, puntuacion, null, date, generos,votos);
 				}
 			}
 			return resp;
@@ -219,7 +224,7 @@ public class Modelo {
 				if (casting[i].compareTo("") != 0 && casting[i] != null) {
 					if (i != 12) {
 						// Crea el arreglo de actores
-						actores[cont] = casting[i];
+						actores[cont] = casting[i].trim();
 						cont++;
 					}
 				} else {
@@ -228,10 +233,10 @@ public class Modelo {
 			}
 			// Dado que la info es correcta, se crean las categorias
 			if (bien == true) {
-				String director = casting[12]; // Nombre del director
+				String director = casting[12].trim(); // Nombre del director
 				Integer id = Integer.parseInt(casting[0]); // identificaci�n
 				// Se crea una pelicula con la informacion disponible
-				resp = new Peliculas(id, director, "", null, actores, null, null);
+				resp = new Peliculas(id, director, "", null, actores, null, null, null);
 			}
 			return resp;
 		} catch (Exception e) {
@@ -283,12 +288,13 @@ public class Modelo {
 	}
 
 	/**
-	 * Metodo para devolver las películas peor punteadas
-	 * @param entra como entero la cantidad de peliculas deseadas
-	 * @return String[] lista de las peores peliculas en orden ascendente; 
+	 * Metodo para devolver las películas peor/mejor punteadas
+	 * @param 	Cantidad de peliculas deseadas
+	 * @param 	Tipo de clasificación: 1= Descendente (Mejores) - 2= Ascendente (Peores)
+	 * @return 	String[] lista de las peliculas en el orden especificado 
 	 * null si hay problemas
 	 */
-	public String[] peoresPeliculas(Integer cant){
+	public String[] rankingPeliculas(Integer cant, Integer tipo){
 		String[] resp = null;
 		//Verifica que los datos existan
 		if(datos != null && datos.size()>0){
@@ -306,16 +312,40 @@ public class Modelo {
 			//Verifica que hayan suficientes datos como los solicitados
 			if(datos.size()>=cant){
 				resp = new String[cant];
-				for(int i=0; i < cant; i++){
-					resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+				switch(tipo){//Escoge el tipo de clasificacion
+					case 1://Orden descendente (mejores peliculas)
+						for(int i=0; i < cant; i++){
+							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
+						}
+						break;
+					case 2://Orden ascendente (peores peliculas)
+						for(int i=0; i < cant; i++){
+							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+						}
+						break;
+					default:
+						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
+						break;
 				}
 			}
 			//Sino, da todos los datos disponiles
 			else{
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
 				resp = new String[datos.size()];
-				for(int i=0; i < datos.size(); i++){
-					resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+				switch(tipo){//Escoge el tipo de clasificacion
+					case 1://Orden descendente (mejores peliculas)
+						for(int i=0; i < datos.size(); i++){
+							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
+						}
+						break;
+					case 2://Orden ascendente (peores peliculas)
+						for(int i=0; i < datos.size(); i++){
+							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+						}
+						break;
+					default:
+						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
+						break;
 				}
 			}
 		}

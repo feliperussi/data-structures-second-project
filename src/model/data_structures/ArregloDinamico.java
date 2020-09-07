@@ -41,7 +41,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 		if (tamanoAct == tamanoMax) 
 		{ // caso de arreglo lleno (aumentar tamaNo)
 			expandArray();
-			System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
+			//System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
 		}
 		elementos[tamanoAct] = dato;
 		tamanoAct++;
