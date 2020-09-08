@@ -68,7 +68,7 @@ public class Controller {
 				}
 				break;
 
-			case 3: //Retorna las peliculas especificadas con peor/mejor puntuacion
+			case 3: //Retorna las peliculas especificadas con peor/mejor puntuacion/votos
 				view.printMessage("--------- \n Cantidad de películas a rankear: ");
 				try{
 					int cant = Integer.parseInt(lector.nextLine());
@@ -77,22 +77,37 @@ public class Controller {
 						view.printMessage("1. Top mejores");
 						view.printMessage("2. Top peores");
 						int tipo = Integer.parseInt(lector.nextLine());
+						view.printMessage("--------- \n Escoger tipo de criterio (e.g., 1): ");
+						view.printMessage("1. Puntuación promedio");
+						view.printMessage("2. Cantidad de votos");
+						int criterio = Integer.parseInt(lector.nextLine());
+						//Verifica que el criterio sea valido
+						if (criterio != 1 && criterio != 2) throw new Exception();
+						String strCriterio = (criterio==1) ? " puntuacion " : " votos "; 
 						switch(tipo){
 							case 1:
-								String[] peliculas1 = modelo.rankingPeliculas(cant, tipo,null);
+								String[] peliculas1 = modelo.rankingPeliculas(cant, tipo, criterio, null);
 								if (peliculas1 != null) {
-									view.printMessage("Las "+ cant + " mejores peliculas por puntuación son:\n");
+									view.printMessage(" ---------------------\n RESUMEN \n ---------------------");
+									view.printMessage("Las "+ cant + " mejores peliculas por" + strCriterio + "tienen:");
+									view.printMessage("Puntaje promedio: " + peliculas1[cant]);
+									view.printMessage("Votos promedio: " + peliculas1[cant+1]);
+									view.printMessage("---------------------");
 									for (String pelicula : peliculas1) {
-										view.printMessage(pelicula);
+										if (pelicula != peliculas1[cant] && pelicula != peliculas1[cant+1]) view.printMessage(pelicula);
 									}
 								} else {
 									view.printMessage("Error: No hay peliculas cargadas \n--------- ");
 								}
 								break;
 							case 2:
-								String[] peliculas2 = modelo.rankingPeliculas(cant, tipo,null);
+								String[] peliculas2 = modelo.rankingPeliculas(cant, tipo,criterio, null);
 								if (peliculas2 != null) {
-									view.printMessage("Las " + cant + " peores peliculas por puntuación son:\n");
+									view.printMessage(" ---------------------\n RESUMEN \n ---------------------");
+									view.printMessage("Las " + cant + " peores peliculas por" + strCriterio + "tienen:");
+									view.printMessage("Puntaje promedio: " + peliculas2[cant]);
+									view.printMessage("Votos promedio: " + peliculas2[cant+1]);
+									view.printMessage("---------------------");
 									for (String pelicula : peliculas2) {
 										view.printMessage(pelicula);
 									}
@@ -179,12 +194,19 @@ public class Controller {
 							view.printMessage("1. Top mejores");
 							view.printMessage("2. Top peores");
 							int tipo = Integer.parseInt(lector.nextLine());
+							view.printMessage("--------- \n Escoger tipo de criterio (e.g., 1): ");
+							view.printMessage("1. Puntuación promedio");
+							view.printMessage("2. Cantidad de votos");
+							int criterio = Integer.parseInt(lector.nextLine());
+							//Verifica que el criterio sea valido
+							if (criterio != 1 && criterio != 2) throw new Exception();
+							String strCriterio = (criterio==1) ? " puntuacion " : " votos "; 
 							switch(tipo){
 								case 1:
-									String[] peliculas1 = modelo.rankingPeliculas(cant, tipo, generosRank);
+									String[] peliculas1 = modelo.rankingPeliculas(cant, tipo, criterio, generosRank);
 									if (peliculas1 != null) {
 										view.printMessage("---------------------\n RESUMEN \n---------------------");
-										view.printMessage("Las "+ cant + " mejores peliculas de " + pGenero + " se clasificaron por puntuación");
+										view.printMessage("Las "+ cant + " mejores peliculas de " + pGenero + " se clasificaron por" + strCriterio);
 										view.printMessage("Puntuación promedio: " +  peliculas1[cant]);
 										view.printMessage("Votos promedio: " +  peliculas1[cant+1]);
 										view.printMessage(" --------------------");
@@ -196,10 +218,10 @@ public class Controller {
 									}
 									break;
 								case 2:
-									String[] peliculas2 = modelo.rankingPeliculas(cant, tipo, generosRank);
+									String[] peliculas2 = modelo.rankingPeliculas(cant, tipo, criterio, generosRank);
 									if (peliculas2 != null) {
 										view.printMessage("---------------------\n RESUMEN \n---------------------");
-										view.printMessage("Las "+ cant + " peores peliculas de " + pGenero + " se clasificaron por puntuación");
+										view.printMessage("Las "+ cant + " peores peliculas de " + pGenero + " se clasificaron por" + strCriterio);
 										view.printMessage("Puntuación promedio: " + peliculas2[cant]);
 										view.printMessage("Votos promedio: " +  peliculas2[cant+1]);
 										view.printMessage(" --------------------");

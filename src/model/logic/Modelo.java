@@ -312,30 +312,37 @@ public class Modelo {
 	 * Metodo para devolver las películas peor/mejor punteadas
 	 * @param 	Cantidad de peliculas deseadas
 	 * @param 	Tipo de clasificación: 1= Descendente (Mejores) - 2= Ascendente (Peores)
+	 * @param 	Criterio a comparar
 	 * @param 	SubArreglo con datos, si es null se utilizan todos
 	 * @return 	String[] lista de las peliculas en el orden especificado 
 	 * null si hay problemas
 	 * NOTA:  ultimos 2 datos dan el vote count average y puntuacion average 
 	 */
-	public String[] rankingPeliculas(Integer cant, Integer tipo, Lista<Peliculas> subDatos){
+	public String[] rankingPeliculas(Integer cant, Integer tipo, Integer criterio, Lista<Peliculas> subDatos){
 		String[] resp = null;
 		Lista<Peliculas> aux = new ListaEncadenada<Peliculas>();
+		CompararPor comp = new CompararPor();
 		//Escoge cuales datos usar
 		if(subDatos != null) aux = subDatos;
 		else aux = datos;
+		//Escoge el criterio 
+		if(criterio != null) comp = new CompararPor(criterio);
 		//Verifica que los datos existan
 		if(aux != null && aux.size()>0){
-			for(int i=1; i <= aux.size(); i++){//Ultimo nodo de la lista es null
-				aux.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
-			}
-			//Variable auxiliar tipo Comparable[]
+			//for(int i=1; i <= aux.size(); i++){
+			//	aux.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
+			//}
+
+			//Variable auxiliar tipo Comparable[]/Peliculas[]
 			Peliculas[] pelisPuntuacion = new Peliculas[aux.size()];
 			for(int i=1;i<=aux.size();i++) {
 				//Inicia en 1 por el conteo de las listas, pero en 0 para Comparable[]
 				pelisPuntuacion[i-1]=aux.get(i);
 			}
-			//Organiza en orden descendente
-			ShellSort.sort(pelisPuntuacion);
+			//Organiza en orden descendente según el criterio
+			if (criterio==null) ShellSort.sort(pelisPuntuacion);
+			else ShellSort.sort(pelisPuntuacion, comp);
+
 			//Verifica que hayan suficientes datos como los solicitados
 			if(aux.size()>=cant){
 				resp = new String[cant+2];
@@ -343,20 +350,7 @@ public class Modelo {
 				double punt_ave = 0;
 				int vote_ave = 0;
 				switch(tipo){//Escoge el tipo de clasificacion
-					case 1://Orden descendente (mejores peliculas)
-						for(int i=0; i < cant; i++){
-							punt_ave=punt_ave + pelisPuntuacion[i].darPuntuacion();
-							vote_ave= vote_ave + pelisPuntuacion[i].darVotos();
-							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
-						}
-						punt_ave = punt_ave/cant;
-						vote_ave = vote_ave/cant;
-						NumberFormat nf = NumberFormat.getNumberInstance();
-						nf.setMaximumFractionDigits(2);
-						resp[cant] = nf.format(punt_ave);
-						resp[cant+1] = nf.format(vote_ave); //Da la respuesta en el formato correcto
-						break;
-					case 2://Orden ascendente (peores peliculas)
+					case 1: //Orden descendente (mejores peliculas)
 						for(int i=0; i < cant; i++){
 							punt_ave=punt_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darPuntuacion();
 							vote_ave= vote_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darVotos();
@@ -368,6 +362,19 @@ public class Modelo {
 						nf2.setMaximumFractionDigits(2);
 						resp[cant] = nf2.format(punt_ave);
 						resp[cant+1] = nf2.format(vote_ave); //Da la respuesta en el formato correcto
+						break;
+					case 2: //Orden ascendente (peores peliculas)
+						for(int i=0; i < cant; i++){
+							punt_ave=punt_ave + pelisPuntuacion[i].darPuntuacion();
+							vote_ave= vote_ave + pelisPuntuacion[i].darVotos();
+							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
+						}
+						punt_ave = punt_ave/cant;
+						vote_ave = vote_ave/cant;
+						NumberFormat nf = NumberFormat.getNumberInstance();
+						nf.setMaximumFractionDigits(2);
+						resp[cant] = nf.format(punt_ave);
+						resp[cant+1] = nf.format(vote_ave); //Da la respuesta en el formato correcto
 						break;
 					default:
 						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
