@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -186,14 +187,19 @@ public class Modelo {
 			Peliculas resp = null;
 			if (detalle[16].compareTo("") != 0 && detalle[16] != null) {
 				// Cosas a verificar:
+				if (detalle[16].equals("")) return null; // Descarta los datos sin nombre
 				String nombre = detalle[16].trim(); // Nombre de la pelicula
+				if (detalle[0].equals("")) return null; // Descarta los datos sin id
 				Integer id = Integer.parseInt(detalle[0]); // identificacion
+				if (detalle[17].equals("")) return null; // Descarta los datos sin puntuacion
 				Double puntuacion = Double.parseDouble(detalle[17]); // Puntuacion
+				if (detalle[18].equals("")) return null; // Descarta los datos sin votos
 				Integer votos = Integer.parseInt(detalle[18]);//Cantidad de votos
 
 				// Se confirma la fecha de estreno este en el formato requerido
-				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				String fecha = detalle[10];
+				if (fecha.equals("")) return null; // Descarta los datos sin fecha 
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				Date date = formato.parse(fecha);
 
 				// Se confirman el genero(s) de la pelicula
@@ -257,21 +263,24 @@ public class Modelo {
 
 	/**
 	 * Metodo para dar la lista de las peliculas buenas de un director
-	 * 
 	 * @param entra como String el nombre del director
 	 * @return String[] lista de peliculas con puntuacion >= umbral; null si no se
 	 *         encuentra el director
+	 * NOTA: En la ultima casilla de devuelve el promedio de puntaje de todas las peliculas
 	 */
 	public String[] buenasPeliculas(String director) {
 		String[] resp = null;
 		Lista<Peliculas> peliculasDirector = new ArregloDinamico<Peliculas>(tamanoAprox / 10);
-
+		double punt_ave = 0;
+		int pelis_num =0;
 		for (int i = 1; i < datos.size(); i++) 
 		{
 			Peliculas temp = datos.get(i);
 			// Compara si es el director correcto
 			if (temp.darDirector().compareTo(director) == 0) 
 			{
+				punt_ave= punt_ave+temp.darPuntuacion(); //Agrega la puntuación al promedio
+				pelis_num++;
 				// Compara si la pelicula es buena
 				if (temp.darPuntuacion() >= 6) 
 				{
@@ -282,12 +291,17 @@ public class Modelo {
 		// Da el formato de String[] con la informacion de la pelicula
 		if (peliculasDirector.size() != 0) 
 		{
-			resp = new String[peliculasDirector.size()];
+			punt_ave=(punt_ave)/pelis_num; //Asegura que no hay div por 0
+			resp = new String[peliculasDirector.size()+1];
 
 			for (int i = 1; i <= peliculasDirector.size(); i++) 
 			{
 				resp[i-1] = peliculasDirector.get(i).darInfo();
 			}
+			NumberFormat nf = NumberFormat.getNumberInstance();
+			nf.setMaximumFractionDigits(1);
+			String rounded = nf.format(punt_ave);
+			resp[peliculasDirector.size()]=rounded;
 		}
 		return resp;
 	}
@@ -296,26 +310,31 @@ public class Modelo {
 	 * Metodo para devolver las películas peor/mejor punteadas
 	 * @param 	Cantidad de peliculas deseadas
 	 * @param 	Tipo de clasificación: 1= Descendente (Mejores) - 2= Ascendente (Peores)
+	 * @param 	SubArreglo con datos, si es null se utilizan todos
 	 * @return 	String[] lista de las peliculas en el orden especificado 
 	 * null si hay problemas
 	 */
-	public String[] rankingPeliculas(Integer cant, Integer tipo){
+	public String[] rankingPeliculas(Integer cant, Integer tipo, Lista<Peliculas> subDatos){
 		String[] resp = null;
+		Lista<Peliculas> aux = new ListaEncadenada<Peliculas>();
+		//Escoge cuales datos usar
+		if(subDatos != null) aux = subDatos;
+		else aux = datos;
 		//Verifica que los datos existan
-		if(datos != null && datos.size()>0){
-			for(int i=1; i <= datos.size(); i++){
-				datos.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
+		if(aux != null && aux.size()>0){
+			for(int i=1; i <= aux.size(); i++){//Ultimo nodo de la lista es null
+				aux.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
 			}
 			//Variable auxiliar tipo Comparable[]
-			Peliculas[] pelisPuntuacion = new Peliculas[datos.size()];
-			for(int i=1;i<=datos.size();i++) {
+			Peliculas[] pelisPuntuacion = new Peliculas[aux.size()];
+			for(int i=1;i<=aux.size();i++) {
 				//Inicia en 1 por el conteo de las listas, pero en 0 para Comparable[]
-				pelisPuntuacion[i-1]=datos.get(i);
+				pelisPuntuacion[i-1]=aux.get(i);
 			}
 			//Organiza en orden descendente
 			ShellSort.sort(pelisPuntuacion);
 			//Verifica que hayan suficientes datos como los solicitados
-			if(datos.size()>=cant){
+			if(aux.size()>=cant){
 				resp = new String[cant];
 				switch(tipo){//Escoge el tipo de clasificacion
 					case 1://Orden descendente (mejores peliculas)
@@ -336,15 +355,15 @@ public class Modelo {
 			//Sino, da todos los datos disponiles
 			else{
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
-				resp = new String[datos.size()];
+				resp = new String[aux.size()];
 				switch(tipo){//Escoge el tipo de clasificacion
 					case 1://Orden descendente (mejores peliculas)
-						for(int i=0; i < datos.size(); i++){
+						for(int i=0; i < aux.size(); i++){
 							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
 						}
 						break;
 					case 2://Orden ascendente (peores peliculas)
-						for(int i=0; i < datos.size(); i++){
+						for(int i=0; i < aux.size(); i++){
 							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
 						}
 						break;
@@ -357,28 +376,63 @@ public class Modelo {
 		return resp;
 	}
 
-	public ArrayList<Peliculas> darPeliculasPorGenero(String pGenero)
-	{
+	/**
+	 * Retorna un areglo de géneros 
+	 * @param genero a buscar
+	 * @return lista de generos o null si no se encuentra el genero
+	 */
+	public ArrayList<Peliculas> darPeliculasPorGenero(String pGenero){
 		ArrayList<Peliculas> arrayGenero = new ArrayList<>();
-		
-		for(int i = 1; i <= datos.size(); i++)
-		{
-		
+		for(int i = 1; i <= datos.size(); i++){
 			String[] generos = datos.get(i).darGenero();
-			
-			for (String genero : generos) 
-			{
-				if(genero.equalsIgnoreCase(pGenero))
-				{
+			for (String genero : generos) {
+				if(genero.equalsIgnoreCase(pGenero)){
 					arrayGenero.add(datos.get(i));
 					break;
 				}
 			}
 		}
+		if (arrayGenero.size()>0) return arrayGenero;
+		else return null;	
+	}
 
-		
-		return arrayGenero;
-		
+	/**
+	 * Retorna la lista de géneros 
+	 * @param genero a buscar
+	 * @return lista de generos o null si no se encuentra el genero
+	 */
+	public Lista<Peliculas> darListaPorGenero(String pGenero){
+		Lista<Peliculas> listaGenero = new ListaEncadenada<Peliculas>();
+		for(int i = 1; i <= datos.size(); i++){
+			String[] generos = datos.get(i).darGenero();
+			for (String genero : generos) {
+				if(genero.equalsIgnoreCase(pGenero)){
+					listaGenero.append(datos.get(i));
+					break;
+				}
+			}
+		}
+		if (listaGenero.size()>0) return listaGenero;
+		else return null;	
+	}
+
+	/**
+	 * @param lista a evaluar
+	 * @return promedio de las puntuaciones de las peliculas como String
+	 */
+	public String vote_Ave(ArrayList<Peliculas> pLista){
+		double temp = 0;
+		String resp = "0";
+		for (Peliculas pelicula: pLista){
+			temp = temp+ pelicula.darPuntuacion();
+		}
+		if (pLista.size()>0){ //Verifica que no haya div por 0
+			temp = temp/pLista.size();
+			NumberFormat nf = NumberFormat.getNumberInstance();
+			nf.setMaximumFractionDigits(1);
+			resp = nf.format(temp); //Da la respuesta en el formato correcto
+		}
+		return resp;
 	}
 
 	public ArregloDinamico<Peliculas> darDatos()
