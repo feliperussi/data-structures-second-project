@@ -30,5 +30,12 @@ public class Node<E>
 	{
 		this.item = item;
 	}
+	
+	public boolean hasNext()
+	{
+		if(this.next != null)
+			return true;
+		return false;		
+	}
 
 }

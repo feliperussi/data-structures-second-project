@@ -16,6 +16,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Modelo {
 	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
 	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
 	private Lista<Peliculas> datos;
+	private ListaEncadenada<Peliculas> listaDatos;
 	private int tamanoAprox = 100;
 
 	/**
@@ -121,6 +123,7 @@ public class Modelo {
 					castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
 					break;
 				case 2:
+					listaDatos = new ListaEncadenada<Peliculas>();
 					datos = new ListaEncadenada<Peliculas>();
 					castLimpio = new ListaEncadenada<Peliculas>();
 					break;
@@ -159,6 +162,8 @@ public class Modelo {
 							String[] genero = infoD.darGenero();
 							Integer votos = infoD.darVotos();
 							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero, votos);
+							//FIXME 
+							
 							datos.append(pelicula);
 						}
 					}
@@ -350,6 +355,30 @@ public class Modelo {
 			}
 		}
 		return resp;
+	}
+
+	public ArrayList<Peliculas> darPeliculasPorGenero(String pGenero)
+	{
+		ArrayList<Peliculas> arrayGenero = new ArrayList<>();
+		
+		for(int i = 1; i <= datos.size(); i++)
+		{
+		
+			String[] generos = datos.get(i).darGenero();
+			
+			for (String genero : generos) 
+			{
+				if(genero.equalsIgnoreCase(pGenero))
+				{
+					arrayGenero.add(datos.get(i));
+					break;
+				}
+			}
+		}
+
+		
+		return arrayGenero;
+		
 	}
 
 	public ArregloDinamico<Peliculas> darDatos()
