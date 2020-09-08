@@ -125,7 +125,7 @@ public class Controller {
 					}
 					view.printMessage(" ---------------------\n RESUMEN \n ---------------------");
 					int pelis_num=buenasPelis.length-1;
-					view.printMessage("El director " + director + " tiene " + pelis_num + " buenas peliculas\n "
+					view.printMessage(" El director " + director + " tiene " + pelis_num + " buenas peliculas\n "
 										+ "En general, sus peliculas tienen un puntaje promedio de: " + buenasPelis[buenasPelis.length-1]);
 					view.printMessage(" ---------------------");
 				} else {
@@ -151,8 +151,9 @@ public class Controller {
 					}
 					view.printMessage("---------------------\n RESUMEN \n---------------------");
 					view.printMessage("Lista de generos cargados en " + tiempo + "ms");
-					view.printMessage("Hay " + generos.size() + " peliculas asociadas al género: " + genero
-										+ " con un puntaje promedio de: " + modelo.vote_Ave(generos));
+					view.printMessage("Hay " + generos.size() + " peliculas asociadas al género: " + genero);
+					view.printMessage("Estas tienen un puntaje promedio de: " + modelo.promedios(generos)[0] +"\n"
+										+ "y una cantidad de votos promedio de: " + modelo.promedios(generos)[1]);
 					view.printMessage("---------------------");
 				}
 				else {
@@ -182,11 +183,13 @@ public class Controller {
 								case 1:
 									String[] peliculas1 = modelo.rankingPeliculas(cant, tipo, generosRank);
 									if (peliculas1 != null) {
-										view.printMessage(" --------------------");
-										view.printMessage("Las "+ cant + " mejores peliculas de " + pGenero + " por puntuación son:\n");
+										view.printMessage("---------------------\n RESUMEN \n---------------------");
+										view.printMessage("Las "+ cant + " mejores peliculas de " + pGenero + " se clasificaron por puntuación");
+										view.printMessage("Puntuación promedio: " +  peliculas1[cant]);
+										view.printMessage("Votos promedio: " +  peliculas1[cant+1]);
 										view.printMessage(" --------------------");
 										for (String pelicula : peliculas1) {
-											view.printMessage(pelicula);
+											if(pelicula != peliculas1[cant] && pelicula != peliculas1[cant+1] ) view.printMessage(pelicula);
 										}
 									} else {
 										view.printMessage("Error: No hay peliculas cargadas \n--------- ");
@@ -195,11 +198,13 @@ public class Controller {
 								case 2:
 									String[] peliculas2 = modelo.rankingPeliculas(cant, tipo, generosRank);
 									if (peliculas2 != null) {
-										view.printMessage(" --------------------");
-										view.printMessage("Las " + cant + " peores peliculas de " + pGenero + " por puntuación son:\n");
+										view.printMessage("---------------------\n RESUMEN \n---------------------");
+										view.printMessage("Las "+ cant + " peores peliculas de " + pGenero + " se clasificaron por puntuación");
+										view.printMessage("Puntuación promedio: " + peliculas2[cant]);
+										view.printMessage("Votos promedio: " +  peliculas2[cant+1]);
 										view.printMessage(" --------------------");
 										for (String pelicula : peliculas2) {
-											view.printMessage(pelicula);
+											if(pelicula != peliculas2[cant] && pelicula != peliculas2[cant+1] ) view.printMessage(pelicula);
 										}
 									} else {
 										view.printMessage("Error: No hay peliculas cargadas \n--------- ");

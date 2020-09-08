@@ -313,6 +313,7 @@ public class Modelo {
 	 * @param 	SubArreglo con datos, si es null se utilizan todos
 	 * @return 	String[] lista de las peliculas en el orden especificado 
 	 * null si hay problemas
+	 * NOTA:  ultimos 2 datos dan el vote count average y puntuacion average 
 	 */
 	public String[] rankingPeliculas(Integer cant, Integer tipo, Lista<Peliculas> subDatos){
 		String[] resp = null;
@@ -335,17 +336,36 @@ public class Modelo {
 			ShellSort.sort(pelisPuntuacion);
 			//Verifica que hayan suficientes datos como los solicitados
 			if(aux.size()>=cant){
-				resp = new String[cant];
+				resp = new String[cant+2];
+				//Inicializa variables de promedios
+				double punt_ave = 0;
+				int vote_ave = 0;
 				switch(tipo){//Escoge el tipo de clasificacion
 					case 1://Orden descendente (mejores peliculas)
 						for(int i=0; i < cant; i++){
+							punt_ave=punt_ave + pelisPuntuacion[i].darPuntuacion();
+							vote_ave= vote_ave + pelisPuntuacion[i].darVotos();
 							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
 						}
+						punt_ave = punt_ave/cant;
+						vote_ave = vote_ave/cant;
+						NumberFormat nf = NumberFormat.getNumberInstance();
+						nf.setMaximumFractionDigits(2);
+						resp[cant] = nf.format(punt_ave);
+						resp[cant+1] = nf.format(vote_ave); //Da la respuesta en el formato correcto
 						break;
 					case 2://Orden ascendente (peores peliculas)
 						for(int i=0; i < cant; i++){
+							punt_ave=punt_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darPuntuacion();
+							vote_ave= vote_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darVotos();
 							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
 						}
+						punt_ave = punt_ave/cant;
+						vote_ave = vote_ave/cant;
+						NumberFormat nf2 = NumberFormat.getNumberInstance();
+						nf2.setMaximumFractionDigits(2);
+						resp[cant] = nf2.format(punt_ave);
+						resp[cant+1] = nf2.format(vote_ave); //Da la respuesta en el formato correcto
 						break;
 					default:
 						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
@@ -417,20 +437,50 @@ public class Modelo {
 	}
 
 	/**
-	 * @param lista a evaluar
-	 * @return promedio de las puntuaciones de las peliculas como String
+	 * @param ArrayList a evaluar
+	 * @return promedio de las puntuaciones y votos de las peliculas como String
+	 * promedios[0]=puntaje, promedios[1]=votos
 	 */
-	public String vote_Ave(ArrayList<Peliculas> pLista){
-		double temp = 0;
-		String resp = "0";
+	public String[] promedios(ArrayList<Peliculas> pLista){
+		double temp_punt = 0;
+		int temp_vote = 0;
+		String[] resp = new String[]{"0","0"};
 		for (Peliculas pelicula: pLista){
-			temp = temp+ pelicula.darPuntuacion();
+			temp_punt = temp_punt + pelicula.darPuntuacion();
+			temp_vote = temp_vote + pelicula.darVotos();
 		}
 		if (pLista.size()>0){ //Verifica que no haya div por 0
-			temp = temp/pLista.size();
+			temp_punt = temp_punt/pLista.size();
+			temp_vote = temp_vote/pLista.size();
 			NumberFormat nf = NumberFormat.getNumberInstance();
 			nf.setMaximumFractionDigits(1);
-			resp = nf.format(temp); //Da la respuesta en el formato correcto
+			resp[0] = nf.format(temp_punt);
+			resp[1] = nf.format(temp_vote); //Da la respuesta en el formato correcto
+		}
+		return resp;
+	}
+
+	/**
+	 * @param lista a evaluar
+	 * @return promedio de las puntuaciones y votos de las peliculas como String
+	 * promedios[0]=puntaje, promedios[1]=votos
+	 */
+	public String[] promediosLista(Lista<Peliculas> pLista){
+		double temp_punt = 0;
+		int temp_vote = 0;
+		String[] resp = new String[]{"0","0"};
+		for (int i=1; i<= pLista.size(); i++){
+			temp_punt = temp_punt + pLista.get(i).darPuntuacion();
+			temp_vote = temp_vote + pLista.get(i).darVotos();
+		}
+		if (pLista.size()>0){ //Verifica que no haya div por 0
+			System.out.println(temp_punt + "," + pLista.size());
+			temp_punt = temp_punt/pLista.size();
+			temp_vote = temp_vote/pLista.size();
+			NumberFormat nf = NumberFormat.getNumberInstance();
+			nf.setMaximumFractionDigits(5);
+			resp[0] = nf.format(temp_punt);
+			resp[1] = nf.format(temp_vote); //Da la respuesta en el formato correcto
 		}
 		return resp;
 	}
