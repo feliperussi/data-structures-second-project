@@ -39,7 +39,8 @@ public class ShellSort {
             fast=fast*3+1;
         }
         for (int gap = fast; gap > 0; gap /= 3) {
-            for (int i = gap; i < array.length; i++) {
+            for (int i = gap; i < array.length; i++) 
+            {
                 Peliculas val = array[i];
                 int j;
                 for (j = i; j >= gap && comparator.compare(array[j - gap],val) > 0; j -= gap) {

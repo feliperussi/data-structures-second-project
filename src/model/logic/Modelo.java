@@ -29,10 +29,10 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	//private static final String PELICULAS_DETALLES = "data/AllMoviesDetailsCleaned.csv";
-	//private static final String PELICULAS_CASTING = "data/AllMoviesCastingRaw.csv";
-	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
-	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
+	private static final String PELICULAS_DETALLES = "data/AllMoviesDetailsCleaned.csv";
+	private static final String PELICULAS_CASTING = "data/AllMoviesCastingRaw.csv";
+	//private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
+	//private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
 	private Lista<Peliculas> datos;
 	private ListaEncadenada<Peliculas> listaDatos;
 	private int tamanoAprox = 100;
@@ -140,7 +140,8 @@ public class Modelo {
 				//Agrega informacion correcta a la lista de castings
 				for (int i = 1; i < castings.size(); i++) { // Comienza en 1 ya que el primer dato es el nombre de la
 					// columna
-					if (verificarCastings(castings.get(i)) != null) {
+					if (verificarCastings(castings.get(i)) != null) 
+					{
 						castLimpio.append(verificarCastings(castings.get(i)));
 					}
 				}
