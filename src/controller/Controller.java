@@ -74,11 +74,11 @@ public class Controller {
 						int cant = Integer.parseInt(lector.nextLine());
 						if (cant >= 10) {
 							view.printMessage("--------- \n Escoger tipo de ranking (e.g., 1): ");
-							view.printMessage("1. Top mejores");
-							view.printMessage("2. Top peores");
+							view.printMessage("1. Top mejores (Descendente)");
+							view.printMessage("2. Top peores (Ascendente)");
 							int tipo = Integer.parseInt(lector.nextLine());
 							view.printMessage("--------- \n Escoger tipo de criterio (e.g., 1): ");
-							view.printMessage("1. Puntuación promedio");
+							view.printMessage("1. Puntuaci�n promedio");
 							view.printMessage("2. Cantidad de votos");
 							int criterio = Integer.parseInt(lector.nextLine());
 							// Verifica que el criterio sea valido
