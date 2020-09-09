@@ -25,6 +25,7 @@ import java.util.List;
  * Definicion del modelo del mundo
  *
  */
+@SuppressWarnings("all")
 public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
@@ -166,8 +167,6 @@ public class Modelo {
 							String[] genero = infoD.darGenero();
 							Integer votos = infoD.darVotos();
 							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero, votos);
-							//FIXME 
-
 							datos.append(pelicula);
 						}
 					}

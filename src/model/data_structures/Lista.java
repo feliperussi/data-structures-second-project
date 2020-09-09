@@ -18,14 +18,6 @@ public interface Lista <T extends Comparable<T>>
 	 * @return elemento de consulta. null si no hay elemento en posicion.
 	 */
 	T get(int i);
-
-	/**
-	 * Agrega un elemento en la posici�n pos si la posici�n es una posici�n v�lida. Los elementos que est�n a partir de la
-	 * posici�n dada deben correrse una posici�n a la derecha. Las posiciones v�lidas son posiciones donde ya hay un 
-	 * elemento en la lista. La posici�n del primer elemento es 1, la del segundo es 2 y as� sucesivamente.
-	 * @throws Exception 
-	 */
-	public void insertElement(T element, int pos) throws Exception;	
 	
 	/**
 	 * Agrega un elemento al principio del arreglo.

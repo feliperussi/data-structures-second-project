@@ -20,7 +20,6 @@ public class TestModelo {
 	{
 		modelo= new Modelo(CAPACIDAD);
 		//modelo.agregarDatosCsvOpt();
-	    //TODO: Broken method
 		System.out.println("Numero de peliculas cargadas: " + modelo.darTamano());
 	}
 

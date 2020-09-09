@@ -293,11 +293,4 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 		}
 	}
 
-	@Override
-	public void insertElement(T element, int pos) 
-	{
-		// TODO Auto-generated method stub	
-	}
-
-
 }

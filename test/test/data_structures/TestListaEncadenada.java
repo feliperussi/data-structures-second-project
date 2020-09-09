@@ -34,12 +34,12 @@ public class TestListaEncadenada
 	{
 		assertTrue("La lista no debe ser nula", lista != null);
 		assertTrue("La lista no puede tener cabeza", lista.head() == null);
-		assertEquals("El tamaño de la lista debe ser cero", 0, lista.size());
+		assertEquals("El tamaï¿½o de la lista debe ser cero", 0, lista.size());
 		
 		setUp1();	
 		assertTrue("La lista no debe ser nula", lista != null);
-		assertTrue("La lista debería tener cabeza", lista.head() != null);
-		assertEquals("El tamaño de la lista no es igual a " + TAMANO,TAMANO, lista.size());
+		assertTrue("La lista deberï¿½a tener cabeza", lista.head() != null);
+		assertEquals("El tamaï¿½o de la lista no es igual a " + TAMANO,TAMANO, lista.size());
 	}
 	
 	@Test
@@ -48,11 +48,11 @@ public class TestListaEncadenada
 		setUp1();
 		Integer numero1 = 158;
 		lista.addFirst(numero1);
-		assertTrue("El primer número debe ser " + numero1, lista.firstElement() == numero1);
+		assertTrue("El primer nï¿½mero debe ser " + numero1, lista.firstElement() == numero1);
 		
 		Integer numero2 = numero1+28;
 		lista.addFirst(numero2);
-		assertEquals("El primer número debe ser " + numero2, numero2, lista.firstElement());	
+		assertEquals("El primer nï¿½mero debe ser " + numero2, numero2, lista.firstElement());	
 	}
 	
 	@Test
@@ -61,11 +61,11 @@ public class TestListaEncadenada
 		setUp1();
 		Integer numero1 = 160;
 		lista.append(numero1);
-		assertTrue("El último número debe ser " + numero1, lista.lastElement() == numero1);
+		assertTrue("El ï¿½ltimo nï¿½mero debe ser " + numero1, lista.lastElement() == numero1);
 		
 		Integer numero2 = numero1+20;
 		lista.append(numero2);
-		assertEquals("El último número debe ser " + numero2, numero2, lista.lastElement());	
+		assertEquals("El ï¿½ltimo nï¿½mero debe ser " + numero2, numero2, lista.lastElement());	
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class TestListaEncadenada
 	{
 		setUp1();
 		Integer numero1 = 50;
-		assertEquals("El ítem retornado debe ser " + numero1, numero1, lista.buscar(numero1));	
+		assertEquals("El ï¿½tem retornado debe ser " + numero1, numero1, lista.buscar(numero1));	
 	}
 	
 	@Test
@@ -83,16 +83,16 @@ public class TestListaEncadenada
 		Integer numero1 = 160;
 		int aumentar = TAMANO;
 		lista.append(numero1);
-		assertEquals("El tamaño de la lista debe ser " + ++aumentar, aumentar, lista.size());	
+		assertEquals("El tamaï¿½o de la lista debe ser " + ++aumentar, aumentar, lista.size());	
 		
 		lista.append(++numero1);
-		assertEquals("El tamaño de la lista debe ser " + ++aumentar, aumentar, lista.size());	
+		assertEquals("El tamaï¿½o de la lista debe ser " + ++aumentar, aumentar, lista.size());	
 		
 		lista.append(++numero1);
-		assertEquals("El tamaño de la lista debe ser " + ++aumentar, aumentar, lista.size());	
+		assertEquals("El tamaï¿½o de la lista debe ser " + ++aumentar, aumentar, lista.size());	
 		
 		lista.append(++numero1);
-		assertEquals("El tamaño de la lista debe ser " + ++aumentar, aumentar, lista.size());	
+		assertEquals("El tamaï¿½o de la lista debe ser " + ++aumentar, aumentar, lista.size());	
 	}
 	
 	@Test
@@ -102,7 +102,7 @@ public class TestListaEncadenada
 		Integer numero1 = 55;
 		Node<Integer> nodo = new Node<Integer>(numero1);
 		
-		assertEquals("El ítem del nodo retornado debe ser " + numero1, nodo.getItem(), lista.buscarDato(numero1).getItem());	
+		assertEquals("El ï¿½tem del nodo retornado debe ser " + numero1, nodo.getItem(), lista.buscarDato(numero1).getItem());	
 	}
 	
 	@Test
@@ -110,8 +110,7 @@ public class TestListaEncadenada
 	{
 		setUp1();
 		Integer numero1 = 12;
-		Integer encontrado = lista.get(13);
-		assertEquals("El ítem retornado debe ser " + numero1, numero1, lista.get(13));			
+		assertEquals("El ï¿½tem retornado debe ser " + numero1, numero1, lista.get(13));			
 	}
 	
 	@Test
@@ -120,10 +119,10 @@ public class TestListaEncadenada
 		setUp1();
 		Integer numero1 = 12424;
 		lista.changeInfo(13, numero1);
-		assertEquals("El ítem retornado debe ser " + numero1, numero1, lista.get(13));	
+		assertEquals("El ï¿½tem retornado debe ser " + numero1, numero1, lista.get(13));	
 		
 		lista.changeInfo(14, ++numero1);
-		assertEquals("El ítem retornado debe ser " + numero1, numero1, lista.get(14));	
+		assertEquals("El ï¿½tem retornado debe ser " + numero1, numero1, lista.get(14));	
 	}
 	
 	@Test
@@ -135,15 +134,15 @@ public class TestListaEncadenada
 		
 		lista.exchange(13, 55);
 		
-		assertEquals("El ítem retornado debe ser " + numero13, numero13, lista.get(55));	
-		assertEquals("El ítem retornado debe ser " + numero55, numero55, lista.get(13));		
+		assertEquals("El ï¿½tem retornado debe ser " + numero13, numero13, lista.get(55));	
+		assertEquals("El ï¿½tem retornado debe ser " + numero55, numero55, lista.get(13));		
 	}
 	
 	@Test
 	public void isEmpty()
 	{
 		assertTrue("La lista no debe ser nula", lista != null);
-		assertTrue("La lista debe ser vacía", lista.isEmpty());
+		assertTrue("La lista debe ser vacï¿½a", lista.isEmpty());
 	}
 	
 	@Test
@@ -155,8 +154,8 @@ public class TestListaEncadenada
 		
 		lista.exchange(13, 55);
 		
-		assertEquals("La posición debería ser " + 13, 13, lista.isPresent(numero55));	
-		assertEquals("La posición debería ser " + 55, 55, lista.isPresent(numero13));		
+		assertEquals("La posiciï¿½n deberï¿½a ser " + 13, 13, lista.isPresent(numero55));	
+		assertEquals("La posiciï¿½n deberï¿½a ser " + 55, 55, lista.isPresent(numero13));		
 	}
 	
 	@Test
@@ -172,12 +171,12 @@ public class TestListaEncadenada
 		Integer numero89 = lista.get(89);
 		lista.insertElement(insertado2, 89);
 			
-		assertEquals("No se insertó el número " + insertado, insertado, lista.buscar(insertado));
-		assertEquals("Se insertó en la posición equivocada ", 10, lista.isPresent(insertado));
-		assertEquals("No se insertó el número " + insertado2, insertado2, lista.buscar(insertado2));
-		assertEquals("Se insertó en la posición equivocada ", 89, lista.isPresent(insertado2));
-		assertEquals("Se cambió mal el elemento " + numero10, numero10, lista.get(11));
-		assertEquals("Se cambió mal el elemento " + numero89, numero89, lista.get(90));
+		assertEquals("No se insertï¿½ el nï¿½mero " + insertado, insertado, lista.buscar(insertado));
+		assertEquals("Se insertï¿½ en la posiciï¿½n equivocada ", 10, lista.isPresent(insertado));
+		assertEquals("No se insertï¿½ el nï¿½mero " + insertado2, insertado2, lista.buscar(insertado2));
+		assertEquals("Se insertï¿½ en la posiciï¿½n equivocada ", 89, lista.isPresent(insertado2));
+		assertEquals("Se cambiï¿½ mal el elemento " + numero10, numero10, lista.get(11));
+		assertEquals("Se cambiï¿½ mal el elemento " + numero89, numero89, lista.get(90));
 	}
 	
 	@Test
@@ -186,7 +185,6 @@ public class TestListaEncadenada
 		setUp1();
 		Integer insertado = 14785;
 		Integer insertado2 = insertado+75;
-		Integer numero10 = lista.get(10);
 	
 		lista.insertElement(insertado, 10);
 		Integer numero89 = lista.get(89);
@@ -194,19 +192,19 @@ public class TestListaEncadenada
 		lista.insertElement(insertado2, 89);
 		
 		lista.removeByIndex(89);
-		assertEquals("No se eliminó el número " + insertado2, numero89, lista.get(89));	
+		assertEquals("No se eliminï¿½ el nï¿½mero " + insertado2, numero89, lista.get(89));	
 		
 		lista.removeByType(insertado);
 		
-		assertTrue("No se eliminó el dato " + insertado, lista.buscar(insertado) == null);	
+		assertTrue("No se eliminï¿½ el dato " + insertado, lista.buscar(insertado) == null);	
 		
 		Integer primero = lista.firstElement();
 		Integer ultimo = lista.lastElement();
 		
 		lista.removeFirst();
-		assertTrue("No se eliminó el primer dato ", lista.firstElement() != primero);	
+		assertTrue("No se eliminï¿½ el primer dato ", lista.firstElement() != primero);	
 		lista.removeLast();
-		assertTrue("No se eliminó el último dato ", lista.lastElement() != ultimo);	
+		assertTrue("No se eliminï¿½ el ï¿½ltimo dato ", lista.lastElement() != ultimo);	
 		
 	}
 }
