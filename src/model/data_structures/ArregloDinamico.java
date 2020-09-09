@@ -39,8 +39,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 	public void append(T dato) {
 		if (tamanoAct == tamanoMax) { // caso de arreglo lleno (aumentar tamaNo)
 			expandArray();
-			// System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " +
-			// tamanoMax);
 		}
 		elementos[tamanoAct] = dato;
 		tamanoAct++;
@@ -55,19 +53,16 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 	}
 
 	public T get(int i) {
-		// Implementar
 		i = i - 1;
 
 		if (i < tamanoAct) {
 			return elementos[i];
 		} else {
-			// System.out.println("No hay un elemento en la posicion: "+ i);
 			return null;
 		}
 	}
 
 	public T buscar(T dato) {
-		// Implementar
 		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
 		// definido en Strings.
 
@@ -86,7 +81,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 				i++;
 			} else {
 				termino = true;
-				// System.out.println("El dato no se encuentra en el arreglo");
 			}
 		}
 		return resp;
@@ -136,7 +130,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements Lista<T> {
 				i++;
 			} else {
 				termino = true;
-				// System.out.println("El dato no se encuentra en el arreglo");
 			}
 		}
 		return resp;

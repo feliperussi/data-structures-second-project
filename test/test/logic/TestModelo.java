@@ -18,7 +18,6 @@ public class TestModelo {
 	@Before
 	public void setUp1() throws IOException {
 		modelo = new Modelo(CAPACIDAD);
-		// modelo.agregarDatosCsvOpt();
 		System.out.println("Numero de peliculas cargadas: " + modelo.darTamano());
 	}
 

@@ -30,8 +30,10 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	//private static final String PELICULAS_DETALLES = "data/AllMoviesDetailsCleaned.csv";
-	//private static final String PELICULAS_CASTING = "data/AllMoviesCastingRaw.csv";
+	// private static final String PELICULAS_DETALLES =
+	// "data/AllMoviesDetailsCleaned.csv";
+	// private static final String PELICULAS_CASTING =
+	// "data/AllMoviesCastingRaw.csv";
 	private static final String PELICULAS_DETALLES = "data/SmallMoviesDetailsCleaned.csv";
 	private static final String PELICULAS_CASTING = "data/MoviesCastingRaw-small.csv";
 	private Lista<Peliculas> datos;
@@ -330,10 +332,6 @@ public class Modelo {
 			comp = new CompararPor(criterio);
 		// Verifica que los datos existan
 		if (aux != null && aux.size() > 0) {
-			// for(int i=1; i <= aux.size(); i++){
-			// aux.get(i).compararPor(1); //Cambia el criterio de comparacion a puntuación
-			// }
-
 			// Variable auxiliar tipo Comparable[]/Peliculas[]
 			Peliculas[] pelisPuntuacion = new Peliculas[aux.size()];
 			for (int i = 1; i <= aux.size(); i++) {
