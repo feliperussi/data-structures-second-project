@@ -2,9 +2,7 @@ package model.data_structures;
 
 import java.util.NoSuchElementException;
 
-
-public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
-{
+public class ListaEncadenada<T extends Comparable<T>> implements Lista<T> {
 	/**
 	 * Primer nodo de la lista.
 	 */
@@ -20,15 +18,13 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	 */
 	private int listSize;
 
-	public ListaEncadenada() 
-	{
+	public ListaEncadenada() {
 		list = null;
 		last = null;
 	}
 
-	public ListaEncadenada(T item)
-	{
-		list = new Node<T> (item) ;
+	public ListaEncadenada(T item) {
+		list = new Node<T>(item);
 		last = list;
 		listSize = 1;
 	}
@@ -36,75 +32,65 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Retorna la cantidad de nodos
 	 */
-	public int size() 
-	{
+	public int size() {
 		return listSize;
 	}
 
-	public Node<T> head()
-	{
+	public Node<T> head() {
 		return list;
 	}
 
-	public Node<T> tail()
-	{
+	public Node<T> tail() {
 		return last;
 	}
+
 	/**
 	 * Retorna el item del nodo seg�n el �ndice. El primer node es el n�mero 1.
 	 */
-	public T get(int index) 
-	{
+	public T get(int index) {
 		index = index - 1;
 		T resp = null;
 
-		if(index == 0)
+		if (index == 0)
 			return list.getItem();
 
 		Node<T> tempNode = list;
 
-		for(int i = 1; i <= index; i++ )
-		{		
+		for (int i = 1; i <= index; i++) {
 			tempNode = tempNode.getNext();
 
-			if(tempNode != null)
-			{
-				if(i == index)
-				{		
+			if (tempNode != null) {
+				if (i == index) {
 					resp = tempNode.getItem();
 					return resp;
 				}
-			}	
+			}
 		}
 		return resp;
 	}
 
 	/**
-	 * Inserta un item en la lista en la posici�n dada. 
+	 * Inserta un item en la lista en la posici�n dada.
 	 */
-	public void insertElement(T element, int pos) 
-	{
-		if( list == null )
+	public void insertElement(T element, int pos) {
+		if (list == null)
 			throw new NoSuchElementException();
 
-		if(pos > size())
+		if (pos > size())
 			throw new NoSuchElementException();
 
-		else if(pos == 1)
-		{
+		else if (pos == 1) {
 			addFirst(element);
 		}
 
-		else if(pos == size())
-		{
+		else if (pos == size()) {
 			append(element);
 		}
 
-		else
-		{
-			Node<T> newNode = new Node<T>(element);	
+		else {
+			Node<T> newNode = new Node<T>(element);
 			Node<T> tempNode = giveMeThatNode(pos);
-			Node<T> previousNode = giveMeThatNode(pos-1);
+			Node<T> previousNode = giveMeThatNode(pos - 1);
 
 			newNode.setNextNode(tempNode);
 			previousNode.setNextNode(newNode);
@@ -115,9 +101,8 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Agrega un item antes del primer elemento actual
 	 */
-	public void addFirst(T item) 
-	{
-		Node <T> newHead = new Node<> (item);
+	public void addFirst(T item) {
+		Node<T> newHead = new Node<>(item);
 		newHead.setNextNode(list);
 		list = newHead;
 		listSize++;
@@ -126,18 +111,15 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Agrega un item al �ltimo elemento de la lista
 	 */
-	public void append(T item) 
-	{
-		Node <T> newNode = new Node<> (item);
+	public void append(T item) {
+		Node<T> newNode = new Node<>(item);
 
-		if(list == null) 
-		{
+		if (list == null) {
 			list = newNode;
 			last = list;
 		}
 
-		else 
-		{
+		else {
 			last.setNextNode(newNode);
 			last = last.getNext();
 		}
@@ -149,43 +131,34 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Retorna el primer elemento de la lista
 	 */
-	public T firstElement() 
-	{	
+	public T firstElement() {
 		return list.getItem();
 	}
 
 	/**
 	 * Retorna el �ltimo elemento de la lista
 	 */
-	public T lastElement() 
-	{
+	public T lastElement() {
 		return last.getItem();
 	}
 
 	/**
 	 * Busca un elemento de la lista seg�n el tipo de dato.
 	 */
-	public Node<T> buscarDato(T dato) 
-	{
+	public Node<T> buscarDato(T dato) {
 		int c = 0;
 
-		Node <T> nodeToSearch = new Node<> (dato);
-		Node <T> tempNode = list;
+		Node<T> nodeToSearch = new Node<>(dato);
+		Node<T> tempNode = list;
 
-		while(c < size())
-		{
-			if(nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0)
-			{
+		while (c < size()) {
+			if (nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0) {
 				nodeToSearch = tempNode;
 				break;
-			}
-			else if(tempNode.getNext() != null)
-			{
+			} else if (tempNode.getNext() != null) {
 				tempNode = tempNode.getNext();
 				c++;
-			}
-			else 
-			{
+			} else {
 				nodeToSearch = null;
 				break;
 			}
@@ -197,39 +170,33 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Retorna True si la lista est� vac�a. False si no lo est�.
 	 */
-	public boolean isEmpty() 
-	{
-		if(size() == 0)
+	public boolean isEmpty() {
+		if (size() == 0)
 			return true;
 		else
 			return false;
 	}
 
 	/**
-	 * Retorna la posici�n del elemento por par�metro con respecto al primer elemento de la lista.
-	 * Retorna 0 si no lo encuentra.
+	 * Retorna la posici�n del elemento por par�metro con respecto al primer
+	 * elemento de la lista. Retorna 0 si no lo encuentra.
 	 */
 
-	public int isPresent(T element)
-	{
+	public int isPresent(T element) {
 		int c = 0;
 		int resp = 0;
-		Node <T> nodeToSearch = new Node<> (element);
-		Node <T> tempNode =  list;
+		Node<T> nodeToSearch = new Node<>(element);
+		Node<T> tempNode = list;
 
-		while(c < size())
-		{
-			if(nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0)
-			{
+		while (c < size()) {
+			if (nodeToSearch.getItem().compareTo(tempNode.getItem()) == 0) {
 				nodeToSearch = tempNode;
-				resp = c+1;
+				resp = c + 1;
 				break;
-			}
-			else if(tempNode.getNext() != null)
-			{
+			} else if (tempNode.getNext() != null) {
 				c++;
-				tempNode = tempNode.getNext();	
-			}	
+				tempNode = tempNode.getNext();
+			}
 		}
 		return resp;
 	}
@@ -237,18 +204,15 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Intercambia la posici�n de dos elementos de la lista.
 	 */
-	public void exchange(int pos1, int pos2)
-	{
-		Node <T> node1 = giveMeThatNode(pos1);
-		Node <T> node2 = giveMeThatNode(pos2);
+	public void exchange(int pos1, int pos2) {
+		Node<T> node1 = giveMeThatNode(pos1);
+		Node<T> node2 = giveMeThatNode(pos2);
 
-		if(node1.getItem() != null && node2.getItem() != null)
-		{		
+		if (node1.getItem() != null && node2.getItem() != null) {
 			T item1 = node1.getItem();
 			node1.setItem(node2.getItem());
 			node2.setItem(item1);
-		}
-		else
+		} else
 			throw new NoSuchElementException();
 
 	}
@@ -256,59 +220,49 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Cambia la informacion del elemento en la posicion dada por parametro
 	 */
-	public void changeInfo(int pos, T elem) 
-	{
-		Node <T> node1 = giveMeThatNode(pos);
+	public void changeInfo(int pos, T elem) {
+		Node<T> node1 = giveMeThatNode(pos);
 		node1.setItem(elem);
 	}
 
 	/**
 	 * Elimina el item dado por par�metro.
 	 */
-	public T removeByType(T dato) 
-	{
+	public T removeByType(T dato) {
 		T resp = dato;
 		Node<T> newNode = new Node<T>(dato);
 
-		if(list.getItem().compareTo(dato) == 0)
-		{
-			list = newNode; 
+		if (list.getItem().compareTo(dato) == 0) {
+			list = newNode;
 		}
 
-		else if(last.getItem().compareTo(dato) == 0)
-		{
+		else if (last.getItem().compareTo(dato) == 0) {
 			last = newNode;
 		}
 
-		else
-		{
+		else {
 			Node<T> find = buscarDato(dato);
 			resp = find.getItem();
 
-			if(resp == null)
-			{
+			if (resp == null) {
 				throw new NoSuchElementException();
-			}
-			else
-			{
-				int index = isPresent(dato)-1;	
+			} else {
+				int index = isPresent(dato) - 1;
 				giveMeThatNode(index).setNextNode(find.getNext());
 
-			}		
+			}
 		}
 		listSize--;
-		return resp;		
+		return resp;
 	}
 
 	/**
 	 * Elmina el primer elemento de la lista.
 	 */
-	public T removeFirst() 
-	{
+	public T removeFirst() {
 		T resp = firstElement();
 
-		if(resp != null)
-		{
+		if (resp != null) {
 			list = list.getNext();
 			listSize--;
 		}
@@ -319,12 +273,10 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Elimina el �ltimo elemento de la lista.
 	 */
-	public T removeLast() 
-	{
+	public T removeLast() {
 		T resp = lastElement();
-		if(resp != null)
-		{
-			last = giveMeThatNode(size()-1);
+		if (resp != null) {
+			last = giveMeThatNode(size() - 1);
 			listSize--;
 		}
 		return resp;
@@ -333,97 +285,82 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	/**
 	 * Elimina el nodo en la posici�n dada por par�metro.
 	 */
-	public T removeByIndex(int index) 
-	{
+	public T removeByIndex(int index) {
 		T resp = null;
 
-		if(index == 1)
-		{
+		if (index == 1) {
 			resp = firstElement();
 			removeFirst();
 		}
 
-		else if(index == size())
-		{
+		else if (index == size()) {
 			resp = lastElement();
 			removeLast();
 		}
 
-		else
-		{
+		else {
 			Node<T> find = giveMeThatNode(index);
 			resp = find.getItem();
 
-			if(resp == null)
-			{
+			if (resp == null) {
 				throw new NoSuchElementException();
-			}
-			else
-			{
-				int i = index-1;	
+			} else {
+				int i = index - 1;
 				giveMeThatNode(i).setNextNode(find.getNext());
 
-			}		
+			}
 		}
 		listSize--;
-		return resp;		
-	} 
+		return resp;
+	}
 
 	/**
 	 * Retorna el nodo seg�n el �ndice.
+	 * 
 	 * @param index
 	 * @return
 	 */
-	public Node<T> giveMeThatNode(int index)
-	{
+	public Node<T> giveMeThatNode(int index) {
 		index = index - 1;
 		Node<T> resp = null;
 
-		if(index+1 == size())
-		{
+		if (index + 1 == size()) {
 			resp = last;
-		}
-		else if (index < size()) 
-		{
+		} else if (index < size()) {
 			resp = list;
-			for (int i = 0; i < index; i++)
-			{
+			for (int i = 0; i < index; i++) {
 				resp = resp.getNext();
 			}
 			return resp;
-		} 
-
+		}
 
 		return resp;
 	}
+
 	@SuppressWarnings("all")
-	public T[] toArray()
-	{
+	public T[] toArray() {
 		T[] array = (T[]) new Comparable[size()];
-		
+
 		Node<T> actual = list;
 		int c = 0;
-		
-		while(actual.hasNext())
-		{
+
+		while (actual.hasNext()) {
 			array[c] = actual.getItem();
 			c++;
 		}
-		
+
 		return array;
 	}
-	
+
 	@Override
-	public T buscar(T dato) 
-	{
-		
+	public T buscar(T dato) {
+
 		Node<T> resp = buscarDato(dato);
-		
-		if(resp == null)
-		{
+
+		if (resp == null) {
 			return null;
 		}
-		
+
 		return resp.getItem();
 	}
 }

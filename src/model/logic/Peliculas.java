@@ -17,8 +17,8 @@ public class Peliculas implements Comparable<Peliculas> {
 	private Integer comparador;
 
 	/**
-	 * Constructor de la clase Peliculas
-	 * Inicia el comparador en 0 para que compare por id
+	 * Constructor de la clase Peliculas Inicia el comparador en 0 para que compare
+	 * por id
 	 * 
 	 * @param idCasting numero de identificacion de la pelicula !=null
 	 * @param dir       director, si no hay informacion en el csv dir=""
@@ -26,10 +26,10 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * @param punt      puntuacion, si no hay informacion en el csv punt=null
 	 * @param act       lista con los actores de la pelicula
 	 * @param rdate     fecha de estreno de la pelicula
-	 * @param pvotos	cantidad de votos de la pelicula
+	 * @param pvotos    cantidad de votos de la pelicula
 	 */
-	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen, Integer pvotos) 
-	{
+	public Peliculas(Integer pID, String dir, String nom, Double punt, String[] act, Date rdate, String[] gen,
+			Integer pvotos) {
 		director = dir;
 		id = pID;
 		nombre = nom;
@@ -37,8 +37,8 @@ public class Peliculas implements Comparable<Peliculas> {
 		actores = act;
 		fecha = rdate;
 		genero = gen;
-		votos=pvotos;
-		comparador=0;
+		votos = pvotos;
+		comparador = 0;
 	}
 
 	// Metodos de devolver informacion
@@ -70,20 +70,21 @@ public class Peliculas implements Comparable<Peliculas> {
 		return genero;
 	}
 
-	public Integer darVotos(){
+	public Integer darVotos() {
 		return votos;
-	}
-	/**
-	 * Cambia el tipo de comparacion
-	 * Posibles comparaciones: 1= puntuacion, default = id
-	 */
-	public void compararPor(Integer i){
-		comparador=i;
 	}
 
 	/**
-	 * Requerimiento de Comparable de implementar metodo compareTo
-	 * Posibles comparaciones: 1 = puntuacion, default = id (o 0)
+	 * Cambia el tipo de comparacion Posibles comparaciones: 1= puntuacion, default
+	 * = id
+	 */
+	public void compararPor(Integer i) {
+		comparador = i;
+	}
+
+	/**
+	 * Requerimiento de Comparable de implementar metodo compareTo Posibles
+	 * comparaciones: 1 = puntuacion, default = id (o 0)
 	 */
 	public int compareTo(Peliculas pelicula) {
 		switch (comparador) {
@@ -91,7 +92,7 @@ public class Peliculas implements Comparable<Peliculas> {
 				return pelicula.darPuntuacion().compareTo(this.puntuacion);
 			default:
 				return pelicula.darId().compareTo(this.id);
-		}		
+		}
 	}
 
 	/**
@@ -99,25 +100,21 @@ public class Peliculas implements Comparable<Peliculas> {
 	 * 
 	 * @return String con los datos de la pelicula
 	 */
-	public String darInfo() 
-	{
+	public String darInfo() {
 		// Convierte la fecha al formato correcto
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String strFecha = formato.format(fecha);
-		String str = "Pelicula: " + nombre + "\nDirector: " + director + "\nFecha: " + strFecha 
-					+ "\nID: " + id + "\nPuntuacion: " + puntuacion + "\nVotos: " + votos + "\nGenero(s): ";
+		String str = "Pelicula: " + nombre + "\nDirector: " + director + "\nFecha: " + strFecha + "\nID: " + id
+				+ "\nPuntuacion: " + puntuacion + "\nVotos: " + votos + "\nGenero(s): ";
 		// Agrega los generos
-		for (String i : genero) 
-		{
+		for (String i : genero) {
 			str = str + " " + i + ",";
 		}
 		str = str.substring(0, str.length() - 1);
 		// Agrega los actores
 		str = str + "\nActores: ";
-		for (String i : actores) 
-		{
-			if (i != null) 
-			{
+		for (String i : actores) {
+			if (i != null) {
 				str = str + " " + i + ",";
 			}
 		}
