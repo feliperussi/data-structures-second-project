@@ -74,8 +74,8 @@ public class Controller {
 					int cant = Integer.parseInt(lector.nextLine());
 					if(cant >= 10){
 						view.printMessage("--------- \n Escoger tipo de ranking (e.g., 1): ");
-						view.printMessage("1. Top mejores");
-						view.printMessage("2. Top peores");
+						view.printMessage("1. Top mejores (Descendente)");
+						view.printMessage("2. Top peores (Ascendente)");
 						int tipo = Integer.parseInt(lector.nextLine());
 						view.printMessage("--------- \n Escoger tipo de criterio (e.g., 1): ");
 						view.printMessage("1. Puntuación promedio");
@@ -192,7 +192,7 @@ public class Controller {
 					view.printMessage("---------------------\n RESUMEN \n---------------------");
 					view.printMessage("Lista de generos cargados en " + tiempo + "ms");
 					view.printMessage("Hay " + generos.size() + " peliculas asociadas al género: " + genero);
-					view.printMessage("Estas tienen un puntaje promedio de: " + modelo.promedios(generos)[0] +"\n"
+					view.printMessage("Estas tienen un puntaje promedio de: " + modelo.promedios(generos )[0] +"\n"
 										+ "y una cantidad de votos promedio de: " + modelo.promedios(generos)[1]);
 					view.printMessage("---------------------");
 				}
@@ -216,15 +216,16 @@ public class Controller {
 						int cant = Integer.parseInt(lector.nextLine());
 						if(cant >= 10){
 							view.printMessage("--------- \n Escoger tipo de ranking (e.g., 1): ");
-							view.printMessage("1. Top mejores");
-							view.printMessage("2. Top peores");
+							view.printMessage("1. Top mejores (Descendente)");
+							view.printMessage("2. Top peores (Ascendente)");
 							int tipo = Integer.parseInt(lector.nextLine());
 							view.printMessage("--------- \n Escoger tipo de criterio (e.g., 1): ");
-							view.printMessage("1. Puntuación promedio");
+							view.printMessage("1. Puntuaci�n promedio");
 							view.printMessage("2. Cantidad de votos");
 							int criterio = Integer.parseInt(lector.nextLine());
+
 							//Verifica que el criterio sea valido
-							if (criterio != 1 && criterio != 2) throw new Exception();
+							if (criterio != 1 && criterio != 2 ) throw new Exception();
 							String strCriterio = (criterio==1) ? " puntuacion " : " votos "; 
 							switch(tipo){
 								case 1:
