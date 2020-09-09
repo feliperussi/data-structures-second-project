@@ -416,7 +416,14 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 	@Override
 	public T buscar(T dato) 
 	{
-		T resp = buscarDato(dato).getItem();
-		return resp;
+		
+		Node<T> resp = buscarDato(dato);
+		
+		if(resp == null)
+		{
+			return null;
+		}
+		
+		return resp.getItem();
 	}
 }

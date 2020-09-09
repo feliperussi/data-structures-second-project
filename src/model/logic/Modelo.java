@@ -121,20 +121,20 @@ public class Modelo {
 			//Crea las variables temporales con el tipo de estructura correcto
 			Lista<Peliculas> castLimpio = null;
 			switch (tipo) {
-				case 1:
-					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
-					castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
-					break;
-				case 2:
-					listaDatos = new ListaEncadenada<Peliculas>();
-					datos = new ListaEncadenada<Peliculas>();
-					castLimpio = new ListaEncadenada<Peliculas>();
-					break;
-				default:
-					System.out.println("No es una estructura de datos valida. \n Se utilizara un Arreglo dinamico por default.");
-					datos = new ArregloDinamico<Peliculas>(tamanoAprox);
-					castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
-					break;
+			case 1:
+				datos = new ArregloDinamico<Peliculas>(tamanoAprox);
+				castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+				break;
+			case 2:
+				listaDatos = new ListaEncadenada<Peliculas>();
+				datos = new ListaEncadenada<Peliculas>();
+				castLimpio = new ListaEncadenada<Peliculas>();
+				break;
+			default:
+				System.out.println("No es una estructura de datos valida. \n Se utilizara un Arreglo dinamico por default.");
+				datos = new ArregloDinamico<Peliculas>(tamanoAprox);
+				castLimpio = new ArregloDinamico<Peliculas>(tamanoAprox);
+				break;
 			}
 			if(castLimpio!=null) {
 				//Agrega informacion correcta a la lista de castings
@@ -166,7 +166,7 @@ public class Modelo {
 							Integer votos = infoD.darVotos();
 							Peliculas pelicula = new Peliculas(id, director, nombre, puntuacion, actores, fecha, genero, votos);
 							//FIXME 
-							
+
 							datos.append(pelicula);
 						}
 					}
@@ -350,35 +350,35 @@ public class Modelo {
 				double punt_ave = 0;
 				int vote_ave = 0;
 				switch(tipo){//Escoge el tipo de clasificacion
-					case 1: //Orden descendente (mejores peliculas)
-						for(int i=0; i < cant; i++){
-							punt_ave=punt_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darPuntuacion();
-							vote_ave= vote_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darVotos();
-							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
-						}
-						punt_ave = punt_ave/cant;
-						vote_ave = vote_ave/cant;
-						NumberFormat nf2 = NumberFormat.getNumberInstance();
-						nf2.setMaximumFractionDigits(2);
-						resp[cant] = nf2.format(punt_ave);
-						resp[cant+1] = nf2.format(vote_ave); //Da la respuesta en el formato correcto
-						break;
-					case 2: //Orden ascendente (peores peliculas)
-						for(int i=0; i < cant; i++){
-							punt_ave=punt_ave + pelisPuntuacion[i].darPuntuacion();
-							vote_ave= vote_ave + pelisPuntuacion[i].darVotos();
-							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
-						}
-						punt_ave = punt_ave/cant;
-						vote_ave = vote_ave/cant;
-						NumberFormat nf = NumberFormat.getNumberInstance();
-						nf.setMaximumFractionDigits(2);
-						resp[cant] = nf.format(punt_ave);
-						resp[cant+1] = nf.format(vote_ave); //Da la respuesta en el formato correcto
-						break;
-					default:
-						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
-						break;
+				case 1: //Orden descendente (mejores peliculas)
+					for(int i=0; i < cant; i++){
+						punt_ave=punt_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darPuntuacion();
+						vote_ave= vote_ave + pelisPuntuacion[pelisPuntuacion.length-i-1].darVotos();
+						resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+					}
+					punt_ave = punt_ave/cant;
+					vote_ave = vote_ave/cant;
+					NumberFormat nf2 = NumberFormat.getNumberInstance();
+					nf2.setMaximumFractionDigits(2);
+					resp[cant] = nf2.format(punt_ave);
+					resp[cant+1] = nf2.format(vote_ave); //Da la respuesta en el formato correcto
+					break;
+				case 2: //Orden ascendente (peores peliculas)
+					for(int i=0; i < cant; i++){
+						punt_ave=punt_ave + pelisPuntuacion[i].darPuntuacion();
+						vote_ave= vote_ave + pelisPuntuacion[i].darVotos();
+						resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
+					}
+					punt_ave = punt_ave/cant;
+					vote_ave = vote_ave/cant;
+					NumberFormat nf = NumberFormat.getNumberInstance();
+					nf.setMaximumFractionDigits(2);
+					resp[cant] = nf.format(punt_ave);
+					resp[cant+1] = nf.format(vote_ave); //Da la respuesta en el formato correcto
+					break;
+				default:
+					System.out.println("--------- \n Criterio de clasificación no válido \n---------");
+					break;
 				}
 			}
 			//Sino, da todos los datos disponiles
@@ -386,19 +386,19 @@ public class Modelo {
 				System.out.println("No hay suficientes datos, estas son las peliculas disponibles: \n");
 				resp = new String[aux.size()];
 				switch(tipo){//Escoge el tipo de clasificacion
-					case 1://Orden descendente (mejores peliculas)
-						for(int i=0; i < aux.size(); i++){
-							resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
-						}
-						break;
-					case 2://Orden ascendente (peores peliculas)
-						for(int i=0; i < aux.size(); i++){
-							resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
-						}
-						break;
-					default:
-						System.out.println("--------- \n Criterio de clasificación no válido \n---------");
-						break;
+				case 1://Orden descendente (mejores peliculas)
+					for(int i=0; i < aux.size(); i++){
+						resp[i]= i+1 + ") " + pelisPuntuacion[i].darInfo();
+					}
+					break;
+				case 2://Orden ascendente (peores peliculas)
+					for(int i=0; i < aux.size(); i++){
+						resp[i]= i+1 + ") " + pelisPuntuacion[pelisPuntuacion.length-i-1].darInfo();
+					}
+					break;
+				default:
+					System.out.println("--------- \n Criterio de clasificación no válido \n---------");
+					break;
 				}
 			}
 		}
