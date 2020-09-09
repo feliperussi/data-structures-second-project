@@ -396,7 +396,7 @@ public class ListaEncadenada<T extends Comparable<T>> implements Lista<T>
 
 		return resp;
 	}
-
+	@SuppressWarnings("all")
 	public T[] toArray()
 	{
 		T[] array = (T[]) new Comparable[size()];

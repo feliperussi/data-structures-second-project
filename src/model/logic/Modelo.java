@@ -492,4 +492,63 @@ public class Modelo {
 		return (ArregloDinamico<Peliculas>) datos;
 	}
 
+	public String[] conocerDirector(String directorAConocer) {
+		ArrayList<Peliculas> peliculasDeDirector=new ArrayList<Peliculas>();
+		for(int i = 1; i <= datos.size(); i++){
+			if(datos.get(i).darDirector().equals(directorAConocer)){
+				peliculasDeDirector.add(datos.get(i));
+			}
+		}
+		String[] respuesta=new String[peliculasDeDirector.size()+1];
+		double sumCal = 0;
+		int actual =0;
+		for(Peliculas pelicula:peliculasDeDirector){
+			respuesta[actual]=pelicula.darNombre();
+			sumCal+=pelicula.darPuntuacion();
+			actual++;
+		}
+		double promedio=sumCal/actual;
+		respuesta[peliculasDeDirector.size()]=String.format("%.2f", promedio);
+		return respuesta;
+	}
+
+	public String[] conocerActor(String actorAConocer) {
+		ArrayList<Peliculas> peliculasDeActor=new ArrayList<Peliculas>();
+		for(int i = 1; i <= datos.size(); i++){
+			for(String actor:datos.get(i).darActores()){
+				if(actor.equals(actorAConocer)) peliculasDeActor.add(datos.get(i));
+			}
+		}
+		String[] respuesta=new String[peliculasDeActor.size()+2];
+		double sumCal = 0;
+		int actual =0;
+		for(Peliculas pelicula:peliculasDeActor){
+			respuesta[actual]=pelicula.darNombre();
+			sumCal+=pelicula.darPuntuacion();
+			actual++;
+		}
+		double promedio=sumCal/actual;
+		respuesta[peliculasDeActor.size()]=String.format("%.2f", promedio);
+		ArrayList<String> dirQueNoSon = new ArrayList<String>();
+		String currnt="Error";
+		int numPel=0;
+		for(Peliculas pelicula:peliculasDeActor){
+			if(dirQueNoSon.contains(pelicula.darDirector())) continue;
+			else{
+				int cant=0;
+				for(Peliculas peli:peliculasDeActor){
+					if(peli.darDirector().equals(pelicula.darDirector()))cant++;
+				}
+				if(cant>numPel){
+					numPel=cant;
+					currnt=pelicula.darDirector();
+				}else{
+					dirQueNoSon.add(pelicula.darDirector());
+				}
+			}
+		}
+		respuesta[peliculasDeActor.size()+1]=currnt;
+		return respuesta;
+	}
+
 }

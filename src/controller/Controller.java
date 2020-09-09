@@ -134,8 +134,33 @@ public class Controller {
 				break;
 
 			case 5: //Retorna las peliculas asociadas a un director
+				view.printMessage("--------- \nNombre del director: ");
+				String directorAConocer = lector.nextLine();
+				String[] conocerDirector=modelo.conocerDirector(directorAConocer);
+				if(conocerDirector.length==1){
+					view.printMessage("El director " + directorAConocer + " no tiene peliculas." + "\n---------");
+				}else{
+					view.printMessage("--------- \n" + directorAConocer + " tiene "+(conocerDirector.length-1)+" peliculas.\n---------");
+					for(int i =0;i<conocerDirector.length-1;i++){
+						view.printMessage(conocerDirector[i]+"\n");
+					}
+					view.printMessage("--------- \nSu calificacion promedio es de "+conocerDirector[conocerDirector.length-1]+"\n---------");
+				}
 				break;
 			case 6: //Retorna las peliculas asociadas a un actor
+				view.printMessage("--------- \nNombre del actor/actriz: ");
+				String actorAConocer = lector.nextLine();
+				String[] conocerActor=modelo.conocerActor(actorAConocer);
+				if(conocerActor.length==2){
+					view.printMessage("El actor/actriz " + actorAConocer + " no ha participado en peliculas." + "\n---------");
+				}else{
+					view.printMessage("--------- \n" + actorAConocer + " ha participado en "+(conocerActor.length-2)+" peliculas.\n---------");
+					for(int i =0;i<conocerActor.length-2;i++){
+						view.printMessage(conocerActor[i]+"\n");
+					}
+					view.printMessage("--------- \nLa calificacion promedio de las peliculas en las que participo es de "+conocerActor[conocerActor.length-2]+"\n---------");
+					view.printMessage("El director con el que tiene mas colaboraciones es "+conocerActor[conocerActor.length-1]+"\n---------");
+				}
 				break;
 			case 7: //Retorna las peliculas asociadas a un genero
 				view.printMessage("--------- \n \nNombre del genero: ");
