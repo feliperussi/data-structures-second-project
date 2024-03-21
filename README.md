@@ -1,7 +1,3 @@
-Entendido, con los archivos actuales y asumiendo el contenido típico de un proyecto Java, podemos inferir ciertos aspectos para el README. Aquí hay una estructura básica de lo que podría ser el README para el proyecto, utilizando la información de los archivos de código y la estructura del proyecto:
-
----
-
 # Movie Analysis System
 
 ## Project Contributors
